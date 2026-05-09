@@ -8,4 +8,6 @@ public static class ApiRoutes
     public const string SystemPermissions = "/api/system/permissions";
     public const string Customers = "/api/customers";
     public const string CustomerById = "/api/customers/{customerId:guid}";
+    public const string CustomerContacts = "/api/customers/{customerId:guid}/contacts";
+    public const string ContactById = "/api/contacts/{contactId:guid}";
 }

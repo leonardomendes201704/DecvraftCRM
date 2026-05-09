@@ -228,7 +228,7 @@ Tasks:
 - `[Done]` Criar entidade `Opportunity`.
 - `[Done]` Criar configuracoes EF.
 - `[Done]` Criar CRUD basico de clientes.
-- `[Todo]` Criar CRUD basico de contatos.
+- `[Done]` Criar CRUD basico de contatos.
 - `[Todo]` Criar CRUD basico de oportunidades.
 - `[Done]` Aplicar filtro por tenant.
 - `[Done]` Criar migration inicial do CRM.
@@ -293,3 +293,39 @@ Tasks:
 - `[Done]` Criar processo de desenvolvimento.
 - `[Done]` Criar registro de decisoes.
 - `[Done]` Criar definition of done.
+
+## EP-11 - Refatoracao Arquitetural da API
+
+Status: `Todo`
+Prioridade: `P0`
+
+Objetivo: evoluir a API de Minimal API concentrada no `Program.cs` para uma arquitetura hexagonal mais explicita, com separacao clara entre entrada HTTP, casos de uso, modelos, servicos e infraestrutura.
+
+### UE-11.01 - Modularizar endpoints HTTP
+
+Tasks:
+
+- `[Todo]` Remover concentracao de endpoints do `Program.cs`.
+- `[Todo]` Criar organizacao por grupos/modulos de endpoints.
+- `[Todo]` Manter `Program.cs` apenas para bootstrap, DI, middleware e mapeamento de modulos.
+- `[Todo]` Garantir que autorizacao por permissao continue aplicada por endpoint.
+
+### UE-11.02 - Introduzir MediatR e casos de uso
+
+Tasks:
+
+- `[Todo]` Adicionar MediatR ao projeto de aplicacao.
+- `[Todo]` Criar commands/queries para autenticacao, modulos e CRM.
+- `[Todo]` Migrar regras de orquestracao de services diretos para handlers.
+- `[Todo]` Padronizar responses/resultados de handlers.
+- `[Todo]` Criar behaviors para validacao, logging e tratamento de erros quando fizer sentido.
+
+### UE-11.03 - Reforcar arquitetura hexagonal
+
+Tasks:
+
+- `[Todo]` Definir portas de entrada e saida na camada Application.
+- `[Todo]` Manter infraestrutura como adapters externos.
+- `[Todo]` Isolar controllers/endpoints como adapters HTTP.
+- `[Todo]` Revisar dependencias entre projetos para evitar acoplamento indevido.
+- `[Todo]` Adicionar testes de arquitetura para validar as regras.

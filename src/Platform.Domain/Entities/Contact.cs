@@ -66,4 +66,23 @@ public sealed class Contact : ITenantEntity
         IsPrimary = true;
         UpdatedAt = updatedAt;
     }
+
+    public void Update(
+        string name,
+        string email,
+        string? phone,
+        string? role,
+        bool isPrimary,
+        DateTimeOffset updatedAt)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(email);
+
+        Name = name.Trim();
+        Email = email.Trim().ToLowerInvariant();
+        Phone = string.IsNullOrWhiteSpace(phone) ? null : phone.Trim();
+        Role = string.IsNullOrWhiteSpace(role) ? null : role.Trim();
+        IsPrimary = isPrimary;
+        UpdatedAt = updatedAt;
+    }
 }

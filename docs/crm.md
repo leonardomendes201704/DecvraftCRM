@@ -50,6 +50,30 @@ Valores de `type`:
 
 Documento duplicado dentro do mesmo tenant retorna `409 Conflict`.
 
+## Contatos
+
+Endpoints iniciais:
+
+- `GET /api/customers/{customerId}/contacts`: lista contatos de um cliente do tenant autenticado. Permissao: `crm.customers.view`.
+- `GET /api/contacts/{contactId}`: retorna um contato do tenant autenticado. Permissao: `crm.customers.view`.
+- `POST /api/customers/{customerId}/contacts`: cria contato para um cliente. Permissao: `crm.customers.create`.
+- `PUT /api/contacts/{contactId}`: atualiza contato. Permissao: `crm.customers.update`.
+- `DELETE /api/contacts/{contactId}`: remove contato. Permissao: `crm.customers.delete`.
+
+Request de criacao/atualizacao:
+
+```json
+{
+  "name": "Maria Silva",
+  "email": "maria@acme.test",
+  "phone": "11999990000",
+  "role": "Compras",
+  "isPrimary": true
+}
+```
+
+O contato sempre deve pertencer a um cliente do mesmo tenant. Email duplicado dentro do mesmo cliente retorna `409 Conflict`.
+
 ## Proximo bloco
 
-O proximo bloco do CRM deve criar CRUD basico para contatos, protegendo os endpoints com permissoes CRM.
+O proximo bloco do CRM deve criar CRUD basico para oportunidades, protegendo os endpoints com permissoes CRM.
