@@ -30,13 +30,13 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 
 ## Persistencia
 
-- `[ ]` `AppDbContext` existe.
-- `[ ]` Entidades core foram criadas.
-- `[ ]` Configuracoes EF foram criadas para entidades core.
-- `[ ]` Indices unicos foram configurados.
-- `[ ]` Filtro global por `TenantId` foi aplicado onde necessario.
-- `[ ]` Migration `InitialCreate` foi criada.
-- `[ ]` Migration executa em banco SQL Server limpo.
+- `[x]` `AppDbContext` existe.
+- `[x]` Entidades core foram criadas.
+- `[x]` Configuracoes EF foram criadas para entidades core.
+- `[x]` Indices unicos foram configurados.
+- `[x]` Filtro global por `TenantId` foi aplicado onde necessario.
+- `[x]` Migration `InitialCreate` foi criada.
+- `[x]` Migration executa em banco SQL Server limpo.
 
 ## Installer
 

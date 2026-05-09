@@ -67,7 +67,7 @@ Tasks:
 
 ## EP-02 - Core Domain e Persistencia
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P0`
 
 Objetivo: implementar entidades centrais, DbContext, mapeamentos EF e migration inicial.
@@ -76,35 +76,36 @@ Objetivo: implementar entidades centrais, DbContext, mapeamentos EF e migration 
 
 Tasks:
 
-- `[Todo]` Criar `SystemInstallation`.
-- `[Todo]` Criar `Tenant`.
-- `[Todo]` Criar `TenantBranding`.
-- `[Todo]` Criar `Module`.
-- `[Todo]` Criar `TenantModule`.
-- `[Todo]` Criar `ApplicationUser`.
-- `[Todo]` Criar `Role`.
-- `[Todo]` Criar `Permission`.
-- `[Todo]` Criar entidades de relacionamento de usuarios, roles e permissions quando necessario.
+- `[Done]` Criar `SystemInstallation`.
+- `[Done]` Criar `Tenant`.
+- `[Done]` Criar `TenantBranding`.
+- `[Done]` Criar `Module`.
+- `[Done]` Criar `TenantModule`.
+- `[Done]` Criar `ApplicationUser`.
+- `[Done]` Criar `Role`.
+- `[Done]` Criar `Permission`.
+- `[Done]` Criar entidades de relacionamento de usuarios, roles e permissions quando necessario.
+- `[Done]` Criar entidades `SystemConfiguration` e `TenantConfiguration` para governanca de configuracoes.
 
 ### UE-02.02 - Configurar persistencia
 
 Tasks:
 
-- `[Todo]` Criar `AppDbContext`.
-- `[Todo]` Criar configuracoes EF por entidade.
-- `[Todo]` Configurar tabelas no plural.
-- `[Todo]` Configurar indices unicos.
-- `[Todo]` Configurar filtro global por `TenantId` para entidades multi-tenant.
-- `[Todo]` Criar extensao `AddPersistence()`.
+- `[Done]` Criar `AppDbContext`.
+- `[Done]` Criar configuracoes EF por entidade.
+- `[Done]` Configurar tabelas no plural.
+- `[Done]` Configurar indices unicos.
+- `[Done]` Configurar filtro global por `TenantId` para entidades multi-tenant.
+- `[Done]` Criar extensao `AddPersistence()`.
 
 ### UE-02.03 - Criar migration inicial
 
 Tasks:
 
-- `[Todo]` Instalar pacotes EF Core.
-- `[Todo]` Criar migration `InitialCreate`.
-- `[Todo]` Validar `dotnet build`.
-- `[Todo]` Validar aplicacao da migration em banco SQL Server.
+- `[Done]` Instalar pacotes EF Core.
+- `[Done]` Criar migration `InitialCreate`.
+- `[Done]` Validar `dotnet build`.
+- `[Done]` Validar aplicacao da migration em banco SQL Server.
 
 ## EP-03 - Provisioning Engine
 

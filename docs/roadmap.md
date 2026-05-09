@@ -31,7 +31,7 @@ Entregas:
 
 ## Fase 2 - Core Domain e Persistencia
 
-Status: `Nao iniciado`
+Status: `Em andamento`
 
 Objetivo: criar as entidades core, `AppDbContext`, configuracoes EF e primeira migration.
 
