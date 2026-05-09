@@ -134,14 +134,18 @@ Tasks:
 
 - `[Todo]` Implementar teste de conexao com banco.
 - `[Todo]` Implementar criacao de banco quando necessario.
-- `[Todo]` Implementar execucao de migrations.
-- `[Todo]` Implementar seeds globais.
-- `[Todo]` Implementar criacao de tenant.
-- `[Todo]` Implementar criacao de branding.
-- `[Todo]` Implementar criacao de admin.
-- `[Todo]` Implementar instalacao de modulos.
-- `[Todo]` Implementar criacao de roles e permissions padrao.
-- `[Todo]` Implementar lock do instalador.
+- `[Done]` Implementar execucao de migrations.
+- `[Done]` Implementar seeds globais.
+- `[Done]` Implementar criacao de tenant.
+- `[Done]` Implementar criacao de branding.
+- `[Done]` Implementar criacao de admin com senha hasheada.
+- `[Done]` Implementar instalacao de modulos.
+- `[Done]` Implementar criacao de roles e permissions padrao.
+- `[Done]` Implementar lock do instalador.
+- `[Done]` Centralizar valores conhecidos de modulos, roles, permissoes e installer.
+- `[Done]` Registrar DI inicial do Provisioning Engine.
+- `[Done]` Cobrir servicos concretos iniciais com testes automatizados.
+- `[Todo]` Implementar orquestrador `ProvisioningService`.
 
 ## EP-04 - Web Installer
 

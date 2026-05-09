@@ -1,9 +1,21 @@
+using Platform.Domain.Catalog;
 using Platform.Provisioning.Models;
 
 namespace Platform.ProvisioningTests;
 
 public sealed class ProvisioningContractTests
 {
+    private const string DatabaseHost = "mssql";
+    private const string DatabaseName = "WhiteLabelErp";
+    private const string DatabaseUser = "sa";
+    private const string BootstrapPassword = "bootstrap-only";
+    private const string CompanyName = "Empresa Demo";
+    private const string TenantSlug = "empresa-demo";
+    private const string AdminName = "Administrador";
+    private const string AdminEmail = "admin@demo.com";
+    private const string AdminPassword = "Admin@123456";
+    private const string SystemName = "ERP Demo";
+
     [Fact]
     public void InstallRequest_ShouldComposeInitialProvisioningPayload()
     {
@@ -11,36 +23,36 @@ public sealed class ProvisioningContractTests
         {
             Database = new DatabaseSetupOptions
             {
-                Host = "mssql",
+                Host = DatabaseHost,
                 Port = 1433,
-                DatabaseName = "WhiteLabelErp",
-                Username = "sa",
-                Password = "bootstrap-only"
+                DatabaseName = DatabaseName,
+                Username = DatabaseUser,
+                Password = BootstrapPassword
             },
             Tenant = new TenantSetupOptions
             {
-                CompanyName = "Empresa Demo",
-                Slug = "empresa-demo"
+                CompanyName = CompanyName,
+                Slug = TenantSlug
             },
             AdminUser = new AdminUserSetupOptions
             {
-                Name = "Administrador",
-                Email = "admin@demo.com",
-                Password = "Admin@123456"
+                Name = AdminName,
+                Email = AdminEmail,
+                Password = AdminPassword
             },
             Branding = new BrandingSetupOptions
             {
-                SystemName = "ERP Demo"
+                SystemName = SystemName
             },
-            Modules = ["core", "crm", "finance"]
+            Modules = [.. KnownModules.DefaultSlugs]
         };
 
-        Assert.Equal("mssql", request.Database.Host);
+        Assert.Equal(DatabaseHost, request.Database.Host);
         Assert.Equal(1433, request.Database.Port);
-        Assert.Equal("empresa-demo", request.Tenant.Slug);
-        Assert.Contains("core", request.Modules);
-        Assert.Contains("crm", request.Modules);
-        Assert.Contains("finance", request.Modules);
+        Assert.Equal(TenantSlug, request.Tenant.Slug);
+        Assert.Contains(KnownModules.CoreSlug, request.Modules);
+        Assert.Contains(KnownModules.CrmSlug, request.Modules);
+        Assert.Contains(KnownModules.FinanceSlug, request.Modules);
     }
 
     [Fact]
@@ -49,13 +61,13 @@ public sealed class ProvisioningContractTests
         var tenantId = Guid.NewGuid();
         var adminUserId = Guid.NewGuid();
 
-        var success = ProvisioningResult.Success(tenantId, adminUserId, ["core"]);
+        var success = ProvisioningResult.Success(tenantId, adminUserId, [KnownModules.CoreSlug]);
         var failure = ProvisioningResult.Failure(["invalid install request"]);
 
         Assert.True(success.Succeeded);
         Assert.Equal(tenantId, success.TenantId);
         Assert.Equal(adminUserId, success.AdminUserId);
-        Assert.Contains("core", success.InstalledModules);
+        Assert.Contains(KnownModules.CoreSlug, success.InstalledModules);
 
         Assert.False(failure.Succeeded);
         Assert.Contains("invalid install request", failure.Errors);

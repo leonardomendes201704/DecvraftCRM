@@ -55,7 +55,13 @@ public sealed class AppDbContext : DbContext
     private void SetTenantQueryFilter<TEntity>(ModelBuilder modelBuilder)
         where TEntity : class, ITenantEntity
     {
-        modelBuilder.Entity<TEntity>()
-            .HasQueryFilter(entity => !_currentTenantId.HasValue || entity.TenantId == _currentTenantId.Value);
+        if (_currentTenantId.HasValue)
+        {
+            var tenantId = _currentTenantId.Value;
+            modelBuilder.Entity<TEntity>().HasQueryFilter(entity => entity.TenantId == tenantId);
+            return;
+        }
+
+        modelBuilder.Entity<TEntity>().HasQueryFilter(entity => true);
     }
 }
