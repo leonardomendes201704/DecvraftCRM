@@ -76,7 +76,9 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[x]` Entidades CRM usam enums valorados para status/tipos fechados.
 - `[x]` Entidades CRM possuem configuracoes EF.
 - `[x]` Entidades CRM respeitam filtro global por tenant.
-- `[ ]` CRUD basico de CRM existe.
+- `[x]` CRUD basico de clientes existe.
+- `[ ]` CRUD basico de contatos existe.
+- `[ ]` CRUD basico de oportunidades existe.
 
 ## Testes
 

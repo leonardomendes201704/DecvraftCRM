@@ -6,4 +6,6 @@ public static class ApiRoutes
     public const string Me = "/api/me";
     public const string Modules = "/api/modules";
     public const string SystemPermissions = "/api/system/permissions";
+    public const string Customers = "/api/customers";
+    public const string CustomerById = "/api/customers/{customerId:guid}";
 }

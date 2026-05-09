@@ -227,7 +227,9 @@ Tasks:
 - `[Done]` Criar entidade `Contact`.
 - `[Done]` Criar entidade `Opportunity`.
 - `[Done]` Criar configuracoes EF.
-- `[Todo]` Criar CRUD basico.
+- `[Done]` Criar CRUD basico de clientes.
+- `[Todo]` Criar CRUD basico de contatos.
+- `[Todo]` Criar CRUD basico de oportunidades.
 - `[Done]` Aplicar filtro por tenant.
 - `[Done]` Criar migration inicial do CRM.
 - `[Done]` Criar testes principais de dominio, modelo e filtro por tenant.
