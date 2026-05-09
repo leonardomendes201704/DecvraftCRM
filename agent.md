@@ -35,4 +35,5 @@ Ao final, declarar:
 - o que foi feito;
 - quais arquivos principais foram alterados;
 - como validar;
-- qualquer bloqueio ou risco restante.
+- qualquer bloqueio ou risco restante;
+- qual e o proximo passo recomendado.

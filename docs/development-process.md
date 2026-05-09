@@ -11,6 +11,7 @@ Este processo existe para manter o projeto alinhado com a documentacao do inicio
 5. Rodar verificacoes aplicaveis.
 6. Atualizar checklist ou docs afetados.
 7. Mover a task para `Review` ou `Done`.
+8. Registrar na comunicacao final qual e o proximo passo recomendado.
 
 ## Regras de controle
 

@@ -12,6 +12,7 @@ Uma task so pode ser marcada como `Done` quando os criterios abaixo forem atendi
 - Chaves, credenciais e configuracoes definitivas sao gerenciadas por entidades em banco, nao por `.env`, `appsettings*.json` ou hardcoded.
 - Nao ha quebra consciente de isolamento por tenant.
 - Documentacao afetada foi atualizada.
+- A conclusao da tarefa informa o proximo passo recomendado.
 
 ## Para entidades
 
