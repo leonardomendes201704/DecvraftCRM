@@ -62,7 +62,8 @@ Tasks:
 - `[Done]` Criar volume persistente para SQL Server.
 - `[Done]` Criar `.env.example`.
 - `[Done]` Criar `.dockerignore`.
-- `[Blocked]` Validar build das imagens Docker localmente. Bloqueado porque o Docker daemon nao esta em execucao.
+- `[Done]` Validar build das imagens Docker localmente.
+- `[Done]` Validar subida dos containers SQL Server, API e Installer.
 
 ## EP-02 - Core Domain e Persistencia
 

@@ -93,3 +93,26 @@ Consequencias:
 - Fases P0 vem antes de CRM/Financeiro completos.
 - A primeira entrega valida e instalar, bloquear installer e autenticar admin.
 - Funcionalidades P1 so devem avancar apos a fundacao estar estavel.
+
+## ADR-0005 - Configuracoes e credenciais gerenciadas por banco
+
+Data: 2026-05-09
+Status: Aceita
+
+Contexto:
+
+A plataforma sera white-label, multi-tenant e auto provisionavel. Chaves, credenciais e configuracoes precisam ser auditaveis, versionaveis, protegidas e alteraveis sem depender de arquivos no servidor.
+
+Decisao:
+
+Toda chave, credencial, segredo, parametro sensivel ou configuracao operacional deve ser persistida e gerenciada por entidades em banco de dados. Arquivos `.env`, `appsettings*.json` e valores hardcoded nao devem ser usados como fonte definitiva de configuracao da aplicacao.
+
+Excecoes ficam restritas ao bootstrap minimo antes do banco existir, exemplos sem segredo real e configuracao tecnica inevitavel do host/container.
+
+Consequencias:
+
+- Criar entidades para configuracoes globais e configuracoes por tenant.
+- O Provisioning Engine deve persistir configuracoes iniciais no banco.
+- Segredos devem ser armazenados de forma protegida, nunca em texto puro.
+- `.env.example` permanece apenas como exemplo de execucao local.
+- `appsettings*.json` deve ficar limitado ao minimo necessario para bootstrap.

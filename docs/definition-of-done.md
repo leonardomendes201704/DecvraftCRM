@@ -9,6 +9,7 @@ Uma task so pode ser marcada como `Done` quando os criterios abaixo forem atendi
 - Nao ha regra de negocio nova diretamente em controller.
 - Nao ha segredo real versionado.
 - Nao ha senha salva em texto puro.
+- Chaves, credenciais e configuracoes definitivas sao gerenciadas por entidades em banco, nao por `.env`, `appsettings*.json` ou hardcoded.
 - Nao ha quebra consciente de isolamento por tenant.
 - Documentacao afetada foi atualizada.
 

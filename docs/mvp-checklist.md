@@ -15,9 +15,9 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 ## Docker
 
 - `[x]` `docker-compose.yml` existe.
-- `[ ]` SQL Server sobe em container.
-- `[ ]` API sobe em container.
-- `[ ]` Installer sobe em container.
+- `[x]` SQL Server sobe em container.
+- `[x]` API sobe em container.
+- `[x]` Installer sobe em container.
 - `[x]` Volume persistente do SQL Server esta configurado.
 - `[x]` `.env.example` existe e nao contem segredo real.
 

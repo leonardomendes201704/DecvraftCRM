@@ -8,6 +8,7 @@ O acompanhamento oficial do projeto fica em [docs/README.md](docs/README.md).
 
 Antes de implementar qualquer funcionalidade, consulte:
 
+- [agent.md](agent.md)
 - [docs/project-vision.md](docs/project-vision.md)
 - [docs/roadmap.md](docs/roadmap.md)
 - [docs/backlog.md](docs/backlog.md)
