@@ -29,7 +29,7 @@ Response `200`:
     "name": "Administrador",
     "email": "admin@demo.com",
     "roles": ["TenantAdmin"],
-    "permissions": ["crm.customers.read"]
+    "permissions": ["crm.customers.view"]
   }
 }
 ```
@@ -56,8 +56,34 @@ Response `200`:
   "name": "Administrador",
   "email": "admin@demo.com",
   "roles": ["TenantAdmin"],
-  "permissions": ["crm.customers.read"]
+  "permissions": ["crm.customers.view"]
 }
 ```
 
 Response `401`: token ausente, invalido ou expirado.
+
+## `GET /api/system/permissions`
+
+Retorna o catalogo de permissoes conhecidas. Este endpoint exige a permissao `core.system.view`.
+
+Headers:
+
+```http
+Authorization: Bearer <jwt>
+```
+
+Response `200`:
+
+```json
+[
+  {
+    "key": "core.system.view",
+    "description": "Visualizar informacoes do sistema",
+    "moduleSlug": "core"
+  }
+]
+```
+
+Response `401`: token ausente, invalido ou expirado.
+
+Response `403`: usuario autenticado sem a permissao exigida.

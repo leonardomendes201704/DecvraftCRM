@@ -59,6 +59,7 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[x]` JWT contem dados minimos esperados.
 - `[x]` `GET /api/me` retorna dados do usuario autenticado.
 - `[x]` Senha nao e salva em texto puro.
+- `[x]` Endpoints podem exigir permissao centralizada.
 
 ## Testes
 

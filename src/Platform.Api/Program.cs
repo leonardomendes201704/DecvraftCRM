@@ -1,6 +1,8 @@
 using Platform.Api.Routing;
+using Platform.Api.Security;
 using Platform.Application.Abstractions;
 using Platform.Application.Auth;
+using Platform.Domain.Catalog;
 using Platform.Infrastructure;
 using Platform.Persistence;
 
@@ -10,6 +12,7 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
 
 builder.Services.AddPersistence(connectionString);
 builder.Services.AddInfrastructure();
+builder.Services.AddScoped<PermissionEndpointFilter>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -42,7 +45,7 @@ app.MapGet(ApiRoutes.Me, async (
     IAuthenticationService authenticationService,
     CancellationToken cancellationToken) =>
 {
-    var accessToken = ExtractBearerToken(request);
+    var accessToken = BearerTokenReader.Read(request);
     if (accessToken is null)
     {
         return Results.Unauthorized();
@@ -57,18 +60,9 @@ app.MapGet(ApiRoutes.Me, async (
 .WithName(ApiEndpointNames.Me)
 .WithOpenApi();
 
+app.MapGet(ApiRoutes.SystemPermissions, () => KnownPermissions.All)
+.RequirePermission(KnownPermissions.CoreSystemView)
+.WithName(ApiEndpointNames.SystemPermissions)
+.WithOpenApi();
+
 app.Run();
-
-static string? ExtractBearerToken(HttpRequest request)
-{
-    const string bearerPrefix = "Bearer ";
-
-    var authorization = request.Headers.Authorization.ToString();
-    if (string.IsNullOrWhiteSpace(authorization) ||
-        !authorization.StartsWith(bearerPrefix, StringComparison.OrdinalIgnoreCase))
-    {
-        return null;
-    }
-
-    return authorization[bearerPrefix.Length..].Trim();
-}

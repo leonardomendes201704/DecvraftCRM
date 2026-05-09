@@ -10,6 +10,13 @@ Este documento controla as decisoes e validacoes de seguranca implementadas.
 - O token JWT inclui identificacao do usuario, tenant, roles e permissoes.
 - As chaves de claims customizadas ficam centralizadas em `KnownAuthClaimTypes`.
 
+## Autorizacao por permissoes
+
+- Endpoints podem exigir permissao com `RequirePermission()`.
+- A autorizacao retorna estados valorados por `PermissionAuthorizationStatus`.
+- Permissoes conhecidas ficam centralizadas em `KnownPermissions`.
+- O primeiro endpoint protegido por permissao e `GET /api/system/permissions`, que exige `core.system.view`.
+
 ## Configuracoes
 
 - Configuracoes definitivas de JWT sao persistidas em `SystemConfigurations`.
@@ -27,4 +34,4 @@ Este documento controla as decisoes e validacoes de seguranca implementadas.
 ## Validacao
 
 - `dotnet test WhiteLabelErpCrm.sln` deve passar.
-- Testes unitarios cobrem verificacao de senha, login e retorno do usuario atual via token.
+- Testes unitarios cobrem verificacao de senha, login, retorno do usuario atual via token e autorizacao por permissao.

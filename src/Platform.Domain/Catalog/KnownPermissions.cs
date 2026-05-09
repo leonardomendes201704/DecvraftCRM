@@ -2,25 +2,42 @@ namespace Platform.Domain.Catalog;
 
 public static class KnownPermissions
 {
+    public const string CoreSystemView = "core.system.view";
+    public const string CoreSystemManage = "core.system.manage";
+    public const string CoreUsersView = "core.users.view";
+    public const string CoreUsersManage = "core.users.manage";
+    public const string CoreModulesView = "core.modules.view";
+    public const string CoreModulesManage = "core.modules.manage";
+    public const string CrmCustomersView = "crm.customers.view";
+    public const string CrmCustomersCreate = "crm.customers.create";
+    public const string CrmCustomersUpdate = "crm.customers.update";
+    public const string CrmCustomersDelete = "crm.customers.delete";
+    public const string CrmOpportunitiesView = "crm.opportunities.view";
+    public const string CrmOpportunitiesManage = "crm.opportunities.manage";
+    public const string FinanceAccountsView = "finance.accounts.view";
+    public const string FinanceAccountsManage = "finance.accounts.manage";
+    public const string FinanceTransactionsView = "finance.transactions.view";
+    public const string FinanceTransactionsManage = "finance.transactions.manage";
+
     public static IReadOnlyCollection<PermissionDefinition> All { get; } =
     [
-        new("core.system.view", "Visualizar informacoes do sistema", KnownModules.CoreSlug),
-        new("core.system.manage", "Gerenciar configuracoes do sistema", KnownModules.CoreSlug),
-        new("core.users.view", "Visualizar usuarios", KnownModules.CoreSlug),
-        new("core.users.manage", "Gerenciar usuarios", KnownModules.CoreSlug),
-        new("core.modules.view", "Visualizar modulos", KnownModules.CoreSlug),
-        new("core.modules.manage", "Gerenciar modulos", KnownModules.CoreSlug),
+        new(CoreSystemView, "Visualizar informacoes do sistema", KnownModules.CoreSlug),
+        new(CoreSystemManage, "Gerenciar configuracoes do sistema", KnownModules.CoreSlug),
+        new(CoreUsersView, "Visualizar usuarios", KnownModules.CoreSlug),
+        new(CoreUsersManage, "Gerenciar usuarios", KnownModules.CoreSlug),
+        new(CoreModulesView, "Visualizar modulos", KnownModules.CoreSlug),
+        new(CoreModulesManage, "Gerenciar modulos", KnownModules.CoreSlug),
 
-        new("crm.customers.view", "Visualizar clientes", KnownModules.CrmSlug),
-        new("crm.customers.create", "Criar clientes", KnownModules.CrmSlug),
-        new("crm.customers.update", "Atualizar clientes", KnownModules.CrmSlug),
-        new("crm.customers.delete", "Excluir clientes", KnownModules.CrmSlug),
-        new("crm.opportunities.view", "Visualizar oportunidades", KnownModules.CrmSlug),
-        new("crm.opportunities.manage", "Gerenciar oportunidades", KnownModules.CrmSlug),
+        new(CrmCustomersView, "Visualizar clientes", KnownModules.CrmSlug),
+        new(CrmCustomersCreate, "Criar clientes", KnownModules.CrmSlug),
+        new(CrmCustomersUpdate, "Atualizar clientes", KnownModules.CrmSlug),
+        new(CrmCustomersDelete, "Excluir clientes", KnownModules.CrmSlug),
+        new(CrmOpportunitiesView, "Visualizar oportunidades", KnownModules.CrmSlug),
+        new(CrmOpportunitiesManage, "Gerenciar oportunidades", KnownModules.CrmSlug),
 
-        new("finance.accounts.view", "Visualizar contas financeiras", KnownModules.FinanceSlug),
-        new("finance.accounts.manage", "Gerenciar contas financeiras", KnownModules.FinanceSlug),
-        new("finance.transactions.view", "Visualizar lancamentos financeiros", KnownModules.FinanceSlug),
-        new("finance.transactions.manage", "Gerenciar lancamentos financeiros", KnownModules.FinanceSlug)
+        new(FinanceAccountsView, "Visualizar contas financeiras", KnownModules.FinanceSlug),
+        new(FinanceAccountsManage, "Gerenciar contas financeiras", KnownModules.FinanceSlug),
+        new(FinanceTransactionsView, "Visualizar lancamentos financeiros", KnownModules.FinanceSlug),
+        new(FinanceTransactionsManage, "Gerenciar lancamentos financeiros", KnownModules.FinanceSlug)
     ];
 }

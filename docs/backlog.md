@@ -193,7 +193,7 @@ Tasks:
 - `[Done]` Criar seeds de roles.
 - `[Done]` Criar seeds de permissions.
 - `[Done]` Relacionar admin inicial ao papel `TenantAdmin`.
-- `[Todo]` Preparar policies basicas.
+- `[Done]` Preparar policies basicas.
 
 ## EP-06 - Modulos Base
 
@@ -267,6 +267,7 @@ Tasks:
 - `[Todo]` Testar migrations do zero.
 - `[Todo]` Testar fluxo completo de provisioning.
 - `[Done]` Testar login do admin apos instalacao em nivel de servico.
+- `[Done]` Testar autorizacao basica por permissao.
 - `[Todo]` Testar regras de arquitetura.
 
 ## EP-10 - Documentacao Tecnica

@@ -28,7 +28,7 @@ public sealed class AuthenticationServiceTests
         Assert.Equal(seededData.UserId, result.Login.User.UserId);
         Assert.Equal(seededData.TenantId, result.Login.User.TenantId);
         Assert.Contains(KnownRoles.TenantAdmin, result.Login.User.Roles);
-        Assert.Contains("crm.customers.read", result.Login.User.Permissions);
+        Assert.Contains(KnownPermissions.CrmCustomersView, result.Login.User.Permissions);
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public sealed class AuthenticationServiceTests
             CreatePasswordHash("StrongPassword123!"),
             now);
         var role = Role.Create(tenant.Id, KnownRoles.TenantAdmin, isSystemRole: true);
-        var permission = Permission.Create("crm.customers.read", "Read CRM customers", KnownModules.CrmSlug);
+        var permission = Permission.Create(KnownPermissions.CrmCustomersView, "Read CRM customers", KnownModules.CrmSlug);
 
         dbContext.Tenants.Add(tenant);
         dbContext.ApplicationUsers.Add(user);

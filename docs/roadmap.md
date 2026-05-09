@@ -91,7 +91,7 @@ Entregas:
 - claims com tenant, roles e permissoes;
 - `POST /api/auth/login`;
 - `GET /api/me`;
-- protecao basica de endpoints;
+- protecao basica de endpoints por permissao;
 - CORS restritivo preparado.
 
 ## Fase 6 - Modulos Base

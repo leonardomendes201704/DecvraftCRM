@@ -11,6 +11,7 @@ public static class DependencyInjection
         services.AddScoped<IPasswordHashVerifier, PasswordHashVerifier>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IPermissionAuthorizationService, PermissionAuthorizationService>();
 
         return services;
     }
