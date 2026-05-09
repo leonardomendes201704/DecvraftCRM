@@ -24,6 +24,8 @@ Antes de implementar qualquer mudanca relevante:
 - [decisions.md](decisions.md): registro de decisoes tecnicas e arquiteturais.
 - [definition-of-done.md](definition-of-done.md): criterios minimos para considerar uma task concluida.
 - [installer-flow.md](installer-flow.md): endpoints e fluxo inicial do Web Installer.
+- [auth-flow.md](auth-flow.md): endpoints e exemplos do fluxo de autenticacao.
+- [security.md](security.md): autenticacao, JWT, senhas e configuracoes sensiveis.
 
 ## Regra de ouro
 

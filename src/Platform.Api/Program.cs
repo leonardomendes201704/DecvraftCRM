@@ -1,13 +1,20 @@
-var builder = WebApplication.CreateBuilder(args);
+using Platform.Api.Routing;
+using Platform.Application.Abstractions;
+using Platform.Application.Auth;
+using Platform.Infrastructure;
+using Platform.Persistence;
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("Default")
+    ?? throw new InvalidOperationException("Connection string 'Default' was not provided.");
+
+builder.Services.AddPersistence(connectionString);
+builder.Services.AddInfrastructure();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -16,29 +23,52 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapPost(ApiRoutes.AuthLogin, async (
+    LoginRequest request,
+    IAuthenticationService authenticationService,
+    CancellationToken cancellationToken) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    var result = await authenticationService.LoginAsync(request, cancellationToken);
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    return result.Succeeded
+        ? Results.Ok(result.Login)
+        : Results.Unauthorized();
 })
-.WithName("GetWeatherForecast")
+.WithName(ApiEndpointNames.Login)
+.WithOpenApi();
+
+app.MapGet(ApiRoutes.Me, async (
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    CancellationToken cancellationToken) =>
+{
+    var accessToken = ExtractBearerToken(request);
+    if (accessToken is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var currentUser = await authenticationService.GetCurrentUserAsync(accessToken, cancellationToken);
+
+    return currentUser is not null
+        ? Results.Ok(currentUser)
+        : Results.Unauthorized();
+})
+.WithName(ApiEndpointNames.Me)
 .WithOpenApi();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+static string? ExtractBearerToken(HttpRequest request)
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    const string bearerPrefix = "Bearer ";
+
+    var authorization = request.Headers.Authorization.ToString();
+    if (string.IsNullOrWhiteSpace(authorization) ||
+        !authorization.StartsWith(bearerPrefix, StringComparison.OrdinalIgnoreCase))
+    {
+        return null;
+    }
+
+    return authorization[bearerPrefix.Length..].Trim();
 }

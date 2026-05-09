@@ -80,15 +80,15 @@ Entregas:
 
 ## Fase 5 - Seguranca e Autenticacao
 
-Status: `Nao iniciado`
+Status: `Em andamento`
 
 Objetivo: implementar hash de senha, login JWT, roles, permissions e endpoint do usuario atual.
 
 Entregas:
 
 - hash seguro de senha;
-- login JWT;
-- claims com tenant e permissoes;
+- login JWT implementado com configuracoes persistidas em banco;
+- claims com tenant, roles e permissoes;
 - `POST /api/auth/login`;
 - `GET /api/me`;
 - protecao basica de endpoints;

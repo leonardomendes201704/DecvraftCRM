@@ -1,4 +1,4 @@
-namespace Platform.Provisioning.Security;
+namespace Platform.Domain.Security;
 
 public static class PasswordHashingDefaults
 {

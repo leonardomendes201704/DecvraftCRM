@@ -170,7 +170,7 @@ Tasks:
 
 ## EP-05 - Autenticacao e Autorizacao
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P0`
 
 Objetivo: permitir login seguro e controle inicial por roles/permissoes.
@@ -179,20 +179,20 @@ Objetivo: permitir login seguro e controle inicial por roles/permissoes.
 
 Tasks:
 
-- `[Todo]` Implementar hash seguro de senha.
-- `[Todo]` Criar servico de autenticacao.
-- `[Todo]` Configurar JWT.
-- `[Todo]` Criar `POST /api/auth/login`.
-- `[Todo]` Criar `GET /api/me`.
-- `[Todo]` Incluir `TenantId` nas claims.
+- `[Done]` Implementar hash seguro de senha.
+- `[Done]` Criar servico de autenticacao.
+- `[Done]` Configurar JWT via `SystemConfigurations`.
+- `[Done]` Criar `POST /api/auth/login`.
+- `[Done]` Criar `GET /api/me`.
+- `[Done]` Incluir `TenantId` nas claims.
 
 ### UE-05.02 - RBAC inicial
 
 Tasks:
 
-- `[Todo]` Criar seeds de roles.
-- `[Todo]` Criar seeds de permissions.
-- `[Todo]` Relacionar admin inicial ao papel `TenantAdmin`.
+- `[Done]` Criar seeds de roles.
+- `[Done]` Criar seeds de permissions.
+- `[Done]` Relacionar admin inicial ao papel `TenantAdmin`.
 - `[Todo]` Preparar policies basicas.
 
 ## EP-06 - Modulos Base
@@ -263,10 +263,10 @@ Tasks:
 - `[Todo]` Testar criacao de tenant.
 - `[Todo]` Testar validacao de slug.
 - `[Todo]` Testar criacao de usuario.
-- `[Todo]` Testar regras de senha.
+- `[Done]` Testar regras de senha.
 - `[Todo]` Testar migrations do zero.
 - `[Todo]` Testar fluxo completo de provisioning.
-- `[Todo]` Testar login do admin apos instalacao.
+- `[Done]` Testar login do admin apos instalacao em nivel de servico.
 - `[Todo]` Testar regras de arquitetura.
 
 ## EP-10 - Documentacao Tecnica

@@ -55,19 +55,19 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 
 ## Autenticacao
 
-- `[ ]` `POST /api/auth/login` autentica o admin criado.
-- `[ ]` JWT contem dados minimos esperados.
-- `[ ]` `GET /api/me` retorna dados do usuario autenticado.
-- `[ ]` Senha nao e salva em texto puro.
+- `[x]` `POST /api/auth/login` autentica usuario ativo por tenant.
+- `[x]` JWT contem dados minimos esperados.
+- `[x]` `GET /api/me` retorna dados do usuario autenticado.
+- `[x]` Senha nao e salva em texto puro.
 
 ## Testes
 
-- `[ ]` Testes unitarios principais passam.
+- `[x]` Testes unitarios principais passam.
 - `[ ]` Testes de integracao com SQL Server passam.
-- `[ ]` Teste do fluxo de provisioning passa.
-- `[ ]` Teste de migrations passa.
-- `[ ]` Testes de arquitetura passam.
-- `[ ]` `dotnet test` executa com sucesso.
+- `[x]` Teste do fluxo de provisioning passa.
+- `[x]` Teste de migrations passa.
+- `[x]` Testes de arquitetura passam.
+- `[x]` `dotnet test` executa com sucesso.
 
 ## Documentacao
 
@@ -78,4 +78,4 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[ ]` Documentacao de banco existe.
 - `[ ]` Documentacao de testes existe.
 - `[ ]` Documentacao de Docker existe.
-- `[ ]` Documentacao de seguranca existe.
+- `[x]` Documentacao de seguranca existe.

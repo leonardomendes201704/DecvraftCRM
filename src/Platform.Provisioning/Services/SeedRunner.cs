@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using Platform.Domain.Catalog;
 using Platform.Domain.Entities;
@@ -20,6 +22,7 @@ public sealed class SeedRunner : ISeedRunner
     {
         await SeedModulesAsync(cancellationToken);
         await SeedPermissionsAsync(cancellationToken);
+        await SeedSystemConfigurationsAsync(cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
@@ -60,5 +63,53 @@ public sealed class SeedRunner : ISeedRunner
                 permissionDefinition.Description,
                 permissionDefinition.ModuleSlug));
         }
+    }
+
+    private async Task SeedSystemConfigurationsAsync(CancellationToken cancellationToken)
+    {
+        await EnsureSystemConfigurationAsync(
+            KnownSystemConfigurationKeys.JwtSecret,
+            Convert.ToBase64String(RandomNumberGenerator.GetBytes(JwtConfigurationDefaults.SecretSizeInBytes)),
+            isSecret: true,
+            cancellationToken);
+
+        await EnsureSystemConfigurationAsync(
+            KnownSystemConfigurationKeys.JwtIssuer,
+            JwtConfigurationDefaults.Issuer,
+            isSecret: false,
+            cancellationToken);
+
+        await EnsureSystemConfigurationAsync(
+            KnownSystemConfigurationKeys.JwtAudience,
+            JwtConfigurationDefaults.Audience,
+            isSecret: false,
+            cancellationToken);
+
+        await EnsureSystemConfigurationAsync(
+            KnownSystemConfigurationKeys.JwtAccessTokenMinutes,
+            JwtConfigurationDefaults.AccessTokenMinutes.ToString(CultureInfo.InvariantCulture),
+            isSecret: false,
+            cancellationToken);
+    }
+
+    private async Task EnsureSystemConfigurationAsync(
+        string key,
+        string value,
+        bool isSecret,
+        CancellationToken cancellationToken)
+    {
+        var exists = await _dbContext.SystemConfigurations
+            .AnyAsync(configuration => configuration.Key == key, cancellationToken);
+
+        if (exists)
+        {
+            return;
+        }
+
+        _dbContext.SystemConfigurations.Add(SystemConfiguration.Create(
+            key,
+            value,
+            isSecret,
+            DateTimeOffset.UtcNow));
     }
 }

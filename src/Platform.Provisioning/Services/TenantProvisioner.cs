@@ -2,10 +2,10 @@ using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using Platform.Domain.Catalog;
 using Platform.Domain.Entities;
+using Platform.Domain.Security;
 using Platform.Persistence;
 using Platform.Provisioning.Abstractions;
 using Platform.Provisioning.Models;
-using Platform.Provisioning.Security;
 
 namespace Platform.Provisioning.Services;
 

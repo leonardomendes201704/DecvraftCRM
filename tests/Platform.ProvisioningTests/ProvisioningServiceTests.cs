@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Platform.Domain.Catalog;
+using Platform.Domain.Security;
 using Platform.Persistence;
 using Platform.Provisioning.Models;
-using Platform.Provisioning.Security;
 using Platform.Provisioning.Services;
 using Platform.ProvisioningTests.Support;
 
