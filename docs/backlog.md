@@ -145,7 +145,9 @@ Tasks:
 - `[Done]` Centralizar valores conhecidos de modulos, roles, permissoes e installer.
 - `[Done]` Registrar DI inicial do Provisioning Engine.
 - `[Done]` Cobrir servicos concretos iniciais com testes automatizados.
-- `[Todo]` Implementar orquestrador `ProvisioningService`.
+- `[Done]` Implementar orquestrador `ProvisioningService`.
+- `[Done]` Cobrir orquestracao do provisioning com testes usando fakes.
+- `[Todo]` Implementar `DatabaseProvisioner` real com estrategia segura de bootstrap.
 
 ## EP-04 - Web Installer
 

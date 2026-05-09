@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<ITenantProvisioner, TenantProvisioner>();
         services.AddScoped<IModuleInstaller, ModuleInstaller>();
         services.AddScoped<IInstallerLockService, InstallerLockService>();
+        services.AddScoped<IProvisioningService, ProvisioningService>();
 
         return services;
     }
