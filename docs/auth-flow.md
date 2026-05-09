@@ -87,3 +87,34 @@ Response `200`:
 Response `401`: token ausente, invalido ou expirado.
 
 Response `403`: usuario autenticado sem a permissao exigida.
+
+## `GET /api/modules`
+
+Retorna o catalogo de modulos com status de instalacao e ativacao para o tenant autenticado. Este endpoint exige a permissao `core.modules.view`.
+
+Headers:
+
+```http
+Authorization: Bearer <jwt>
+```
+
+Response `200`:
+
+```json
+[
+  {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "name": "Core",
+    "slug": "core",
+    "version": "1.0.0",
+    "isCore": true,
+    "isEnabled": true,
+    "isInstalled": true,
+    "isActiveForTenant": true
+  }
+]
+```
+
+Response `401`: token ausente, invalido ou expirado.
+
+Response `403`: usuario autenticado sem a permissao exigida.

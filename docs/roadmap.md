@@ -96,7 +96,7 @@ Entregas:
 
 ## Fase 6 - Modulos Base
 
-Status: `Nao iniciado`
+Status: `Concluido`
 
 Objetivo: registrar e ativar modulos por tenant.
 
@@ -107,7 +107,7 @@ Entregas:
 - modulo `finance`;
 - `ModuleDefinition`;
 - permissoes por modulo;
-- `GET /api/modules`.
+- `GET /api/modules` protegido por permissao e com status por tenant.
 
 ## Fase 7 - CRM Basico
 

@@ -197,7 +197,7 @@ Tasks:
 
 ## EP-06 - Modulos Base
 
-Status: `Todo`
+Status: `Done`
 Prioridade: `P0`
 
 Objetivo: registrar modulos e controlar ativacao por tenant.
@@ -206,11 +206,11 @@ Objetivo: registrar modulos e controlar ativacao por tenant.
 
 Tasks:
 
-- `[Todo]` Criar metadados do modulo `core`.
-- `[Todo]` Criar metadados do modulo `crm`.
-- `[Todo]` Criar metadados do modulo `finance`.
-- `[Todo]` Criar `GET /api/modules`.
-- `[Todo]` Garantir ativacao por tenant.
+- `[Done]` Criar metadados do modulo `core`.
+- `[Done]` Criar metadados do modulo `crm`.
+- `[Done]` Criar metadados do modulo `finance`.
+- `[Done]` Criar `GET /api/modules`.
+- `[Done]` Garantir ativacao por tenant.
 
 ## EP-07 - CRM Basico
 
@@ -268,6 +268,7 @@ Tasks:
 - `[Todo]` Testar fluxo completo de provisioning.
 - `[Done]` Testar login do admin apos instalacao em nivel de servico.
 - `[Done]` Testar autorizacao basica por permissao.
+- `[Done]` Testar consulta de modulos por tenant.
 - `[Todo]` Testar regras de arquitetura.
 
 ## EP-10 - Documentacao Tecnica

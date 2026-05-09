@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Platform.Application.Abstractions;
 using Platform.Infrastructure.Auth;
+using Platform.Infrastructure.Modules;
 
 namespace Platform.Infrastructure;
 
@@ -12,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IPermissionAuthorizationService, PermissionAuthorizationService>();
+        services.AddScoped<IModuleCatalogService, ModuleCatalogService>();
 
         return services;
     }

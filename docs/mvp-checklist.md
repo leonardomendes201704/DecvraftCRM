@@ -61,6 +61,13 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[x]` Senha nao e salva em texto puro.
 - `[x]` Endpoints podem exigir permissao centralizada.
 
+## Modulos
+
+- `[x]` Metadados dos modulos `core`, `crm` e `finance` existem.
+- `[x]` `GET /api/modules` retorna modulos globais com status do tenant.
+- `[x]` Ativacao por tenant e considerada na resposta.
+- `[x]` Consulta de modulos exige permissao `core.modules.view`.
+
 ## Testes
 
 - `[x]` Testes unitarios principais passam.

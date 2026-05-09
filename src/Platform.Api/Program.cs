@@ -60,6 +60,32 @@ app.MapGet(ApiRoutes.Me, async (
 .WithName(ApiEndpointNames.Me)
 .WithOpenApi();
 
+app.MapGet(ApiRoutes.Modules, async (
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IModuleCatalogService moduleCatalogService,
+    CancellationToken cancellationToken) =>
+{
+    var accessToken = BearerTokenReader.Read(request);
+    if (accessToken is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var currentUser = await authenticationService.GetCurrentUserAsync(accessToken, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var modules = await moduleCatalogService.GetModulesAsync(currentUser.TenantId, cancellationToken);
+
+    return Results.Ok(modules);
+})
+.RequirePermission(KnownPermissions.CoreModulesView)
+.WithName(ApiEndpointNames.Modules)
+.WithOpenApi();
+
 app.MapGet(ApiRoutes.SystemPermissions, () => KnownPermissions.All)
 .RequirePermission(KnownPermissions.CoreSystemView)
 .WithName(ApiEndpointNames.SystemPermissions)

@@ -26,6 +26,7 @@ Antes de implementar qualquer mudanca relevante:
 - [installer-flow.md](installer-flow.md): endpoints e fluxo inicial do Web Installer.
 - [auth-flow.md](auth-flow.md): endpoints e exemplos do fluxo de autenticacao.
 - [security.md](security.md): autenticacao, JWT, senhas e configuracoes sensiveis.
+- [modules.md](modules.md): catalogo inicial de modulos e ativacao por tenant.
 
 ## Regra de ouro
 
