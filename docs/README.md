@@ -27,6 +27,7 @@ Antes de implementar qualquer mudanca relevante:
 - [auth-flow.md](auth-flow.md): endpoints e exemplos do fluxo de autenticacao.
 - [security.md](security.md): autenticacao, JWT, senhas e configuracoes sensiveis.
 - [modules.md](modules.md): catalogo inicial de modulos e ativacao por tenant.
+- [crm.md](crm.md): entidades e persistencia inicial do CRM.
 
 ## Regra de ouro
 

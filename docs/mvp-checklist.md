@@ -68,6 +68,16 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[x]` Ativacao por tenant e considerada na resposta.
 - `[x]` Consulta de modulos exige permissao `core.modules.view`.
 
+## CRM
+
+- `[x]` Entidade `Customer` existe.
+- `[x]` Entidade `Contact` existe.
+- `[x]` Entidade `Opportunity` existe.
+- `[x]` Entidades CRM usam enums valorados para status/tipos fechados.
+- `[x]` Entidades CRM possuem configuracoes EF.
+- `[x]` Entidades CRM respeitam filtro global por tenant.
+- `[ ]` CRUD basico de CRM existe.
+
 ## Testes
 
 - `[x]` Testes unitarios principais passam.

@@ -29,6 +29,9 @@ public sealed class AppDbContext : DbContext
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<SystemConfiguration> SystemConfigurations => Set<SystemConfiguration>();
     public DbSet<TenantConfiguration> TenantConfigurations => Set<TenantConfiguration>();
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<Contact> Contacts => Set<Contact>();
+    public DbSet<Opportunity> Opportunities => Set<Opportunity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -55,13 +58,7 @@ public sealed class AppDbContext : DbContext
     private void SetTenantQueryFilter<TEntity>(ModelBuilder modelBuilder)
         where TEntity : class, ITenantEntity
     {
-        if (_currentTenantId.HasValue)
-        {
-            var tenantId = _currentTenantId.Value;
-            modelBuilder.Entity<TEntity>().HasQueryFilter(entity => entity.TenantId == tenantId);
-            return;
-        }
-
-        modelBuilder.Entity<TEntity>().HasQueryFilter(entity => true);
+        modelBuilder.Entity<TEntity>().HasQueryFilter(entity =>
+            _currentTenantId == null || entity.TenantId == _currentTenantId);
     }
 }

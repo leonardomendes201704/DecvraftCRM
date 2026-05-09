@@ -20,5 +20,8 @@ public sealed class PersistenceModelTests
         Assert.Contains("SystemInstallations", script);
         Assert.Contains("ApplicationUsers", script);
         Assert.Contains("TenantConfigurations", script);
+        Assert.Contains("Customers", script);
+        Assert.Contains("Contacts", script);
+        Assert.Contains("Opportunities", script);
     }
 }

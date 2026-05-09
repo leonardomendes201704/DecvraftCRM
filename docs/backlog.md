@@ -214,7 +214,7 @@ Tasks:
 
 ## EP-07 - CRM Basico
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P1`
 
 Objetivo: entregar funcionalidades CRM iniciais.
@@ -223,13 +223,14 @@ Objetivo: entregar funcionalidades CRM iniciais.
 
 Tasks:
 
-- `[Todo]` Criar entidade `Customer`.
-- `[Todo]` Criar entidade `Contact`.
-- `[Todo]` Criar entidade `Opportunity`.
-- `[Todo]` Criar configuracoes EF.
+- `[Done]` Criar entidade `Customer`.
+- `[Done]` Criar entidade `Contact`.
+- `[Done]` Criar entidade `Opportunity`.
+- `[Done]` Criar configuracoes EF.
 - `[Todo]` Criar CRUD basico.
-- `[Todo]` Aplicar filtro por tenant.
-- `[Todo]` Criar testes principais.
+- `[Done]` Aplicar filtro por tenant.
+- `[Done]` Criar migration inicial do CRM.
+- `[Done]` Criar testes principais de dominio, modelo e filtro por tenant.
 
 ## EP-08 - Financeiro Basico
 

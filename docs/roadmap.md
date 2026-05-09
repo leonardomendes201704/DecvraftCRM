@@ -111,7 +111,7 @@ Entregas:
 
 ## Fase 7 - CRM Basico
 
-Status: `Nao iniciado`
+Status: `Em andamento`
 
 Objetivo: criar funcionalidades essenciais de CRM com isolamento por tenant.
 
@@ -120,6 +120,8 @@ Entregas:
 - entidade `Customer`;
 - entidade `Contact`;
 - entidade `Opportunity`;
+- configuracoes EF e migration inicial de CRM;
+- filtro por tenant validado para entidades CRM;
 - CRUD basico;
 - permissoes CRM;
 - testes principais.
