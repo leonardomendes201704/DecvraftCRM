@@ -13,6 +13,7 @@ Uma task so pode ser marcada como `Done` quando os criterios abaixo forem atendi
 - Nao ha quebra consciente de isolamento por tenant.
 - Documentacao afetada foi atualizada.
 - A conclusao da tarefa informa o proximo passo recomendado.
+- Valores fechados de dominio nao foram implementados como strings, numeros magicos ou hardcoded espalhado.
 
 ## Para entidades
 

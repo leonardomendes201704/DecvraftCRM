@@ -21,6 +21,7 @@ Este processo existe para manter o projeto alinhado com a documentacao do inicio
 - Toda regra critica deve ter teste.
 - Todo endpoint novo deve ter exemplo documentado.
 - Toda chave, credencial ou configuracao definitiva deve ser modelada para persistencia em banco.
+- Valores fechados de dominio devem usar enums valorados, value objects ou constantes centralizadas, nao valores hardcoded espalhados.
 - Toda entrega P0 deve manter `dotnet build` funcionando.
 - O escopo do MVP tecnico tem prioridade sobre funcionalidades P1 e P2.
 

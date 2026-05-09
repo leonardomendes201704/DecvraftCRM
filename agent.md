@@ -26,6 +26,19 @@ Mesmo nas excecoes, nenhum segredo real deve ser commitado.
 - `appsettings*.json` deve conter apenas configuracao minima de bootstrap e ambiente local.
 - `.env.example` deve ser tratado como exemplo de execucao, nao como fonte final de verdade.
 
+## Diretriz obrigatoria de valores de dominio
+
+Usar enums valorados, value objects ou constantes centralizadas para valores fechados de dominio, status, tipos, chaves conhecidas, modulos, permissoes e estados do sistema.
+
+Nao espalhar strings, numeros magicos ou valores hardcoded pelo codigo.
+
+Quando um valor precisar ser persistido:
+
+- preferir enum com conversao explicita;
+- manter valores estaveis e versionaveis;
+- documentar o significado dos valores quando nao for obvio;
+- evitar depender do nome textual do enum quando isso puder quebrar compatibilidade futura.
+
 ## Fluxo de desenvolvimento
 
 Antes de implementar algo, declarar o que sera feito.
