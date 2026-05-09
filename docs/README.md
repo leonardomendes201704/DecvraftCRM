@@ -23,6 +23,7 @@ Antes de implementar qualquer mudanca relevante:
 - [development-process.md](development-process.md): regras de acompanhamento e fluxo de trabalho.
 - [decisions.md](decisions.md): registro de decisoes tecnicas e arquiteturais.
 - [definition-of-done.md](definition-of-done.md): criterios minimos para considerar uma task concluida.
+- [installer-flow.md](installer-flow.md): endpoints e fluxo inicial do Web Installer.
 
 ## Regra de ouro
 

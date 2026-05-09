@@ -152,7 +152,7 @@ Tasks:
 
 ## EP-04 - Web Installer
 
-Status: `Todo`
+Status: `Done`
 Prioridade: `P0`
 
 Objetivo: disponibilizar endpoints de instalacao controlados.
@@ -161,11 +161,12 @@ Objetivo: disponibilizar endpoints de instalacao controlados.
 
 Tasks:
 
-- `[Todo]` Criar `GET /install/status`.
-- `[Todo]` Criar `POST /install/test-database`.
-- `[Todo]` Criar `POST /install/run`.
-- `[Todo]` Validar bloqueio apos instalacao.
-- `[Todo]` Padronizar respostas de erro e sucesso.
+- `[Done]` Criar `GET /install/status`.
+- `[Done]` Criar `POST /install/test-database`.
+- `[Done]` Criar `POST /install/run`.
+- `[Done]` Padronizar respostas iniciais de erro e sucesso.
+- `[Done]` Validar bloqueio apos instalacao via endpoint.
+- `[Done]` Validar fluxo completo via Docker.
 
 ## EP-05 - Autenticacao e Autorizacao
 

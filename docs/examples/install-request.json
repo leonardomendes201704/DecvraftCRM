@@ -1,0 +1,30 @@
+{
+  "database": {
+    "host": "mssql",
+    "port": 1433,
+    "databaseName": "WhiteLabelErp",
+    "username": "sa",
+    "password": "YourStrong!Passw0rd",
+    "trustServerCertificate": true
+  },
+  "tenant": {
+    "companyName": "Empresa Demo",
+    "slug": "empresa-demo",
+    "customDomain": null
+  },
+  "adminUser": {
+    "name": "Administrador",
+    "email": "admin@demo.com",
+    "password": "Admin@123456"
+  },
+  "branding": {
+    "systemName": "ERP Demo",
+    "primaryColor": "#2563EB",
+    "secondaryColor": "#111827"
+  },
+  "modules": [
+    "core",
+    "crm",
+    "finance"
+  ]
+}

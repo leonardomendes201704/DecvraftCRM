@@ -9,6 +9,8 @@ public sealed class DatabaseProvisioner : IDatabaseProvisioner
 {
     private const string DatabaseExistsSql = "SELECT DB_ID(@databaseName)";
     private const string DatabaseNameParameter = "@databaseName";
+    private const int TargetDatabaseAccessRetries = 10;
+    private static readonly TimeSpan TargetDatabaseAccessRetryDelay = TimeSpan.FromSeconds(1);
 
     public async Task TestConnectionAsync(DatabaseSetupOptions options, CancellationToken cancellationToken = default)
     {
@@ -23,6 +25,7 @@ public sealed class DatabaseProvisioner : IDatabaseProvisioner
 
         if (await DatabaseExistsAsync(connection, options.DatabaseName, cancellationToken))
         {
+            await WaitForTargetDatabaseAsync(options, cancellationToken);
             return;
         }
 
@@ -30,6 +33,7 @@ public sealed class DatabaseProvisioner : IDatabaseProvisioner
         command.CommandText = $"CREATE DATABASE {SqlServerIdentifier.Quote(options.DatabaseName)}";
 
         await command.ExecuteNonQueryAsync(cancellationToken);
+        await WaitForTargetDatabaseAsync(options, cancellationToken);
     }
 
     private static async Task<bool> DatabaseExistsAsync(SqlConnection connection, string databaseName, CancellationToken cancellationToken)
@@ -41,5 +45,22 @@ public sealed class DatabaseProvisioner : IDatabaseProvisioner
         var result = await command.ExecuteScalarAsync(cancellationToken);
 
         return result is not null && result is not DBNull;
+    }
+
+    private static async Task WaitForTargetDatabaseAsync(DatabaseSetupOptions options, CancellationToken cancellationToken)
+    {
+        for (var attempt = 1; attempt <= TargetDatabaseAccessRetries; attempt++)
+        {
+            try
+            {
+                await using var targetConnection = new SqlConnection(SqlServerBootstrapConnectionFactory.CreateTargetConnectionString(options));
+                await targetConnection.OpenAsync(cancellationToken);
+                return;
+            }
+            catch when (attempt < TargetDatabaseAccessRetries)
+            {
+                await Task.Delay(TargetDatabaseAccessRetryDelay, cancellationToken);
+            }
+        }
     }
 }

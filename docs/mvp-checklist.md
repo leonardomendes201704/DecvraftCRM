@@ -40,17 +40,18 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 
 ## Installer
 
-- `[ ]` `GET /install/status` retorna `isInstalled = false` antes da instalacao.
+- `[x]` `GET /install/status` retorna `isInstalled = false` antes da instalacao.
 - `[x]` Motor interno de teste de conexao com SQL Server foi implementado e validado.
-- `[ ]` `POST /install/run` executa instalacao completa.
-- `[ ]` Tenant inicial e criado.
-- `[ ]` Branding inicial e criado.
-- `[ ]` Usuario admin e criado com senha hasheada.
-- `[ ]` Modulos `core`, `crm` e `finance` sao registrados.
-- `[ ]` Modulos selecionados sao ativados para o tenant.
-- `[ ]` Roles e permissions iniciais sao criadas.
-- `[ ]` Instalador e bloqueado apos instalacao.
-- `[ ]` `GET /install/status` retorna `isInstalled = true` apos instalacao.
+- `[x]` `POST /install/test-database` valida conexao via Web Installer.
+- `[x]` `POST /install/run` executa instalacao completa.
+- `[x]` Tenant inicial e criado.
+- `[x]` Branding inicial e criado.
+- `[x]` Usuario admin e criado com senha hasheada.
+- `[x]` Modulos `core`, `crm` e `finance` sao registrados.
+- `[x]` Modulos selecionados sao ativados para o tenant.
+- `[x]` Roles e permissions iniciais sao criadas.
+- `[x]` Instalador e bloqueado apos instalacao.
+- `[x]` `GET /install/status` retorna `isInstalled = true` apos instalacao.
 
 ## Autenticacao
 

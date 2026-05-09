@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Platform.Domain.Catalog;
 using Platform.Domain.Entities;
@@ -9,6 +10,9 @@ namespace Platform.Provisioning.Services;
 
 public sealed class InstallerLockService : IInstallerLockService
 {
+    private const int CannotOpenDatabaseErrorNumber = 4060;
+    private const int InvalidObjectNameErrorNumber = 208;
+
     private readonly AppDbContext _dbContext;
 
     public InstallerLockService(AppDbContext dbContext)
@@ -18,7 +22,7 @@ public sealed class InstallerLockService : IInstallerLockService
 
     public async Task<InstallStatusResult> GetStatusAsync(CancellationToken cancellationToken = default)
     {
-        var installation = await GetInstallationAsync(cancellationToken);
+        var installation = await TryGetInstallationAsync(cancellationToken);
 
         return new InstallStatusResult
         {
@@ -30,7 +34,7 @@ public sealed class InstallerLockService : IInstallerLockService
 
     public async Task<bool> IsInstalledAsync(CancellationToken cancellationToken = default)
     {
-        var installation = await GetInstallationAsync(cancellationToken);
+        var installation = await TryGetInstallationAsync(cancellationToken);
 
         return installation?.IsInstalled ?? false;
     }
@@ -61,5 +65,24 @@ public sealed class InstallerLockService : IInstallerLockService
     {
         return _dbContext.SystemInstallations
             .SingleOrDefaultAsync(installation => installation.InstallationKey == InstallerDefaults.InstallationKey, cancellationToken);
+    }
+
+    private async Task<SystemInstallation?> TryGetInstallationAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await GetInstallationAsync(cancellationToken);
+        }
+        catch (Exception exception) when (IsDatabaseUnavailable(exception))
+        {
+            return null;
+        }
+    }
+
+    private static bool IsDatabaseUnavailable(Exception exception)
+    {
+        return exception is SqlException { Number: CannotOpenDatabaseErrorNumber } ||
+            exception is SqlException { Number: InvalidObjectNameErrorNumber } ||
+            exception.InnerException is not null && IsDatabaseUnavailable(exception.InnerException);
     }
 }

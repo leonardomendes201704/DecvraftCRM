@@ -65,7 +65,7 @@ Entregas:
 
 ## Fase 4 - Web Installer
 
-Status: `Nao iniciado`
+Status: `Concluido`
 
 Objetivo: expor endpoints para status, teste de banco e execucao da instalacao.
 

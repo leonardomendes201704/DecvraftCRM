@@ -1,13 +1,27 @@
+using Platform.Persistence;
+using Platform.Provisioning;
+using Platform.Provisioning.Abstractions;
+using Platform.Provisioning.Models;
+using Platform.Provisioning.Validation;
+using Platform.WebInstaller.Routing;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(defaultConnectionString))
+{
+    throw new InvalidOperationException("Bootstrap connection string 'DefaultConnection' was not configured.");
+}
+
+builder.Services.AddPersistence(defaultConnectionString);
+builder.Services.AddProvisioning();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -16,29 +30,53 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapGet(InstallerRoutes.Status, async (IInstallerLockService installerLockService, CancellationToken cancellationToken) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    try
+    {
+        var status = await installerLockService.GetStatusAsync(cancellationToken);
+        return Results.Ok(status);
+    }
+    catch
+    {
+        return Results.Ok(new InstallStatusResult { IsInstalled = false });
+    }
 })
-.WithName("GetWeatherForecast")
+.WithName(InstallerEndpointNames.Status)
+.WithOpenApi();
+
+app.MapPost(InstallerRoutes.TestDatabase, async (
+    DatabaseSetupOptions request,
+    IDatabaseProvisioner databaseProvisioner,
+    CancellationToken cancellationToken) =>
+{
+    try
+    {
+        await databaseProvisioner.TestConnectionAsync(request, cancellationToken);
+        return Results.Ok(new DatabaseTestResponse(true));
+    }
+    catch (Exception exception)
+    {
+        return Results.BadRequest(new DatabaseTestResponse(false, exception.Message));
+    }
+})
+.WithName(InstallerEndpointNames.TestDatabase)
+.WithOpenApi();
+
+app.MapPost(InstallerRoutes.Run, async (
+    InstallRequest request,
+    IProvisioningService provisioningService,
+    CancellationToken cancellationToken) =>
+{
+    var result = await provisioningService.InstallAsync(request, cancellationToken);
+
+    return result.Succeeded
+        ? Results.Ok(result)
+        : Results.BadRequest(result);
+})
+.WithName(InstallerEndpointNames.Run)
 .WithOpenApi();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+internal sealed record DatabaseTestResponse(bool Succeeded, string? Error = null);
