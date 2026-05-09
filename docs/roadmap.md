@@ -13,7 +13,7 @@ Legenda:
 
 ## Fase 1 - Fundacao da Plataforma
 
-Status: `Nao iniciado`
+Status: `Em andamento`
 
 Objetivo: criar a solution, projetos, referencias, pacotes, Docker Compose e API/Installer basicos.
 

@@ -18,7 +18,7 @@ Prioridade:
 
 ## EP-01 - Fundacao da Plataforma
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P0`
 
 Objetivo: criar a base tecnica compilavel e executavel via Docker.
@@ -29,12 +29,13 @@ Como desenvolvedor, quero uma solution .NET organizada por camadas para que a pl
 
 Tasks:
 
-- `[Todo]` Criar `WhiteLabelErpCrm.sln`.
-- `[Todo]` Criar pasta `src`.
-- `[Todo]` Criar pasta `tests`.
-- `[Todo]` Criar projetos `Platform.Api`, `Platform.WebInstaller`, `Platform.Domain`, `Platform.Application`, `Platform.Infrastructure`, `Platform.Persistence`, `Platform.Provisioning`, `Platform.Modules.Core`, `Platform.Modules.Crm`, `Platform.Modules.Finance` e `Platform.Worker`.
-- `[Todo]` Criar projetos de teste `Platform.UnitTests`, `Platform.IntegrationTests`, `Platform.ProvisioningTests`, `Platform.MigrationTests` e `Platform.ArchitectureTests`.
-- `[Todo]` Adicionar todos os projetos na solution.
+- `[Done]` Criar `WhiteLabelErpCrm.sln`.
+- `[Done]` Fixar SDK .NET 8 com `global.json`.
+- `[Done]` Criar pasta `src`.
+- `[Done]` Criar pasta `tests`.
+- `[Done]` Criar projetos `Platform.Api`, `Platform.WebInstaller`, `Platform.Domain`, `Platform.Application`, `Platform.Infrastructure`, `Platform.Persistence`, `Platform.Provisioning`, `Platform.Modules.Core`, `Platform.Modules.Crm`, `Platform.Modules.Finance` e `Platform.Worker`.
+- `[Done]` Criar projetos de teste `Platform.UnitTests`, `Platform.IntegrationTests`, `Platform.ProvisioningTests`, `Platform.MigrationTests` e `Platform.ArchitectureTests`.
+- `[Done]` Adicionar todos os projetos na solution.
 
 ### UE-01.02 - Configurar referencias entre projetos
 
@@ -42,12 +43,12 @@ Como desenvolvedor, quero referencias coerentes entre camadas para preservar a a
 
 Tasks:
 
-- `[Todo]` Referenciar `Domain` em `Application`.
-- `[Todo]` Referenciar `Domain` e `Application` em `Persistence`.
-- `[Todo]` Referenciar `Domain` e `Application` em `Infrastructure`.
-- `[Todo]` Referenciar `Domain`, `Application`, `Persistence` e `Infrastructure` em `Provisioning`.
-- `[Todo]` Referenciar camadas necessarias na `Api`.
-- `[Todo]` Referenciar dependencias necessarias no `WebInstaller`.
+- `[Done]` Referenciar `Domain` em `Application`.
+- `[Done]` Referenciar `Domain` e `Application` em `Persistence`.
+- `[Done]` Referenciar `Domain` e `Application` em `Infrastructure`.
+- `[Done]` Referenciar `Domain`, `Application`, `Persistence` e `Infrastructure` em `Provisioning`.
+- `[Done]` Referenciar camadas necessarias na `Api`.
+- `[Done]` Referenciar dependencias necessarias no `WebInstaller`.
 
 ### UE-01.03 - Configurar Docker inicial
 
@@ -55,11 +56,13 @@ Como operador, quero subir SQL Server, API e Installer via Docker Compose para v
 
 Tasks:
 
-- `[Todo]` Criar `docker-compose.yml`.
-- `[Todo]` Criar `docker/Dockerfile.api`.
-- `[Todo]` Criar `docker/Dockerfile.installer`.
-- `[Todo]` Criar volume persistente para SQL Server.
-- `[Todo]` Criar `.env.example`.
+- `[Done]` Criar `docker-compose.yml`.
+- `[Done]` Criar `docker/Dockerfile.api`.
+- `[Done]` Criar `docker/Dockerfile.installer`.
+- `[Done]` Criar volume persistente para SQL Server.
+- `[Done]` Criar `.env.example`.
+- `[Done]` Criar `.dockerignore`.
+- `[Blocked]` Validar build das imagens Docker localmente. Bloqueado porque o Docker daemon nao esta em execucao.
 
 ## EP-02 - Core Domain e Persistencia
 

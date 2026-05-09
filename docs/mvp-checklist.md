@@ -6,20 +6,20 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 
 ## Fundacao
 
-- `[ ]` A solution `WhiteLabelErpCrm.sln` existe.
-- `[ ]` Todos os projetos `Platform.*` foram criados.
-- `[ ]` Todos os projetos de teste foram criados.
-- `[ ]` As referencias entre projetos respeitam a arquitetura definida.
-- `[ ]` `dotnet build` executa com sucesso.
+- `[x]` A solution `WhiteLabelErpCrm.sln` existe.
+- `[x]` Todos os projetos `Platform.*` foram criados.
+- `[x]` Todos os projetos de teste foram criados.
+- `[x]` As referencias entre projetos respeitam a arquitetura definida.
+- `[x]` `dotnet build` executa com sucesso.
 
 ## Docker
 
-- `[ ]` `docker-compose.yml` existe.
+- `[x]` `docker-compose.yml` existe.
 - `[ ]` SQL Server sobe em container.
 - `[ ]` API sobe em container.
 - `[ ]` Installer sobe em container.
-- `[ ]` Volume persistente do SQL Server esta configurado.
-- `[ ]` `.env.example` existe e nao contem segredo real.
+- `[x]` Volume persistente do SQL Server esta configurado.
+- `[x]` `.env.example` existe e nao contem segredo real.
 
 ## API e Health Checks
 
