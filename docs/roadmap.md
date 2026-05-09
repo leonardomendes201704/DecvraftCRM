@@ -46,7 +46,7 @@ Entregas:
 
 ## Fase 3 - Provisioning Engine
 
-Status: `Nao iniciado`
+Status: `Em andamento`
 
 Objetivo: implementar os contratos e servicos responsaveis pela instalacao automatica.
 

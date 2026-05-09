@@ -109,7 +109,7 @@ Tasks:
 
 ## EP-03 - Provisioning Engine
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P0`
 
 Objetivo: implementar o motor de instalacao automatica.
@@ -118,13 +118,15 @@ Objetivo: implementar o motor de instalacao automatica.
 
 Tasks:
 
-- `[Todo]` Criar `InstallRequest`.
-- `[Todo]` Criar `DatabaseSetupOptions`.
-- `[Todo]` Criar `TenantSetupOptions`.
-- `[Todo]` Criar `AdminUserSetupOptions`.
-- `[Todo]` Criar `BrandingSetupOptions`.
-- `[Todo]` Criar `ProvisioningResult`.
-- `[Todo]` Criar interfaces do provisioning.
+- `[Done]` Criar `InstallRequest`.
+- `[Done]` Criar `DatabaseSetupOptions`.
+- `[Done]` Criar `TenantSetupOptions`.
+- `[Done]` Criar `AdminUserSetupOptions`.
+- `[Done]` Criar `BrandingSetupOptions`.
+- `[Done]` Criar `ProvisioningResult`.
+- `[Done]` Criar `InstallStatusResult`.
+- `[Done]` Criar interfaces do provisioning.
+- `[Done]` Criar teste de contrato dos modelos iniciais.
 
 ### UE-03.02 - Implementar fluxo de instalacao
 
