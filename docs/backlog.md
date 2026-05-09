@@ -132,8 +132,8 @@ Tasks:
 
 Tasks:
 
-- `[Todo]` Implementar teste de conexao com banco.
-- `[Todo]` Implementar criacao de banco quando necessario.
+- `[Done]` Implementar teste de conexao com banco.
+- `[Done]` Implementar criacao de banco quando necessario.
 - `[Done]` Implementar execucao de migrations.
 - `[Done]` Implementar seeds globais.
 - `[Done]` Implementar criacao de tenant.
@@ -147,7 +147,8 @@ Tasks:
 - `[Done]` Cobrir servicos concretos iniciais com testes automatizados.
 - `[Done]` Implementar orquestrador `ProvisioningService`.
 - `[Done]` Cobrir orquestracao do provisioning com testes usando fakes.
-- `[Todo]` Implementar `DatabaseProvisioner` real com estrategia segura de bootstrap.
+- `[Done]` Implementar `DatabaseProvisioner` real com estrategia segura de bootstrap.
+- `[Done]` Validar `DatabaseProvisioner` contra SQL Server real em Docker.
 
 ## EP-04 - Web Installer
 

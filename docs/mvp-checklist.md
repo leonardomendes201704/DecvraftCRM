@@ -41,7 +41,7 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 ## Installer
 
 - `[ ]` `GET /install/status` retorna `isInstalled = false` antes da instalacao.
-- `[ ]` `POST /install/test-database` valida conexao com SQL Server.
+- `[x]` Motor interno de teste de conexao com SQL Server foi implementado e validado.
 - `[ ]` `POST /install/run` executa instalacao completa.
 - `[ ]` Tenant inicial e criado.
 - `[ ]` Branding inicial e criado.
