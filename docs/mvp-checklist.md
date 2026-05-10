@@ -80,6 +80,16 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[x]` CRUD basico de contatos existe.
 - `[x]` CRUD basico de oportunidades existe.
 
+## Financeiro
+
+- `[x]` Entidade `FinancialAccount` existe.
+- `[x]` Entidade `FinancialTransaction` existe.
+- `[x]` Entidades financeiras usam enums valorados para status/tipos fechados.
+- `[x]` Entidades financeiras possuem configuracoes EF.
+- `[x]` Entidades financeiras respeitam filtro global por tenant.
+- `[x]` CRUD basico de contas financeiras existe.
+- `[x]` CRUD basico de lancamentos financeiros existe.
+
 ## Testes
 
 - `[x]` Testes unitarios principais passam.

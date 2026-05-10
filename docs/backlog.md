@@ -236,7 +236,7 @@ Tasks:
 
 ## EP-08 - Financeiro Basico
 
-Status: `Todo`
+Status: `Done`
 Prioridade: `P1`
 
 Objetivo: entregar funcionalidades financeiras iniciais.
@@ -245,12 +245,14 @@ Objetivo: entregar funcionalidades financeiras iniciais.
 
 Tasks:
 
-- `[Todo]` Criar entidade `FinancialAccount`.
-- `[Todo]` Criar entidade `FinancialTransaction`.
-- `[Todo]` Criar configuracoes EF.
-- `[Todo]` Criar CRUD basico.
-- `[Todo]` Aplicar filtro por tenant.
-- `[Todo]` Criar testes principais.
+- `[Done]` Criar entidade `FinancialAccount`.
+- `[Done]` Criar entidade `FinancialTransaction`.
+- `[Done]` Criar configuracoes EF.
+- `[Done]` Criar migration inicial do financeiro.
+- `[Done]` Criar CRUD basico de contas financeiras.
+- `[Done]` Criar CRUD basico de lancamentos financeiros.
+- `[Done]` Aplicar filtro por tenant.
+- `[Done]` Criar testes principais.
 
 ## EP-09 - Testes Automatizados
 

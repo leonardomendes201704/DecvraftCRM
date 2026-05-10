@@ -128,7 +128,7 @@ Entregas:
 
 ## Fase 8 - Financeiro Basico
 
-Status: `Nao iniciado`
+Status: `Concluido`
 
 Objetivo: criar funcionalidades financeiras iniciais com isolamento por tenant.
 
@@ -136,7 +136,9 @@ Entregas:
 
 - entidade `FinancialAccount`;
 - entidade `FinancialTransaction`;
-- CRUD basico;
+- configuracoes EF e migration inicial do financeiro;
+- CRUD basico de contas;
+- CRUD basico de lancamentos;
 - permissoes financeiras;
 - testes principais.
 

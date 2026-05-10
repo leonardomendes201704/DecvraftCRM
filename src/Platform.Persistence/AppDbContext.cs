@@ -32,6 +32,8 @@ public sealed class AppDbContext : DbContext
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Contact> Contacts => Set<Contact>();
     public DbSet<Opportunity> Opportunities => Set<Opportunity>();
+    public DbSet<FinancialAccount> FinancialAccounts => Set<FinancialAccount>();
+    public DbSet<FinancialTransaction> FinancialTransactions => Set<FinancialTransaction>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -23,5 +23,7 @@ public sealed class PersistenceModelTests
         Assert.Contains("Customers", script);
         Assert.Contains("Contacts", script);
         Assert.Contains("Opportunities", script);
+        Assert.Contains("FinancialAccounts", script);
+        Assert.Contains("FinancialTransactions", script);
     }
 }

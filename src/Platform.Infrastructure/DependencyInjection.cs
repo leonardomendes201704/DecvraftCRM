@@ -3,6 +3,7 @@ using Platform.Application.Abstractions;
 using Platform.Infrastructure.Auth;
 using Platform.Infrastructure.Contacts;
 using Platform.Infrastructure.Customers;
+using Platform.Infrastructure.Finance;
 using Platform.Infrastructure.Modules;
 using Platform.Infrastructure.Opportunities;
 
@@ -20,6 +21,8 @@ public static class DependencyInjection
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<IContactService, ContactService>();
         services.AddScoped<IOpportunityService, OpportunityService>();
+        services.AddScoped<IFinancialAccountService, FinancialAccountService>();
+        services.AddScoped<IFinancialTransactionService, FinancialTransactionService>();
 
         return services;
     }

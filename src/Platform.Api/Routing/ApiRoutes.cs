@@ -15,4 +15,9 @@ public static class ApiRoutes
     public const string OpportunityWon = "/api/opportunities/{opportunityId:guid}/won";
     public const string OpportunityLost = "/api/opportunities/{opportunityId:guid}/lost";
     public const string OpportunityCanceled = "/api/opportunities/{opportunityId:guid}/canceled";
+    public const string FinancialAccounts = "/api/financial/accounts";
+    public const string FinancialAccountById = "/api/financial/accounts/{accountId:guid}";
+    public const string FinancialAccountTransactions = "/api/financial/accounts/{accountId:guid}/transactions";
+    public const string FinancialTransactionById = "/api/financial/transactions/{transactionId:guid}";
+    public const string FinancialTransactionVoid = "/api/financial/transactions/{transactionId:guid}/void";
 }

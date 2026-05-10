@@ -28,6 +28,7 @@ Antes de implementar qualquer mudanca relevante:
 - [security.md](security.md): autenticacao, JWT, senhas e configuracoes sensiveis.
 - [modules.md](modules.md): catalogo inicial de modulos e ativacao por tenant.
 - [crm.md](crm.md): entidades e persistencia inicial do CRM.
+- [finance.md](finance.md): entidades, endpoints e regras iniciais do financeiro.
 
 ## Regra de ouro
 

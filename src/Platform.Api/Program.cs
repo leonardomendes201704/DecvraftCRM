@@ -4,6 +4,7 @@ using Platform.Application.Abstractions;
 using Platform.Application.Auth;
 using Platform.Application.Contacts;
 using Platform.Application.Customers;
+using Platform.Application.Finance;
 using Platform.Application.Opportunities;
 using Platform.Domain.Catalog;
 using Platform.Domain.Enums;
@@ -461,6 +462,220 @@ app.MapPost(ApiRoutes.OpportunityCanceled, async (
 .WithName(ApiEndpointNames.OpportunitiesCancel)
 .WithOpenApi();
 
+app.MapGet(ApiRoutes.FinancialAccounts, async (
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialAccountService accountService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var accounts = await accountService.ListAsync(currentUser.TenantId, cancellationToken);
+
+    return Results.Ok(accounts);
+})
+.RequirePermission(KnownPermissions.FinanceAccountsView)
+.WithName(ApiEndpointNames.FinancialAccountsList)
+.WithOpenApi();
+
+app.MapGet(ApiRoutes.FinancialAccountById, async (
+    Guid accountId,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialAccountService accountService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var account = await accountService.GetByIdAsync(currentUser.TenantId, accountId, cancellationToken);
+
+    return account is null ? Results.NotFound() : Results.Ok(account);
+})
+.RequirePermission(KnownPermissions.FinanceAccountsView)
+.WithName(ApiEndpointNames.FinancialAccountsGetById)
+.WithOpenApi();
+
+app.MapPost(ApiRoutes.FinancialAccounts, async (
+    CreateFinancialAccountRequest accountRequest,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialAccountService accountService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var result = await accountService.CreateAsync(currentUser.TenantId, accountRequest, cancellationToken);
+
+    return ToFinancialAccountWriteResult(result);
+})
+.RequirePermission(KnownPermissions.FinanceAccountsManage)
+.WithName(ApiEndpointNames.FinancialAccountsCreate)
+.WithOpenApi();
+
+app.MapPut(ApiRoutes.FinancialAccountById, async (
+    Guid accountId,
+    UpdateFinancialAccountRequest accountRequest,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialAccountService accountService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var result = await accountService.UpdateAsync(currentUser.TenantId, accountId, accountRequest, cancellationToken);
+
+    return ToFinancialAccountWriteResult(result);
+})
+.RequirePermission(KnownPermissions.FinanceAccountsManage)
+.WithName(ApiEndpointNames.FinancialAccountsUpdate)
+.WithOpenApi();
+
+app.MapDelete(ApiRoutes.FinancialAccountById, async (
+    Guid accountId,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialAccountService accountService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var result = await accountService.DeactivateAsync(currentUser.TenantId, accountId, cancellationToken);
+
+    return result.Status == FinancialAccountOperationStatus.Success
+        ? Results.NoContent()
+        : ToFinancialAccountWriteResult(result);
+})
+.RequirePermission(KnownPermissions.FinanceAccountsManage)
+.WithName(ApiEndpointNames.FinancialAccountsDeactivate)
+.WithOpenApi();
+
+app.MapGet(ApiRoutes.FinancialAccountTransactions, async (
+    Guid accountId,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialTransactionService transactionService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var transactions = await transactionService.ListByAccountAsync(currentUser.TenantId, accountId, cancellationToken);
+
+    return Results.Ok(transactions);
+})
+.RequirePermission(KnownPermissions.FinanceTransactionsView)
+.WithName(ApiEndpointNames.FinancialTransactionsListByAccount)
+.WithOpenApi();
+
+app.MapGet(ApiRoutes.FinancialTransactionById, async (
+    Guid transactionId,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialTransactionService transactionService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var transaction = await transactionService.GetByIdAsync(currentUser.TenantId, transactionId, cancellationToken);
+
+    return transaction is null ? Results.NotFound() : Results.Ok(transaction);
+})
+.RequirePermission(KnownPermissions.FinanceTransactionsView)
+.WithName(ApiEndpointNames.FinancialTransactionsGetById)
+.WithOpenApi();
+
+app.MapPost(ApiRoutes.FinancialAccountTransactions, async (
+    Guid accountId,
+    CreateFinancialTransactionRequest transactionRequest,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialTransactionService transactionService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var result = await transactionService.CreateAsync(currentUser.TenantId, accountId, transactionRequest, cancellationToken);
+
+    return ToFinancialTransactionWriteResult(result);
+})
+.RequirePermission(KnownPermissions.FinanceTransactionsManage)
+.WithName(ApiEndpointNames.FinancialTransactionsCreate)
+.WithOpenApi();
+
+app.MapPut(ApiRoutes.FinancialTransactionById, async (
+    Guid transactionId,
+    UpdateFinancialTransactionRequest transactionRequest,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialTransactionService transactionService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var result = await transactionService.UpdateAsync(currentUser.TenantId, transactionId, transactionRequest, cancellationToken);
+
+    return ToFinancialTransactionWriteResult(result);
+})
+.RequirePermission(KnownPermissions.FinanceTransactionsManage)
+.WithName(ApiEndpointNames.FinancialTransactionsUpdate)
+.WithOpenApi();
+
+app.MapPost(ApiRoutes.FinancialTransactionVoid, async (
+    Guid transactionId,
+    HttpRequest request,
+    IAuthenticationService authenticationService,
+    IFinancialTransactionService transactionService,
+    CancellationToken cancellationToken) =>
+{
+    var currentUser = await ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+    if (currentUser is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    var result = await transactionService.VoidAsync(currentUser.TenantId, transactionId, cancellationToken);
+
+    return ToFinancialTransactionWriteResult(result);
+})
+.RequirePermission(KnownPermissions.FinanceTransactionsManage)
+.WithName(ApiEndpointNames.FinancialTransactionsVoid)
+.WithOpenApi();
+
 app.MapGet(ApiRoutes.SystemPermissions, () => KnownPermissions.All)
 .RequirePermission(KnownPermissions.CoreSystemView)
 .WithName(ApiEndpointNames.SystemPermissions)
@@ -513,6 +728,30 @@ static IResult ToOpportunityWriteResult(OpportunityOperationResult result)
         OpportunityOperationStatus.NotFound => Results.NotFound(),
         OpportunityOperationStatus.CustomerNotFound => Results.NotFound(),
         OpportunityOperationStatus.InvalidInput => Results.BadRequest(),
+        _ => Results.BadRequest()
+    };
+}
+
+static IResult ToFinancialAccountWriteResult(FinancialAccountOperationResult result)
+{
+    return result.Status switch
+    {
+        FinancialAccountOperationStatus.Success => Results.Ok(result.Account),
+        FinancialAccountOperationStatus.NotFound => Results.NotFound(),
+        FinancialAccountOperationStatus.DuplicateName => Results.Conflict(),
+        FinancialAccountOperationStatus.InvalidInput => Results.BadRequest(),
+        _ => Results.BadRequest()
+    };
+}
+
+static IResult ToFinancialTransactionWriteResult(FinancialTransactionOperationResult result)
+{
+    return result.Status switch
+    {
+        FinancialTransactionOperationStatus.Success => Results.Ok(result.Transaction),
+        FinancialTransactionOperationStatus.NotFound => Results.NotFound(),
+        FinancialTransactionOperationStatus.AccountNotFound => Results.NotFound(),
+        FinancialTransactionOperationStatus.InvalidInput => Results.BadRequest(),
         _ => Results.BadRequest()
     };
 }
