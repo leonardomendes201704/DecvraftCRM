@@ -1,9 +1,11 @@
+using Platform.Application.Common;
+
 namespace Platform.Application.Auth;
 
 public sealed record AuthenticationResult(
     bool Succeeded,
     LoginResponse? Login,
-    string? Error)
+    string? Error) : IApplicationResult
 {
     public static AuthenticationResult Success(LoginResponse login) => new(true, login, null);
 

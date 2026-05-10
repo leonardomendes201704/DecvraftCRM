@@ -1,11 +1,14 @@
+using Platform.Application.Common;
 using Platform.Domain.Enums;
 
 namespace Platform.Application.Customers;
 
 public sealed record CustomerOperationResult(
     CustomerOperationStatus Status,
-    CustomerResponse? Customer)
+    CustomerResponse? Customer) : IApplicationOperationResult<CustomerOperationStatus>
 {
+    public bool Succeeded => Status == CustomerOperationStatus.Success;
+
     public static CustomerOperationResult Success(CustomerResponse customer) =>
         new(CustomerOperationStatus.Success, customer);
 

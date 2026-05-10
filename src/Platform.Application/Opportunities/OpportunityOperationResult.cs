@@ -1,11 +1,14 @@
+using Platform.Application.Common;
 using Platform.Domain.Enums;
 
 namespace Platform.Application.Opportunities;
 
 public sealed record OpportunityOperationResult(
     OpportunityOperationStatus Status,
-    OpportunityResponse? Opportunity)
+    OpportunityResponse? Opportunity) : IApplicationOperationResult<OpportunityOperationStatus>
 {
+    public bool Succeeded => Status == OpportunityOperationStatus.Success;
+
     public static OpportunityOperationResult Success(OpportunityResponse opportunity) =>
         new(OpportunityOperationStatus.Success, opportunity);
 

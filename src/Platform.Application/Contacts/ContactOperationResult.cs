@@ -1,11 +1,14 @@
+using Platform.Application.Common;
 using Platform.Domain.Enums;
 
 namespace Platform.Application.Contacts;
 
 public sealed record ContactOperationResult(
     ContactOperationStatus Status,
-    ContactResponse? Contact)
+    ContactResponse? Contact) : IApplicationOperationResult<ContactOperationStatus>
 {
+    public bool Succeeded => Status == ContactOperationStatus.Success;
+
     public static ContactOperationResult Success(ContactResponse contact) =>
         new(ContactOperationStatus.Success, contact);
 

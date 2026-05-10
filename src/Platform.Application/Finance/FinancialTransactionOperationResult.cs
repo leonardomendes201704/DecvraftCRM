@@ -1,11 +1,14 @@
+using Platform.Application.Common;
 using Platform.Domain.Enums;
 
 namespace Platform.Application.Finance;
 
 public sealed record FinancialTransactionOperationResult(
     FinancialTransactionOperationStatus Status,
-    FinancialTransactionResponse? Transaction)
+    FinancialTransactionResponse? Transaction) : IApplicationOperationResult<FinancialTransactionOperationStatus>
 {
+    public bool Succeeded => Status == FinancialTransactionOperationStatus.Success;
+
     public static FinancialTransactionOperationResult Success(FinancialTransactionResponse transaction) =>
         new(FinancialTransactionOperationStatus.Success, transaction);
 
