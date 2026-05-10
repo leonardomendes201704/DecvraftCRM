@@ -298,7 +298,7 @@ Tasks:
 
 ## EP-11 - Refatoracao Arquitetural da API
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P0`
 
 Objetivo: evoluir a API de Minimal API concentrada no `Program.cs` para uma arquitetura hexagonal mais explicita, com separacao clara entre entrada HTTP, casos de uso, modelos, servicos e infraestrutura.
@@ -307,10 +307,10 @@ Objetivo: evoluir a API de Minimal API concentrada no `Program.cs` para uma arqu
 
 Tasks:
 
-- `[Todo]` Remover concentracao de endpoints do `Program.cs`.
-- `[Todo]` Criar organizacao por grupos/modulos de endpoints.
-- `[Todo]` Manter `Program.cs` apenas para bootstrap, DI, middleware e mapeamento de modulos.
-- `[Todo]` Garantir que autorizacao por permissao continue aplicada por endpoint.
+- `[Done]` Remover concentracao de endpoints do `Program.cs`.
+- `[Done]` Criar organizacao por grupos/modulos de endpoints.
+- `[Done]` Manter `Program.cs` apenas para bootstrap, DI, middleware e mapeamento de modulos.
+- `[Done]` Garantir que autorizacao por permissao continue aplicada por endpoint.
 
 ### UE-11.02 - Introduzir MediatR e casos de uso
 
