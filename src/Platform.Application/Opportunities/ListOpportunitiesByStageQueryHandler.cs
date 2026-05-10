@@ -20,6 +20,7 @@ public sealed class ListOpportunitiesByStageQueryHandler
         var opportunities = await _opportunityRepository.ListByStageAsync(
             request.TenantId,
             request.StageId,
+            request.OwnerEmployeeId,
             cancellationToken);
 
         return opportunities.Select(OpportunityResponseMapper.ToResponse).ToArray();

@@ -6,4 +6,5 @@ public sealed record UpdateOpportunityActivityRequest(
     OpportunityActivityType Type,
     string Title,
     string? Notes,
-    DateTimeOffset? DueAt);
+    DateTimeOffset? DueAt,
+    Guid? OwnerEmployeeId = null);

@@ -25,10 +25,12 @@ public static class ApiRoutes
     public const string OpportunityStageOpportunities = "/api/opportunity-stages/{stageId:guid}/opportunities";
     public const string OpportunityById = "/api/opportunities/{opportunityId:guid}";
     public const string OpportunityStageMove = "/api/opportunities/{opportunityId:guid}/stage";
+    public const string OpportunityOwner = "/api/opportunities/{opportunityId:guid}/owner";
     public const string OpportunityActivities = "/api/opportunities/{opportunityId:guid}/activities";
     public const string OpportunityActivitiesOverdue = "/api/opportunity-activities/overdue";
     public const string OpportunityActivitiesUpcoming = "/api/opportunity-activities/upcoming";
     public const string OpportunityActivityById = "/api/opportunity-activities/{activityId:guid}";
+    public const string OpportunityActivityOwner = "/api/opportunity-activities/{activityId:guid}/owner";
     public const string OpportunityActivityComplete = "/api/opportunity-activities/{activityId:guid}/complete";
     public const string OpportunityActivityCancel = "/api/opportunity-activities/{activityId:guid}/cancel";
     public const string OpportunityHistory = "/api/opportunities/{opportunityId:guid}/history";

@@ -6,6 +6,7 @@ public sealed record OpportunityActivityResponse(
     Guid Id,
     Guid TenantId,
     Guid OpportunityId,
+    Guid? OwnerEmployeeId,
     OpportunityActivityType Type,
     string Title,
     string? Notes,

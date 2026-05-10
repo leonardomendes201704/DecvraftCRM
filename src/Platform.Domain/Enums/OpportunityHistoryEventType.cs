@@ -11,5 +11,7 @@ public enum OpportunityHistoryEventType
     ActivityCreated = 7,
     ActivityUpdated = 8,
     ActivityCompleted = 9,
-    ActivityCanceled = 10
+    ActivityCanceled = 10,
+    OwnerChanged = 11,
+    ActivityOwnerChanged = 12
 }

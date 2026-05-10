@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Platform.Application.Abstractions;
 using Platform.Domain.Entities;
+using Platform.Domain.Enums;
 using Platform.Persistence;
 
 namespace Platform.Infrastructure.Opportunities;
@@ -17,10 +18,14 @@ public sealed class OpportunityRepository : IOpportunityRepository
     public async Task<IReadOnlyCollection<Opportunity>> ListByCustomerAsync(
         Guid tenantId,
         Guid customerId,
+        Guid? ownerEmployeeId = null,
         CancellationToken cancellationToken = default)
     {
         return await _dbContext.Opportunities
-            .Where(opportunity => opportunity.TenantId == tenantId && opportunity.CustomerId == customerId)
+            .Where(opportunity =>
+                opportunity.TenantId == tenantId
+                && opportunity.CustomerId == customerId
+                && (ownerEmployeeId == null || opportunity.OwnerEmployeeId == ownerEmployeeId))
             .OrderByDescending(opportunity => opportunity.CreatedAt)
             .ToListAsync(cancellationToken);
     }
@@ -35,10 +40,14 @@ public sealed class OpportunityRepository : IOpportunityRepository
     public async Task<IReadOnlyCollection<Opportunity>> ListByStageAsync(
         Guid tenantId,
         Guid stageId,
+        Guid? ownerEmployeeId = null,
         CancellationToken cancellationToken = default)
     {
         return await _dbContext.Opportunities
-            .Where(opportunity => opportunity.TenantId == tenantId && opportunity.StageId == stageId)
+            .Where(opportunity =>
+                opportunity.TenantId == tenantId
+                && opportunity.StageId == stageId
+                && (ownerEmployeeId == null || opportunity.OwnerEmployeeId == ownerEmployeeId))
             .OrderBy(opportunity => opportunity.ExpectedCloseDate)
             .ThenByDescending(opportunity => opportunity.EstimatedValue)
             .ThenBy(opportunity => opportunity.Title)
@@ -49,6 +58,19 @@ public sealed class OpportunityRepository : IOpportunityRepository
     {
         return _dbContext.Customers
             .AnyAsync(customer => customer.TenantId == tenantId && customer.Id == customerId, cancellationToken);
+    }
+
+    public Task<bool> ActiveEmployeeExistsAsync(
+        Guid tenantId,
+        Guid employeeId,
+        CancellationToken cancellationToken = default)
+    {
+        return _dbContext.Employees.AnyAsync(
+            employee =>
+                employee.TenantId == tenantId
+                && employee.Id == employeeId
+                && employee.Status == EmployeeStatus.Active,
+            cancellationToken);
     }
 
     public void Add(Opportunity opportunity)

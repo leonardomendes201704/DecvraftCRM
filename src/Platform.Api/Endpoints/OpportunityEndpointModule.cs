@@ -13,6 +13,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
     {
         app.MapGet(ApiRoutes.CustomerOpportunities, async (
             Guid customerId,
+            Guid? ownerEmployeeId,
             HttpRequest request,
             IMediator mediator,
             ICurrentUserAccessor currentUserAccessor,
@@ -29,7 +30,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
             }
 
             var opportunities = await mediator.Send(
-                new ListOpportunitiesByCustomerQuery(currentUser.TenantId, customerId),
+                new ListOpportunitiesByCustomerQuery(currentUser.TenantId, customerId, ownerEmployeeId),
                 cancellationToken);
 
             return Results.Ok(opportunities);
@@ -175,6 +176,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
 
         app.MapGet(ApiRoutes.OpportunityStageOpportunities, async (
             Guid stageId,
+            Guid? ownerEmployeeId,
             HttpRequest request,
             IMediator mediator,
             ICurrentUserAccessor currentUserAccessor,
@@ -191,7 +193,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
             }
 
             var opportunities = await mediator.Send(
-                new ListOpportunitiesByStageQuery(currentUser.TenantId, stageId),
+                new ListOpportunitiesByStageQuery(currentUser.TenantId, stageId, ownerEmployeeId),
                 cancellationToken);
 
             return Results.Ok(opportunities);
@@ -284,8 +286,37 @@ public sealed class OpportunityEndpointModule : IEndpointModule
         .WithName(ApiEndpointNames.OpportunitiesMoveStage)
         .WithOpenApi();
 
+        app.MapPut(ApiRoutes.OpportunityOwner, async (
+            Guid opportunityId,
+            AssignOpportunityOwnerRequest ownerRequest,
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var result = await mediator.Send(
+                new AssignOpportunityOwnerCommand(currentUser.TenantId, opportunityId, ownerRequest),
+                cancellationToken);
+
+            return EndpointResultMapper.ToOpportunityWriteResult(result);
+        })
+        .RequirePermission(KnownPermissions.CrmOpportunitiesManage)
+        .WithName(ApiEndpointNames.OpportunitiesAssignOwner)
+        .WithOpenApi();
+
         app.MapGet(ApiRoutes.OpportunityActivities, async (
             Guid opportunityId,
+            Guid? ownerEmployeeId,
             HttpRequest request,
             IMediator mediator,
             ICurrentUserAccessor currentUserAccessor,
@@ -302,7 +333,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
             }
 
             var activities = await mediator.Send(
-                new ListOpportunityActivitiesQuery(currentUser.TenantId, opportunityId),
+                new ListOpportunityActivitiesQuery(currentUser.TenantId, opportunityId, ownerEmployeeId),
                 cancellationToken);
 
             return Results.Ok(activities);
@@ -312,6 +343,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
         .WithOpenApi();
 
         app.MapGet(ApiRoutes.OpportunityActivitiesOverdue, async (
+            Guid? ownerEmployeeId,
             HttpRequest request,
             IMediator mediator,
             ICurrentUserAccessor currentUserAccessor,
@@ -328,7 +360,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
             }
 
             var activities = await mediator.Send(
-                new ListOverdueOpportunityActivitiesQuery(currentUser.TenantId),
+                new ListOverdueOpportunityActivitiesQuery(currentUser.TenantId, ownerEmployeeId),
                 cancellationToken);
 
             return Results.Ok(activities);
@@ -339,6 +371,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
 
         app.MapGet(ApiRoutes.OpportunityActivitiesUpcoming, async (
             int? days,
+            Guid? ownerEmployeeId,
             HttpRequest request,
             IMediator mediator,
             ICurrentUserAccessor currentUserAccessor,
@@ -355,7 +388,7 @@ public sealed class OpportunityEndpointModule : IEndpointModule
             }
 
             var activities = await mediator.Send(
-                new ListUpcomingOpportunityActivitiesQuery(currentUser.TenantId, days ?? 7),
+                new ListUpcomingOpportunityActivitiesQuery(currentUser.TenantId, days ?? 7, ownerEmployeeId),
                 cancellationToken);
 
             return Results.Ok(activities);
@@ -418,6 +451,34 @@ public sealed class OpportunityEndpointModule : IEndpointModule
         })
         .RequirePermission(KnownPermissions.CrmOpportunitiesManage)
         .WithName(ApiEndpointNames.OpportunityActivitiesUpdate)
+        .WithOpenApi();
+
+        app.MapPut(ApiRoutes.OpportunityActivityOwner, async (
+            Guid activityId,
+            AssignOpportunityActivityOwnerRequest ownerRequest,
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var result = await mediator.Send(
+                new AssignOpportunityActivityOwnerCommand(currentUser.TenantId, activityId, ownerRequest),
+                cancellationToken);
+
+            return EndpointResultMapper.ToOpportunityActivityWriteResult(result);
+        })
+        .RequirePermission(KnownPermissions.CrmOpportunitiesManage)
+        .WithName(ApiEndpointNames.OpportunityActivitiesAssignOwner)
         .WithOpenApi();
 
         app.MapPost(ApiRoutes.OpportunityActivityComplete, async (

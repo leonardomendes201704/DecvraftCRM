@@ -17,6 +17,7 @@ public sealed class OpportunityConfiguration : IEntityTypeConfiguration<Opportun
         builder.Property(entity => entity.Status).HasConversion<int>().IsRequired();
 
         builder.HasIndex(entity => new { entity.TenantId, entity.StageId });
+        builder.HasIndex(entity => new { entity.TenantId, entity.OwnerEmployeeId });
         builder.HasIndex(entity => new { entity.TenantId, entity.CustomerId, entity.Status });
 
         builder.HasOne<Tenant>()
@@ -33,6 +34,12 @@ public sealed class OpportunityConfiguration : IEntityTypeConfiguration<Opportun
         builder.HasOne<OpportunityStage>()
             .WithMany()
             .HasForeignKey(entity => new { entity.TenantId, entity.StageId })
+            .HasPrincipalKey(entity => new { entity.TenantId, entity.Id })
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne<Employee>()
+            .WithMany()
+            .HasForeignKey(entity => new { entity.TenantId, entity.OwnerEmployeeId })
             .HasPrincipalKey(entity => new { entity.TenantId, entity.Id })
             .OnDelete(DeleteBehavior.Restrict);
     }

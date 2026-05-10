@@ -5,14 +5,14 @@ using Platform.Domain.Enums;
 
 namespace Platform.Application.Opportunities;
 
-public sealed class CreateOpportunityActivityCommandHandler
-    : IRequestHandler<CreateOpportunityActivityCommand, OpportunityActivityOperationResult>
+public sealed class AssignOpportunityActivityOwnerCommandHandler
+    : IRequestHandler<AssignOpportunityActivityOwnerCommand, OpportunityActivityOperationResult>
 {
     private readonly IOpportunityActivityRepository _activityRepository;
     private readonly IOpportunityHistoryRepository _historyRepository;
     private readonly IClock _clock;
 
-    public CreateOpportunityActivityCommandHandler(
+    public AssignOpportunityActivityOwnerCommandHandler(
         IOpportunityActivityRepository activityRepository,
         IOpportunityHistoryRepository historyRepository,
         IClock clock)
@@ -23,22 +23,17 @@ public sealed class CreateOpportunityActivityCommandHandler
     }
 
     public async Task<OpportunityActivityOperationResult> Handle(
-        CreateOpportunityActivityCommand request,
+        AssignOpportunityActivityOwnerCommand request,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(request.Request.Title))
-        {
-            return OpportunityActivityOperationResult.InvalidInput();
-        }
-
-        var opportunityExists = await _activityRepository.OpportunityExistsAsync(
+        var activity = await _activityRepository.GetByIdAsync(
             request.TenantId,
-            request.OpportunityId,
+            request.ActivityId,
             cancellationToken);
 
-        if (!opportunityExists)
+        if (activity is null)
         {
-            return OpportunityActivityOperationResult.OpportunityNotFound();
+            return OpportunityActivityOperationResult.NotFound();
         }
 
         if (request.Request.OwnerEmployeeId is not null)
@@ -55,22 +50,14 @@ public sealed class CreateOpportunityActivityCommandHandler
         }
 
         var now = _clock.UtcNow;
-        var activity = OpportunityActivity.Create(
-            request.TenantId,
-            request.OpportunityId,
-            request.Request.Type,
-            request.Request.Title,
-            request.Request.Notes,
-            request.Request.DueAt,
-            now,
-            request.Request.OwnerEmployeeId);
-
-        _activityRepository.Add(activity);
+        activity.AssignOwner(request.Request.OwnerEmployeeId, now);
         _historyRepository.Add(OpportunityHistoryEntry.Create(
             request.TenantId,
-            request.OpportunityId,
-            OpportunityHistoryEventType.ActivityCreated,
-            $"Atividade criada: {activity.Title}.",
+            activity.OpportunityId,
+            OpportunityHistoryEventType.ActivityOwnerChanged,
+            request.Request.OwnerEmployeeId is null
+                ? $"Responsavel da atividade removido: {activity.Title}."
+                : $"Responsavel da atividade alterado: {activity.Title}.",
             now));
 
         await _activityRepository.SaveChangesAsync(cancellationToken);

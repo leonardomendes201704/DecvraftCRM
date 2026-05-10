@@ -4,4 +4,5 @@ public sealed record CreateOpportunityRequest(
     string Title,
     decimal EstimatedValue,
     DateOnly? ExpectedCloseDate,
-    Guid? StageId = null);
+    Guid? StageId = null,
+    Guid? OwnerEmployeeId = null);

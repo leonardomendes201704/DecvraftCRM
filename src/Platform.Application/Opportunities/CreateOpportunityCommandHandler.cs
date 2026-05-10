@@ -57,6 +57,19 @@ public sealed class CreateOpportunityCommandHandler
             }
         }
 
+        if (request.Request.OwnerEmployeeId is not null)
+        {
+            var ownerExists = await _opportunityRepository.ActiveEmployeeExistsAsync(
+                request.TenantId,
+                request.Request.OwnerEmployeeId.Value,
+                cancellationToken);
+
+            if (!ownerExists)
+            {
+                return OpportunityOperationResult.OwnerNotFound();
+            }
+        }
+
         var now = _clock.UtcNow;
         var opportunity = Opportunity.Create(
             request.TenantId,
@@ -65,7 +78,8 @@ public sealed class CreateOpportunityCommandHandler
             request.Request.EstimatedValue,
             request.Request.ExpectedCloseDate,
             now,
-            request.Request.StageId);
+            request.Request.StageId,
+            request.Request.OwnerEmployeeId);
 
         _opportunityRepository.Add(opportunity);
         _historyRepository.Add(OpportunityHistoryEntry.Create(

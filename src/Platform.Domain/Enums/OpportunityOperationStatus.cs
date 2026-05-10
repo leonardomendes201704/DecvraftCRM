@@ -6,5 +6,6 @@ public enum OpportunityOperationStatus
     NotFound = 2,
     CustomerNotFound = 3,
     InvalidInput = 4,
-    StageNotFound = 5
+    StageNotFound = 5,
+    OwnerNotFound = 6
 }

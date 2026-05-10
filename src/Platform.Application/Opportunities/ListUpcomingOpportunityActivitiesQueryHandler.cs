@@ -32,6 +32,7 @@ public sealed class ListUpcomingOpportunityActivitiesQueryHandler
             request.TenantId,
             from,
             to,
+            request.OwnerEmployeeId,
             cancellationToken);
 
         return activities.Select(OpportunityActivityResponseMapper.ToResponse).ToArray();

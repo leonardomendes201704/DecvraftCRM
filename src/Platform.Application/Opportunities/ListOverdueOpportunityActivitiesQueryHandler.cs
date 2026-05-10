@@ -24,6 +24,7 @@ public sealed class ListOverdueOpportunityActivitiesQueryHandler
         var activities = await _activityRepository.ListOverdueAsync(
             request.TenantId,
             _clock.UtcNow,
+            request.OwnerEmployeeId,
             cancellationToken);
 
         return activities.Select(OpportunityActivityResponseMapper.ToResponse).ToArray();

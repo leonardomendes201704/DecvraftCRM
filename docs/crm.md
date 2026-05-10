@@ -101,11 +101,14 @@ Request de criacao/atualizacao:
 {
   "title": "Projeto ERP",
   "estimatedValue": 15000.00,
-  "expectedCloseDate": "2026-07-31"
+  "expectedCloseDate": "2026-07-31",
+  "stageId": "00000000-0000-0000-0000-000000000000",
+  "ownerEmployeeId": "00000000-0000-0000-0000-000000000000"
 }
 ```
 
 A oportunidade sempre deve pertencer a um cliente do mesmo tenant. Valor estimado negativo retorna `400 Bad Request`.
+Quando informado, `ownerEmployeeId` deve apontar para funcionario ativo do mesmo tenant.
 
 ## Pipeline de oportunidades
 
@@ -117,6 +120,7 @@ Endpoints iniciais:
 - `DELETE /api/opportunity-stages/{stageId}`: desativa etapa. Permissao: `crm.opportunities.manage`.
 - `GET /api/opportunity-stages/{stageId}/opportunities`: lista oportunidades vinculadas a uma etapa. Permissao: `crm.opportunities.view`.
 - `PUT /api/opportunities/{opportunityId}/stage`: move oportunidade para uma etapa ativa. Permissao: `crm.opportunities.manage`.
+- `PUT /api/opportunities/{opportunityId}/owner`: altera ou remove responsavel da oportunidade. Permissao: `crm.opportunities.manage`.
 
 Request de criacao/atualizacao de etapa:
 
@@ -135,6 +139,16 @@ Request de movimentacao:
 }
 ```
 
+Request de alteracao de responsavel:
+
+```json
+{
+  "ownerEmployeeId": "00000000-0000-0000-0000-000000000000"
+}
+```
+
+Para remover o responsavel, envie `ownerEmployeeId` como `null`.
+
 ## Atividades e historico
 
 Endpoints iniciais:
@@ -142,6 +156,7 @@ Endpoints iniciais:
 - `GET /api/opportunities/{opportunityId}/activities`: lista atividades da oportunidade. Permissao: `crm.opportunities.view`.
 - `POST /api/opportunities/{opportunityId}/activities`: cria atividade. Permissao: `crm.opportunities.manage`.
 - `PUT /api/opportunity-activities/{activityId}`: atualiza atividade. Permissao: `crm.opportunities.manage`.
+- `PUT /api/opportunity-activities/{activityId}/owner`: altera ou remove responsavel da atividade. Permissao: `crm.opportunities.manage`.
 - `POST /api/opportunity-activities/{activityId}/complete`: conclui atividade. Permissao: `crm.opportunities.manage`.
 - `POST /api/opportunity-activities/{activityId}/cancel`: cancela atividade. Permissao: `crm.opportunities.manage`.
 - `GET /api/opportunity-activities/overdue`: lista atividades vencidas ainda agendadas. Permissao: `crm.opportunities.view`.
@@ -155,7 +170,8 @@ Request de criacao/atualizacao de atividade:
   "type": 3,
   "title": "Reuniao de apresentacao",
   "notes": "Apresentar proposta comercial",
-  "dueAt": "2026-06-01T14:00:00-03:00"
+  "dueAt": "2026-06-01T14:00:00-03:00",
+  "ownerEmployeeId": "00000000-0000-0000-0000-000000000000"
 }
 ```
 
@@ -169,7 +185,16 @@ Valores de `type`:
 - `6`: `FollowUp`.
 
 Eventos de criacao, atualizacao, mudanca de etapa, ganho, perda, cancelamento e alteracoes de atividades sao registrados automaticamente em `OpportunityHistoryEntry`.
+Alteracoes de responsavel da oportunidade e da atividade tambem geram historico.
+
+Filtros por responsavel:
+
+- `GET /api/customers/{customerId}/opportunities?ownerEmployeeId={employeeId}`.
+- `GET /api/opportunity-stages/{stageId}/opportunities?ownerEmployeeId={employeeId}`.
+- `GET /api/opportunities/{opportunityId}/activities?ownerEmployeeId={employeeId}`.
+- `GET /api/opportunity-activities/overdue?ownerEmployeeId={employeeId}`.
+- `GET /api/opportunity-activities/upcoming?ownerEmployeeId={employeeId}&days=7`.
 
 ## Proximo bloco
 
-O proximo bloco recomendado e modelar responsaveis comerciais em oportunidades e atividades para permitir agenda por usuario, distribuicao de carteira e filtros por responsavel.
+O proximo bloco recomendado e criar relatorios/visoes agregadas por responsavel, como carteira por vendedor, atividades por funcionario e funil por equipe.

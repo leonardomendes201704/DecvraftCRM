@@ -16,11 +16,13 @@ public sealed class OpportunityActivity : ITenantEntity
         string title,
         string? notes,
         DateTimeOffset? dueAt,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAt,
+        Guid? ownerEmployeeId = null)
     {
         Id = Guid.NewGuid();
         TenantId = tenantId;
         OpportunityId = opportunityId;
+        OwnerEmployeeId = ownerEmployeeId;
         Type = type;
         Title = title;
         Notes = notes;
@@ -32,6 +34,7 @@ public sealed class OpportunityActivity : ITenantEntity
     public Guid Id { get; private set; }
     public Guid TenantId { get; private set; }
     public Guid OpportunityId { get; private set; }
+    public Guid? OwnerEmployeeId { get; private set; }
     public OpportunityActivityType Type { get; private set; }
     public string Title { get; private set; } = string.Empty;
     public string? Notes { get; private set; }
@@ -48,7 +51,8 @@ public sealed class OpportunityActivity : ITenantEntity
         string title,
         string? notes,
         DateTimeOffset? dueAt,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAt,
+        Guid? ownerEmployeeId = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(title);
 
@@ -59,7 +63,8 @@ public sealed class OpportunityActivity : ITenantEntity
             title.Trim(),
             Normalize(notes),
             dueAt,
-            createdAt);
+            createdAt,
+            ownerEmployeeId);
     }
 
     public void Update(
@@ -67,10 +72,12 @@ public sealed class OpportunityActivity : ITenantEntity
         string title,
         string? notes,
         DateTimeOffset? dueAt,
-        DateTimeOffset updatedAt)
+        DateTimeOffset updatedAt,
+        Guid? ownerEmployeeId = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(title);
 
+        OwnerEmployeeId = ownerEmployeeId;
         Type = type;
         Title = title.Trim();
         Notes = Normalize(notes);
@@ -88,6 +95,12 @@ public sealed class OpportunityActivity : ITenantEntity
     public void Cancel(DateTimeOffset updatedAt)
     {
         Status = OpportunityActivityStatus.Canceled;
+        UpdatedAt = updatedAt;
+    }
+
+    public void AssignOwner(Guid? ownerEmployeeId, DateTimeOffset updatedAt)
+    {
+        OwnerEmployeeId = ownerEmployeeId;
         UpdatedAt = updatedAt;
     }
 

@@ -21,6 +21,9 @@ public sealed record OpportunityOperationResult(
     public static OpportunityOperationResult StageNotFound() =>
         new(OpportunityOperationStatus.StageNotFound, null);
 
+    public static OpportunityOperationResult OwnerNotFound() =>
+        new(OpportunityOperationStatus.OwnerNotFound, null);
+
     public static OpportunityOperationResult InvalidInput() =>
         new(OpportunityOperationStatus.InvalidInput, null);
 }

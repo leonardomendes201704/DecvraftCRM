@@ -41,13 +41,27 @@ public sealed class UpdateOpportunityActivityCommandHandler
             return OpportunityActivityOperationResult.NotFound();
         }
 
+        if (request.Request.OwnerEmployeeId is not null)
+        {
+            var ownerExists = await _activityRepository.ActiveEmployeeExistsAsync(
+                request.TenantId,
+                request.Request.OwnerEmployeeId.Value,
+                cancellationToken);
+
+            if (!ownerExists)
+            {
+                return OpportunityActivityOperationResult.OwnerNotFound();
+            }
+        }
+
         var now = _clock.UtcNow;
         activity.Update(
             request.Request.Type,
             request.Request.Title,
             request.Request.Notes,
             request.Request.DueAt,
-            now);
+            now,
+            request.Request.OwnerEmployeeId);
 
         _historyRepository.Add(OpportunityHistoryEntry.Create(
             request.TenantId,

@@ -416,9 +416,9 @@ Tasks:
 
 Tasks:
 
-- `[Todo]` Adicionar `OwnerEmployeeId` em `Opportunity`.
-- `[Todo]` Adicionar `OwnerEmployeeId` em `OpportunityActivity`.
-- `[Todo]` Permitir alterar responsavel da oportunidade.
-- `[Todo]` Permitir alterar responsavel da atividade.
-- `[Todo]` Registrar historico quando responsavel for alterado.
-- `[Todo]` Atualizar listagens de oportunidades e atividades com filtro por responsavel.
+- `[Done]` Adicionar `OwnerEmployeeId` em `Opportunity`.
+- `[Done]` Adicionar `OwnerEmployeeId` em `OpportunityActivity`.
+- `[Done]` Permitir alterar responsavel da oportunidade.
+- `[Done]` Permitir alterar responsavel da atividade.
+- `[Done]` Registrar historico quando responsavel for alterado.
+- `[Done]` Atualizar listagens de oportunidades e atividades com filtro por responsavel.

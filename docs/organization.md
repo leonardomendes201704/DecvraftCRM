@@ -166,6 +166,8 @@ Regras:
 - Pode ser obrigatorio depois que a oportunidade sair da etapa inicial, mas opcional na criacao inicial.
 - Troca de responsavel deve registrar `OpportunityHistoryEntry`.
 
+Status de implementacao: `Done` na UE-13.04.
+
 ### OpportunityActivity.OwnerEmployeeId
 
 Responsavel por executar a atividade.
@@ -175,6 +177,8 @@ Regras:
 - Deve apontar para `Employee` ativo do mesmo tenant.
 - Atividades vencidas/proximas poderao ser filtradas por responsavel.
 - Conclusao/cancelamento deve preservar o responsavel historico.
+
+Status de implementacao: `Done` na UE-13.04.
 
 ## Endpoints Planejados
 
@@ -228,7 +232,8 @@ Request de vinculo usuario-funcionario:
 
 - `PUT /api/opportunities/{opportunityId}/owner`
 - `PUT /api/opportunity-activities/{activityId}/owner`
-- `GET /api/opportunities?ownerEmployeeId={employeeId}`
+- `GET /api/customers/{customerId}/opportunities?ownerEmployeeId={employeeId}`
+- `GET /api/opportunity-stages/{stageId}/opportunities?ownerEmployeeId={employeeId}`
 - `GET /api/opportunity-activities/overdue?ownerEmployeeId={employeeId}`
 - `GET /api/opportunity-activities/upcoming?ownerEmployeeId={employeeId}&days=7`
 

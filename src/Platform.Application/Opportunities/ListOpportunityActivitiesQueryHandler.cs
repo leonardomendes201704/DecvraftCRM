@@ -20,6 +20,7 @@ public sealed class ListOpportunityActivitiesQueryHandler
         var activities = await _activityRepository.ListByOpportunityAsync(
             request.TenantId,
             request.OpportunityId,
+            request.OwnerEmployeeId,
             cancellationToken);
 
         return activities.Select(OpportunityActivityResponseMapper.ToResponse).ToArray();

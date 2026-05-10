@@ -30,6 +30,7 @@ public sealed class ListOpportunitiesByCustomerQueryHandler
         var opportunities = await _opportunityRepository.ListByCustomerAsync(
             request.TenantId,
             request.CustomerId,
+            request.OwnerEmployeeId,
             cancellationToken);
 
         return opportunities

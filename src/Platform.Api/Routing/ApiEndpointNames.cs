@@ -44,11 +44,13 @@ public static class ApiEndpointNames
     public const string OpportunitiesCreate = "Opportunities.Create";
     public const string OpportunitiesUpdate = "Opportunities.Update";
     public const string OpportunitiesMoveStage = "Opportunities.MoveStage";
+    public const string OpportunitiesAssignOwner = "Opportunities.AssignOwner";
     public const string OpportunityActivitiesList = "OpportunityActivities.List";
     public const string OpportunityActivitiesOverdue = "OpportunityActivities.Overdue";
     public const string OpportunityActivitiesUpcoming = "OpportunityActivities.Upcoming";
     public const string OpportunityActivitiesCreate = "OpportunityActivities.Create";
     public const string OpportunityActivitiesUpdate = "OpportunityActivities.Update";
+    public const string OpportunityActivitiesAssignOwner = "OpportunityActivities.AssignOwner";
     public const string OpportunityActivitiesComplete = "OpportunityActivities.Complete";
     public const string OpportunityActivitiesCancel = "OpportunityActivities.Cancel";
     public const string OpportunityHistoryList = "OpportunityHistory.List";

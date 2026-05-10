@@ -18,10 +18,14 @@ public sealed class OpportunityActivityRepository : IOpportunityActivityReposito
     public async Task<IReadOnlyCollection<OpportunityActivity>> ListByOpportunityAsync(
         Guid tenantId,
         Guid opportunityId,
+        Guid? ownerEmployeeId = null,
         CancellationToken cancellationToken = default)
     {
         return await _dbContext.OpportunityActivities
-            .Where(activity => activity.TenantId == tenantId && activity.OpportunityId == opportunityId)
+            .Where(activity =>
+                activity.TenantId == tenantId
+                && activity.OpportunityId == opportunityId
+                && (ownerEmployeeId == null || activity.OwnerEmployeeId == ownerEmployeeId))
             .OrderBy(activity => activity.Status)
             .ThenBy(activity => activity.DueAt)
             .ThenByDescending(activity => activity.CreatedAt)
@@ -41,12 +45,14 @@ public sealed class OpportunityActivityRepository : IOpportunityActivityReposito
     public async Task<IReadOnlyCollection<OpportunityActivity>> ListOverdueAsync(
         Guid tenantId,
         DateTimeOffset now,
+        Guid? ownerEmployeeId = null,
         CancellationToken cancellationToken = default)
     {
         return await _dbContext.OpportunityActivities
             .Where(activity =>
                 activity.TenantId == tenantId
                 && activity.Status == OpportunityActivityStatus.Scheduled
+                && (ownerEmployeeId == null || activity.OwnerEmployeeId == ownerEmployeeId)
                 && activity.DueAt != null
                 && activity.DueAt < now)
             .OrderBy(activity => activity.DueAt)
@@ -58,12 +64,14 @@ public sealed class OpportunityActivityRepository : IOpportunityActivityReposito
         Guid tenantId,
         DateTimeOffset from,
         DateTimeOffset to,
+        Guid? ownerEmployeeId = null,
         CancellationToken cancellationToken = default)
     {
         return await _dbContext.OpportunityActivities
             .Where(activity =>
                 activity.TenantId == tenantId
                 && activity.Status == OpportunityActivityStatus.Scheduled
+                && (ownerEmployeeId == null || activity.OwnerEmployeeId == ownerEmployeeId)
                 && activity.DueAt != null
                 && activity.DueAt >= from
                 && activity.DueAt <= to)
@@ -79,6 +87,19 @@ public sealed class OpportunityActivityRepository : IOpportunityActivityReposito
     {
         return _dbContext.Opportunities.AnyAsync(
             opportunity => opportunity.TenantId == tenantId && opportunity.Id == opportunityId,
+            cancellationToken);
+    }
+
+    public Task<bool> ActiveEmployeeExistsAsync(
+        Guid tenantId,
+        Guid employeeId,
+        CancellationToken cancellationToken = default)
+    {
+        return _dbContext.Employees.AnyAsync(
+            employee =>
+                employee.TenantId == tenantId
+                && employee.Id == employeeId
+                && employee.Status == EmployeeStatus.Active,
             cancellationToken);
     }
 

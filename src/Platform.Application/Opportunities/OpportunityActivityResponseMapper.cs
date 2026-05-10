@@ -10,6 +10,7 @@ internal static class OpportunityActivityResponseMapper
             activity.Id,
             activity.TenantId,
             activity.OpportunityId,
+            activity.OwnerEmployeeId,
             activity.Type,
             activity.Title,
             activity.Notes,

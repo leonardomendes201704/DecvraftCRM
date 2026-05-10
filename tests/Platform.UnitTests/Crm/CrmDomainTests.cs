@@ -88,6 +88,41 @@ public sealed class CrmDomainTests
     }
 
     [Fact]
+    public void Opportunity_AssignOwner_sets_owner_employee()
+    {
+        var opportunity = Opportunity.Create(
+            Guid.NewGuid(),
+            Guid.NewGuid(),
+            "ERP rollout",
+            1000,
+            null,
+            DateTimeOffset.UtcNow);
+
+        var ownerEmployeeId = Guid.NewGuid();
+        opportunity.AssignOwner(ownerEmployeeId, DateTimeOffset.UtcNow);
+
+        Assert.Equal(ownerEmployeeId, opportunity.OwnerEmployeeId);
+    }
+
+    [Fact]
+    public void OpportunityActivity_AssignOwner_sets_owner_employee()
+    {
+        var activity = OpportunityActivity.Create(
+            Guid.NewGuid(),
+            Guid.NewGuid(),
+            OpportunityActivityType.Task,
+            "Follow up",
+            null,
+            null,
+            DateTimeOffset.UtcNow);
+
+        var ownerEmployeeId = Guid.NewGuid();
+        activity.AssignOwner(ownerEmployeeId, DateTimeOffset.UtcNow);
+
+        Assert.Equal(ownerEmployeeId, activity.OwnerEmployeeId);
+    }
+
+    [Fact]
     public void OpportunityHistoryEntry_Create_normalizes_description()
     {
         var entry = OpportunityHistoryEntry.Create(
@@ -117,5 +152,7 @@ public sealed class CrmDomainTests
         Assert.Equal(3, (int)OpportunityActivityStatus.Canceled);
         Assert.Equal(1, (int)OpportunityHistoryEventType.Created);
         Assert.Equal(10, (int)OpportunityHistoryEventType.ActivityCanceled);
+        Assert.Equal(11, (int)OpportunityHistoryEventType.OwnerChanged);
+        Assert.Equal(12, (int)OpportunityHistoryEventType.ActivityOwnerChanged);
     }
 }

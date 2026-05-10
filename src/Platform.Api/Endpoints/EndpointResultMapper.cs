@@ -42,6 +42,7 @@ internal static class EndpointResultMapper
             OpportunityOperationStatus.NotFound => Results.NotFound(),
             OpportunityOperationStatus.CustomerNotFound => Results.NotFound(),
             OpportunityOperationStatus.StageNotFound => Results.NotFound(),
+            OpportunityOperationStatus.OwnerNotFound => Results.NotFound(),
             OpportunityOperationStatus.InvalidInput => Results.BadRequest(),
             _ => Results.BadRequest()
         };
@@ -66,6 +67,7 @@ internal static class EndpointResultMapper
             OpportunityActivityOperationStatus.Success => Results.Ok(result.Activity),
             OpportunityActivityOperationStatus.NotFound => Results.NotFound(),
             OpportunityActivityOperationStatus.OpportunityNotFound => Results.NotFound(),
+            OpportunityActivityOperationStatus.OwnerNotFound => Results.NotFound(),
             OpportunityActivityOperationStatus.InvalidInput => Results.BadRequest(),
             _ => Results.BadRequest()
         };
