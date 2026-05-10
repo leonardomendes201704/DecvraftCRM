@@ -335,3 +335,31 @@ Tasks:
 - `[Done]` Isolar controllers/endpoints como adapters HTTP.
 - `[Done]` Revisar dependencias entre projetos para evitar acoplamento indevido.
 - `[Done]` Adicionar testes de arquitetura para validar as regras.
+
+## EP-12 - Evolucao Comercial do CRM
+
+Status: `Done`
+Prioridade: `P1`
+
+Objetivo: ampliar oportunidades para um fluxo comercial acompanhavel, com pipeline, atividades e historico.
+
+### UE-12.01 - Pipeline de oportunidades
+
+Tasks:
+
+- `[Done]` Criar entidade `OpportunityStage`.
+- `[Done]` Permitir listar, criar, atualizar e desativar etapas por tenant.
+- `[Done]` Permitir associar oportunidade a uma etapa.
+- `[Done]` Permitir mover oportunidade entre etapas.
+- `[Done]` Criar migration de pipeline comercial.
+
+### UE-12.02 - Atividades e historico de oportunidades
+
+Tasks:
+
+- `[Done]` Criar entidade `OpportunityActivity`.
+- `[Done]` Criar entidade `OpportunityHistoryEntry`.
+- `[Done]` Permitir listar, criar, atualizar, concluir e cancelar atividades.
+- `[Done]` Registrar historico automatico para criacao, atualizacao, mudanca de etapa, status e atividades.
+- `[Done]` Expor leitura do historico por oportunidade.
+- `[Done]` Cobrir valores fechados do CRM com testes de dominio.

@@ -57,6 +57,50 @@ public sealed class CrmDomainTests
     }
 
     [Fact]
+    public void OpportunityStage_Create_sets_active_stage_with_position()
+    {
+        var stage = OpportunityStage.Create(Guid.NewGuid(), "  Proposta  ", 2, DateTimeOffset.UtcNow);
+
+        Assert.Equal("Proposta", stage.Name);
+        Assert.Equal(2, stage.Position);
+        Assert.True(stage.IsActive);
+    }
+
+    [Fact]
+    public void OpportunityActivity_Complete_sets_status_and_completed_at()
+    {
+        var now = DateTimeOffset.UtcNow;
+        var activity = OpportunityActivity.Create(
+            Guid.NewGuid(),
+            Guid.NewGuid(),
+            OpportunityActivityType.Meeting,
+            " Reuniao ",
+            " alinhamento ",
+            now,
+            now);
+
+        activity.Complete(now.AddHours(1));
+
+        Assert.Equal("Reuniao", activity.Title);
+        Assert.Equal("alinhamento", activity.Notes);
+        Assert.Equal(OpportunityActivityStatus.Completed, activity.Status);
+        Assert.Equal(now.AddHours(1), activity.CompletedAt);
+    }
+
+    [Fact]
+    public void OpportunityHistoryEntry_Create_normalizes_description()
+    {
+        var entry = OpportunityHistoryEntry.Create(
+            Guid.NewGuid(),
+            Guid.NewGuid(),
+            OpportunityHistoryEventType.StageChanged,
+            " Movida para proposta ",
+            DateTimeOffset.UtcNow);
+
+        Assert.Equal("Movida para proposta", entry.Description);
+    }
+
+    [Fact]
     public void Crm_enums_have_stable_values()
     {
         Assert.Equal(1, (int)CustomerType.Company);
@@ -67,5 +111,11 @@ public sealed class CrmDomainTests
         Assert.Equal(2, (int)OpportunityStatus.Won);
         Assert.Equal(3, (int)OpportunityStatus.Lost);
         Assert.Equal(4, (int)OpportunityStatus.Canceled);
+        Assert.Equal(1, (int)OpportunityActivityType.Call);
+        Assert.Equal(6, (int)OpportunityActivityType.FollowUp);
+        Assert.Equal(1, (int)OpportunityActivityStatus.Scheduled);
+        Assert.Equal(3, (int)OpportunityActivityStatus.Canceled);
+        Assert.Equal(1, (int)OpportunityHistoryEventType.Created);
+        Assert.Equal(10, (int)OpportunityHistoryEventType.ActivityCanceled);
     }
 }

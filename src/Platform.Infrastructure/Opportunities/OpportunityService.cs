@@ -36,6 +36,7 @@ public sealed class OpportunityService : IOpportunityService
                 opportunity.Id,
                 opportunity.TenantId,
                 opportunity.CustomerId,
+                opportunity.StageId,
                 opportunity.Title,
                 opportunity.EstimatedValue,
                 opportunity.ExpectedCloseDate,
@@ -81,7 +82,8 @@ public sealed class OpportunityService : IOpportunityService
             request.Title,
             request.EstimatedValue,
             request.ExpectedCloseDate,
-            DateTimeOffset.UtcNow);
+            DateTimeOffset.UtcNow,
+            request.StageId);
 
         _dbContext.Opportunities.Add(opportunity);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -112,7 +114,8 @@ public sealed class OpportunityService : IOpportunityService
             request.Title,
             request.EstimatedValue,
             request.ExpectedCloseDate,
-            DateTimeOffset.UtcNow);
+            DateTimeOffset.UtcNow,
+            request.StageId);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return OpportunityOperationResult.Success(ToResponse(opportunity));
@@ -184,6 +187,7 @@ public sealed class OpportunityService : IOpportunityService
             opportunity.Id,
             opportunity.TenantId,
             opportunity.CustomerId,
+            opportunity.StageId,
             opportunity.Title,
             opportunity.EstimatedValue,
             opportunity.ExpectedCloseDate,

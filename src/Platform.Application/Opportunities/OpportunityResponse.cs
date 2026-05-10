@@ -6,6 +6,7 @@ public sealed record OpportunityResponse(
     Guid Id,
     Guid TenantId,
     Guid CustomerId,
+    Guid? StageId,
     string Title,
     decimal EstimatedValue,
     DateOnly? ExpectedCloseDate,

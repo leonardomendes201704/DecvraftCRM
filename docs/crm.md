@@ -7,12 +7,18 @@ Este documento controla o escopo inicial do modulo CRM.
 - `Customer`: cliente ou empresa relacionada ao tenant.
 - `Contact`: contato associado a um cliente.
 - `Opportunity`: oportunidade comercial associada a um cliente.
+- `OpportunityStage`: etapa do pipeline comercial do tenant.
+- `OpportunityActivity`: atividade planejada ou executada em uma oportunidade.
+- `OpportunityHistoryEntry`: registro historico automatico de eventos da oportunidade.
 
 ## Valores fechados
 
 - `CustomerType`: `Company`, `Individual`.
 - `CustomerStatus`: `Active`, `Inactive`.
 - `OpportunityStatus`: `Open`, `Won`, `Lost`, `Canceled`.
+- `OpportunityActivityType`: `Call`, `Email`, `Meeting`, `Task`, `Proposal`, `FollowUp`.
+- `OpportunityActivityStatus`: `Scheduled`, `Completed`, `Canceled`.
+- `OpportunityHistoryEventType`: `Created`, `Updated`, `StageChanged`, `Won`, `Lost`, `Canceled`, `ActivityCreated`, `ActivityUpdated`, `ActivityCompleted`, `ActivityCanceled`.
 
 Todos os valores fechados sao enums valorados para evitar strings ou numeros soltos.
 
@@ -21,7 +27,9 @@ Todos os valores fechados sao enums valorados para evitar strings ou numeros sol
 - As entidades CRM sao multi-tenant e implementam `ITenantEntity`.
 - O filtro global do `AppDbContext` isola consultas por tenant quando houver tenant corrente.
 - `Contact` e `Opportunity` usam FK composta `{TenantId, CustomerId}` para impedir vinculo cruzado entre tenants.
+- Oportunidades, atividades e historico usam chaves compostas com `TenantId` para impedir vinculos cruzados entre tenants.
 - A migration inicial do CRM e `AddCrmEntities`.
+- A migration de pipeline, atividades e historico e `AddOpportunityPipelineActivities`.
 
 ## Clientes
 
@@ -99,6 +107,66 @@ Request de criacao/atualizacao:
 
 A oportunidade sempre deve pertencer a um cliente do mesmo tenant. Valor estimado negativo retorna `400 Bad Request`.
 
+## Pipeline de oportunidades
+
+Endpoints iniciais:
+
+- `GET /api/opportunity-stages`: lista etapas do tenant autenticado. Permissao: `crm.opportunities.view`.
+- `POST /api/opportunity-stages`: cria etapa. Permissao: `crm.opportunities.manage`.
+- `PUT /api/opportunity-stages/{stageId}`: atualiza etapa. Permissao: `crm.opportunities.manage`.
+- `DELETE /api/opportunity-stages/{stageId}`: desativa etapa. Permissao: `crm.opportunities.manage`.
+- `PUT /api/opportunities/{opportunityId}/stage`: move oportunidade para uma etapa ativa. Permissao: `crm.opportunities.manage`.
+
+Request de criacao/atualizacao de etapa:
+
+```json
+{
+  "name": "Proposta enviada",
+  "position": 3
+}
+```
+
+Request de movimentacao:
+
+```json
+{
+  "stageId": "00000000-0000-0000-0000-000000000000"
+}
+```
+
+## Atividades e historico
+
+Endpoints iniciais:
+
+- `GET /api/opportunities/{opportunityId}/activities`: lista atividades da oportunidade. Permissao: `crm.opportunities.view`.
+- `POST /api/opportunities/{opportunityId}/activities`: cria atividade. Permissao: `crm.opportunities.manage`.
+- `PUT /api/opportunity-activities/{activityId}`: atualiza atividade. Permissao: `crm.opportunities.manage`.
+- `POST /api/opportunity-activities/{activityId}/complete`: conclui atividade. Permissao: `crm.opportunities.manage`.
+- `POST /api/opportunity-activities/{activityId}/cancel`: cancela atividade. Permissao: `crm.opportunities.manage`.
+- `GET /api/opportunities/{opportunityId}/history`: lista historico da oportunidade. Permissao: `crm.opportunities.view`.
+
+Request de criacao/atualizacao de atividade:
+
+```json
+{
+  "type": 3,
+  "title": "Reuniao de apresentacao",
+  "notes": "Apresentar proposta comercial",
+  "dueAt": "2026-06-01T14:00:00-03:00"
+}
+```
+
+Valores de `type`:
+
+- `1`: `Call`.
+- `2`: `Email`.
+- `3`: `Meeting`.
+- `4`: `Task`.
+- `5`: `Proposal`.
+- `6`: `FollowUp`.
+
+Eventos de criacao, atualizacao, mudanca de etapa, ganho, perda, cancelamento e alteracoes de atividades sao registrados automaticamente em `OpportunityHistoryEntry`.
+
 ## Proximo bloco
 
-O proximo bloco recomendado e evoluir o CRM com etapas comerciais, atividades e historico de interacoes, mantendo as regras em handlers MediatR e portas da camada `Application`.
+O proximo bloco recomendado e adicionar filtros/listagens agregadas para pipeline comercial, como oportunidades por etapa, atividades vencidas e proximas atividades por responsavel.

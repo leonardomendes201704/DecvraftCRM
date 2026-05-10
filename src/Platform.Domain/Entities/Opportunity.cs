@@ -15,11 +15,13 @@ public sealed class Opportunity : ITenantEntity
         string title,
         decimal estimatedValue,
         DateOnly? expectedCloseDate,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAt,
+        Guid? stageId = null)
     {
         Id = Guid.NewGuid();
         TenantId = tenantId;
         CustomerId = customerId;
+        StageId = stageId;
         Title = title;
         EstimatedValue = estimatedValue;
         ExpectedCloseDate = expectedCloseDate;
@@ -30,6 +32,7 @@ public sealed class Opportunity : ITenantEntity
     public Guid Id { get; private set; }
     public Guid TenantId { get; private set; }
     public Guid CustomerId { get; private set; }
+    public Guid? StageId { get; private set; }
     public string Title { get; private set; } = string.Empty;
     public decimal EstimatedValue { get; private set; }
     public DateOnly? ExpectedCloseDate { get; private set; }
@@ -43,7 +46,8 @@ public sealed class Opportunity : ITenantEntity
         string title,
         decimal estimatedValue,
         DateOnly? expectedCloseDate,
-        DateTimeOffset createdAt)
+        DateTimeOffset createdAt,
+        Guid? stageId = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(title);
 
@@ -58,7 +62,8 @@ public sealed class Opportunity : ITenantEntity
             title.Trim(),
             estimatedValue,
             expectedCloseDate,
-            createdAt);
+            createdAt,
+            stageId);
     }
 
     public void MarkAsWon(DateTimeOffset updatedAt)
@@ -77,7 +82,8 @@ public sealed class Opportunity : ITenantEntity
         string title,
         decimal estimatedValue,
         DateOnly? expectedCloseDate,
-        DateTimeOffset updatedAt)
+        DateTimeOffset updatedAt,
+        Guid? stageId = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(title);
 
@@ -86,6 +92,7 @@ public sealed class Opportunity : ITenantEntity
             throw new ArgumentOutOfRangeException(nameof(estimatedValue));
         }
 
+        StageId = stageId;
         Title = title.Trim();
         EstimatedValue = estimatedValue;
         ExpectedCloseDate = expectedCloseDate;
@@ -95,6 +102,12 @@ public sealed class Opportunity : ITenantEntity
     public void Cancel(DateTimeOffset updatedAt)
     {
         Status = OpportunityStatus.Canceled;
+        UpdatedAt = updatedAt;
+    }
+
+    public void MoveToStage(Guid stageId, DateTimeOffset updatedAt)
+    {
+        StageId = stageId;
         UpdatedAt = updatedAt;
     }
 }

@@ -11,7 +11,15 @@ public static class ApiRoutes
     public const string CustomerContacts = "/api/customers/{customerId:guid}/contacts";
     public const string ContactById = "/api/contacts/{contactId:guid}";
     public const string CustomerOpportunities = "/api/customers/{customerId:guid}/opportunities";
+    public const string OpportunityStages = "/api/opportunity-stages";
+    public const string OpportunityStageById = "/api/opportunity-stages/{stageId:guid}";
     public const string OpportunityById = "/api/opportunities/{opportunityId:guid}";
+    public const string OpportunityStageMove = "/api/opportunities/{opportunityId:guid}/stage";
+    public const string OpportunityActivities = "/api/opportunities/{opportunityId:guid}/activities";
+    public const string OpportunityActivityById = "/api/opportunity-activities/{activityId:guid}";
+    public const string OpportunityActivityComplete = "/api/opportunity-activities/{activityId:guid}/complete";
+    public const string OpportunityActivityCancel = "/api/opportunity-activities/{activityId:guid}/cancel";
+    public const string OpportunityHistory = "/api/opportunities/{opportunityId:guid}/history";
     public const string OpportunityWon = "/api/opportunities/{opportunityId:guid}/won";
     public const string OpportunityLost = "/api/opportunities/{opportunityId:guid}/lost";
     public const string OpportunityCanceled = "/api/opportunities/{opportunityId:guid}/canceled";

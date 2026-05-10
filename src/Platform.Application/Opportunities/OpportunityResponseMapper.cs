@@ -10,6 +10,7 @@ internal static class OpportunityResponseMapper
             opportunity.Id,
             opportunity.TenantId,
             opportunity.CustomerId,
+            opportunity.StageId,
             opportunity.Title,
             opportunity.EstimatedValue,
             opportunity.ExpectedCloseDate,

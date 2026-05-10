@@ -1,5 +1,7 @@
 using MediatR;
 using Platform.Application.Abstractions;
+using Platform.Domain.Entities;
+using Platform.Domain.Enums;
 
 namespace Platform.Application.Opportunities;
 
@@ -7,11 +9,16 @@ public sealed class MarkOpportunityAsLostCommandHandler
     : IRequestHandler<MarkOpportunityAsLostCommand, OpportunityOperationResult>
 {
     private readonly IOpportunityRepository _opportunityRepository;
+    private readonly IOpportunityHistoryRepository _historyRepository;
     private readonly IClock _clock;
 
-    public MarkOpportunityAsLostCommandHandler(IOpportunityRepository opportunityRepository, IClock clock)
+    public MarkOpportunityAsLostCommandHandler(
+        IOpportunityRepository opportunityRepository,
+        IOpportunityHistoryRepository historyRepository,
+        IClock clock)
     {
         _opportunityRepository = opportunityRepository;
+        _historyRepository = historyRepository;
         _clock = clock;
     }
 
@@ -29,7 +36,14 @@ public sealed class MarkOpportunityAsLostCommandHandler
             return OpportunityOperationResult.NotFound();
         }
 
-        opportunity.MarkAsLost(_clock.UtcNow);
+        var now = _clock.UtcNow;
+        opportunity.MarkAsLost(now);
+        _historyRepository.Add(OpportunityHistoryEntry.Create(
+            request.TenantId,
+            opportunity.Id,
+            OpportunityHistoryEventType.Lost,
+            $"Oportunidade perdida: {opportunity.Title}.",
+            now));
         await _opportunityRepository.SaveChangesAsync(cancellationToken);
 
         return OpportunityOperationResult.Success(OpportunityResponseMapper.ToResponse(opportunity));

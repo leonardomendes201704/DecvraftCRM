@@ -40,7 +40,32 @@ internal static class EndpointResultMapper
             OpportunityOperationStatus.Success => Results.Ok(result.Opportunity),
             OpportunityOperationStatus.NotFound => Results.NotFound(),
             OpportunityOperationStatus.CustomerNotFound => Results.NotFound(),
+            OpportunityOperationStatus.StageNotFound => Results.NotFound(),
             OpportunityOperationStatus.InvalidInput => Results.BadRequest(),
+            _ => Results.BadRequest()
+        };
+    }
+
+    internal static IResult ToOpportunityStageWriteResult(OpportunityStageOperationResult result)
+    {
+        return result.Status switch
+        {
+            OpportunityStageOperationStatus.Success => Results.Ok(result.Stage),
+            OpportunityStageOperationStatus.NotFound => Results.NotFound(),
+            OpportunityStageOperationStatus.DuplicateName => Results.Conflict(),
+            OpportunityStageOperationStatus.InvalidInput => Results.BadRequest(),
+            _ => Results.BadRequest()
+        };
+    }
+
+    internal static IResult ToOpportunityActivityWriteResult(OpportunityActivityOperationResult result)
+    {
+        return result.Status switch
+        {
+            OpportunityActivityOperationStatus.Success => Results.Ok(result.Activity),
+            OpportunityActivityOperationStatus.NotFound => Results.NotFound(),
+            OpportunityActivityOperationStatus.OpportunityNotFound => Results.NotFound(),
+            OpportunityActivityOperationStatus.InvalidInput => Results.BadRequest(),
             _ => Results.BadRequest()
         };
     }

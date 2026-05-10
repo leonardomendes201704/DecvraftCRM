@@ -22,6 +22,9 @@ public static class DependencyInjection
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IContactRepository, ContactRepository>();
         services.AddScoped<IOpportunityRepository, OpportunityRepository>();
+        services.AddScoped<IOpportunityStageRepository, OpportunityStageRepository>();
+        services.AddScoped<IOpportunityActivityRepository, OpportunityActivityRepository>();
+        services.AddScoped<IOpportunityHistoryRepository, OpportunityHistoryRepository>();
         services.AddScoped<IFinancialAccountRepository, FinancialAccountRepository>();
         services.AddScoped<IFinancialTransactionRepository, FinancialTransactionRepository>();
         services.AddScoped<ICustomerService, CustomerService>();

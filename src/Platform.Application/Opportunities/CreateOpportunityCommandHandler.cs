@@ -1,6 +1,7 @@
 using MediatR;
 using Platform.Application.Abstractions;
 using Platform.Domain.Entities;
+using Platform.Domain.Enums;
 
 namespace Platform.Application.Opportunities;
 
@@ -8,11 +9,19 @@ public sealed class CreateOpportunityCommandHandler
     : IRequestHandler<CreateOpportunityCommand, OpportunityOperationResult>
 {
     private readonly IOpportunityRepository _opportunityRepository;
+    private readonly IOpportunityStageRepository _stageRepository;
+    private readonly IOpportunityHistoryRepository _historyRepository;
     private readonly IClock _clock;
 
-    public CreateOpportunityCommandHandler(IOpportunityRepository opportunityRepository, IClock clock)
+    public CreateOpportunityCommandHandler(
+        IOpportunityRepository opportunityRepository,
+        IOpportunityStageRepository stageRepository,
+        IOpportunityHistoryRepository historyRepository,
+        IClock clock)
     {
         _opportunityRepository = opportunityRepository;
+        _stageRepository = stageRepository;
+        _historyRepository = historyRepository;
         _clock = clock;
     }
 
@@ -35,15 +44,36 @@ public sealed class CreateOpportunityCommandHandler
             return OpportunityOperationResult.CustomerNotFound();
         }
 
+        if (request.Request.StageId is not null)
+        {
+            var stage = await _stageRepository.GetByIdAsync(
+                request.TenantId,
+                request.Request.StageId.Value,
+                cancellationToken);
+
+            if (stage is null || !stage.IsActive)
+            {
+                return OpportunityOperationResult.StageNotFound();
+            }
+        }
+
+        var now = _clock.UtcNow;
         var opportunity = Opportunity.Create(
             request.TenantId,
             request.CustomerId,
             request.Request.Title,
             request.Request.EstimatedValue,
             request.Request.ExpectedCloseDate,
-            _clock.UtcNow);
+            now,
+            request.Request.StageId);
 
         _opportunityRepository.Add(opportunity);
+        _historyRepository.Add(OpportunityHistoryEntry.Create(
+            request.TenantId,
+            opportunity.Id,
+            OpportunityHistoryEventType.Created,
+            $"Oportunidade criada: {opportunity.Title}.",
+            now));
         await _opportunityRepository.SaveChangesAsync(cancellationToken);
 
         return OpportunityOperationResult.Success(OpportunityResponseMapper.ToResponse(opportunity));
