@@ -168,6 +168,29 @@ Regras:
 
 Status de implementacao: `Done` na UE-13.04.
 
+## Visoes Gerenciais Planejadas
+
+As visoes gerenciais por responsavel devem alimentar dashboards e telas web sem exigir que o frontend calcule regra de negocio.
+
+Endpoints planejados:
+
+- `GET /api/crm/responsibles/portfolio-summary`
+- `GET /api/crm/responsibles/opportunities-summary`
+- `GET /api/crm/responsibles/overdue-activities-summary`
+- `GET /api/crm/responsibles/upcoming-activities-summary`
+- `GET /api/crm/teams/funnel-summary`
+
+Escopo da UE-13.05:
+
+- Agrupar oportunidades por `OwnerEmployeeId`.
+- Calcular quantidade e valor estimado de oportunidades abertas por responsavel.
+- Agrupar atividades vencidas por `OwnerEmployeeId`.
+- Agrupar proximas atividades por `OwnerEmployeeId`.
+- Permitir funil por departamento/equipe usando `Employee.DepartmentId`.
+- Retornar dados prontos para dashboard comercial.
+
+Status de implementacao: planejado para UE-13.05.
+
 ### OpportunityActivity.OwnerEmployeeId
 
 Responsavel por executar a atividade.

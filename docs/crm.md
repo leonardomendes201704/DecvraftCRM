@@ -197,4 +197,11 @@ Filtros por responsavel:
 
 ## Proximo bloco
 
-O proximo bloco recomendado e criar relatorios/visoes agregadas por responsavel, como carteira por vendedor, atividades por funcionario e funil por equipe.
+O proximo bloco recomendado antes do frontend e implementar a `UE-13.05`, criando endpoints agregados para dashboard comercial:
+
+- carteira por responsavel;
+- oportunidades por responsavel;
+- valor estimado por responsavel;
+- atividades vencidas por responsavel;
+- proximas atividades por responsavel;
+- funil por equipe/departamento.

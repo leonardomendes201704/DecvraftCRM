@@ -423,6 +423,19 @@ Tasks:
 - `[Done]` Registrar historico quando responsavel for alterado.
 - `[Done]` Atualizar listagens de oportunidades e atividades com filtro por responsavel.
 
+### UE-13.05 - Visoes gerenciais por responsavel
+
+Tasks:
+
+- `[Todo]` Criar resumo de carteira por responsavel.
+- `[Todo]` Criar total de oportunidades por responsavel.
+- `[Todo]` Criar valor estimado de oportunidades abertas por responsavel.
+- `[Todo]` Criar atividades vencidas agrupadas por responsavel.
+- `[Todo]` Criar proximas atividades agrupadas por responsavel.
+- `[Todo]` Criar funil comercial por equipe/departamento.
+- `[Todo]` Criar endpoints agregados para dashboard comercial.
+- `[Todo]` Atualizar documentacao de CRM e organizacao com os endpoints agregados.
+
 ## EP-14 - Frontend Web Installer
 
 Status: `Todo`
