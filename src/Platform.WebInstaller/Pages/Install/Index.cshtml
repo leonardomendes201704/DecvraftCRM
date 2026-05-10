@@ -27,6 +27,10 @@
         <div class="installer-body">
             @if (Model.IsInstalled)
             {
+                <div class="success-panel">
+                    <p>O banco configurado no startup ja possui uma instalacao. Para instalar outra instancia no mesmo SQL Server, inicie o wizard e informe outro nome de banco na etapa Banco.</p>
+                </div>
+
                 <dl class="summary-list">
                     <div class="summary-row">
                         <dt>Status</dt>
@@ -41,6 +45,11 @@
                         <dd>@(Model.InstalledAt?.ToString("dd/MM/yyyy HH:mm") ?? "Nao informada")</dd>
                     </div>
                 </dl>
+
+                <div class="action-row">
+                    <span></span>
+                    <a class="button button-primary" href="@InstallerWizardRoutes.Database">Nova instalacao em outro banco</a>
+                </div>
             }
             else
             {

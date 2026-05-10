@@ -60,7 +60,8 @@ Status das UE-14.02 e UE-14.03:
 - O provisioning troca o `DbContext` para o banco informado no wizard antes de migrations, seeds e criacao do tenant.
 - Tela de conclusao exibe tenant, administrador e modulos instalados sem expor senha.
 - Dados sensiveis do wizard sao limpos da session apos instalacao bem-sucedida.
-- Acesso direto as etapas e bloqueado quando a instalacao ja esta concluida.
+- Quando o banco de bootstrap ja esta instalado, a tela inicial permite iniciar nova instalacao em outro banco no mesmo host.
+- A reinstalacao continua bloqueada pelo `ProvisioningService` no banco alvo escolhido no wizard.
 
 ## Padrao de UI
 
@@ -82,7 +83,7 @@ Rota sugerida:
 Responsabilidades:
 
 - Consultar status da instalacao.
-- Se ja instalado, bloquear wizard e exibir estado instalado.
+- Se o banco configurado no startup ja estiver instalado, exibir estado instalado e permitir iniciar nova instalacao em outro banco.
 - Se nao instalado, permitir inicio do fluxo.
 
 ### 2. Banco de dados
@@ -242,7 +243,7 @@ Persistencia do estado:
 ## Criterios de Aceite
 
 - Usuario consegue executar instalacao completa pelo navegador.
-- Wizard bloqueia acesso quando sistema ja estiver instalado.
+- Wizard bloqueia reinstalacao no mesmo banco alvo ja instalado.
 - Teste de banco funciona antes da execucao.
 - Erros de validacao aparecem na propria etapa.
 - Senha do admin nao aparece na revisao.

@@ -61,16 +61,19 @@ docs/examples/install-request.json
 Fluxo interno:
 
 1. Validar request.
-2. Verificar se o instalador ja esta bloqueado.
-3. Testar conexao com SQL Server.
-4. Criar banco se necessario.
-5. Executar migrations.
-6. Executar seeds globais.
-7. Criar tenant.
-8. Criar branding.
-9. Criar admin.
-10. Instalar modulos.
-11. Bloquear instalador.
+2. Testar conexao com SQL Server.
+3. Criar banco se necessario.
+4. Trocar o contexto de persistencia para o banco alvo informado.
+5. Verificar se o instalador ja esta bloqueado no banco alvo.
+6. Executar migrations.
+7. Executar seeds globais.
+8. Criar tenant.
+9. Criar branding.
+10. Criar admin.
+11. Instalar modulos.
+12. Bloquear instalador.
+
+Para criar outra instalacao no mesmo host SQL Server, use outro `databaseName` no wizard. O host pode ser o mesmo; o banco alvo precisa ser novo ou ainda nao instalado.
 
 ## Observacao de bootstrap
 
