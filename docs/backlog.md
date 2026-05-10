@@ -319,7 +319,8 @@ Tasks:
 - `[Done]` Adicionar MediatR ao projeto de aplicacao.
 - `[Done]` Criar commands/queries iniciais para autenticacao e modulos.
 - `[Done]` Criar commands/queries para clientes do CRM.
-- `[Todo]` Criar commands/queries para contatos e oportunidades do CRM.
+- `[Done]` Criar commands/queries para contatos do CRM.
+- `[Todo]` Criar commands/queries para oportunidades do CRM.
 - `[Todo]` Migrar regras de orquestracao de services diretos para handlers.
 - `[Todo]` Padronizar responses/resultados de handlers.
 - `[Todo]` Criar behaviors para validacao, logging e tratamento de erros quando fizer sentido.
