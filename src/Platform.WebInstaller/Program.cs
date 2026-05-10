@@ -3,12 +3,23 @@ using Platform.Provisioning;
 using Platform.Provisioning.Abstractions;
 using Platform.Provisioning.Models;
 using Platform.Provisioning.Validation;
+using Platform.WebInstaller.Services;
 using Platform.WebInstaller.Routing;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.Name = ".DevcraftCRM.Installer";
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
+builder.Services.AddScoped<IInstallerWizardStateStore, SessionInstallerWizardStateStore>();
 
 var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -29,6 +40,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseSession();
+
+app.MapRazorPages();
 
 app.MapGet(InstallerRoutes.Status, async (IInstallerLockService installerLockService, CancellationToken cancellationToken) =>
 {

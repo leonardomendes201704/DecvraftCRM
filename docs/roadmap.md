@@ -65,7 +65,7 @@ Entregas:
 
 ## Fase 4 - Web Installer
 
-Status: `Concluido`
+Status: `Em andamento`
 
 Objetivo: expor endpoints e interface visual para status, teste de banco e execucao da instalacao.
 
@@ -74,10 +74,11 @@ Entregas:
 - `GET /install/status`;
 - `POST /install/test-database`;
 - `POST /install/run`;
-- wizard visual em Razor Pages;
-- etapas de banco, tenant, admin, branding, modulos, revisao e conclusao;
-- validacoes de entrada;
-- bloqueio contra reinstalacao;
+- estrutura visual do wizard em Razor Pages;
+- rotas visuais de banco, tenant, admin, branding, modulos, revisao e conclusao;
+- estado temporario em session protegida;
+- validacoes de entrada pendentes para o proximo bloco;
+- bloqueio visual contra reinstalacao em andamento;
 - respostas padronizadas.
 
 ## Fase 5 - Seguranca e Autenticacao

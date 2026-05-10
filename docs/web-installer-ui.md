@@ -29,7 +29,8 @@ Platform.WebInstaller/
       Review.cshtml
       Complete.cshtml
   Services/
-    InstallerWizardService.cs
+    IInstallerWizardStateStore.cs
+    SessionInstallerWizardStateStore.cs
   ViewModels/
     InstallWizardState.cs
     DatabaseStepViewModel.cs
@@ -42,6 +43,14 @@ Platform.WebInstaller/
     InstallerStepIndicator/
     InstallerValidationSummary/
 ```
+
+Status da UE-14.01:
+
+- Razor Pages habilitado no `Platform.WebInstaller`.
+- Layout compartilhado criado em `Pages/Shared/_Layout.cshtml`.
+- Indicador reutilizavel criado em `Pages/Shared/_InstallerStepIndicator.cshtml`.
+- Estado temporario criado em `InstallWizardState` e armazenado via session protegida do ASP.NET Core.
+- Rotas visuais criadas de `/install` ate `/install/complete`.
 
 ## Padrao de UI
 
@@ -205,6 +214,7 @@ InstallWizardState
 Persistencia do estado:
 
 - Preferir session/cookie temporario protegido para o estado do wizard.
+- A UE-14.01 usa `SessionInstallerWizardStateStore` com cookie HTTP-only e essencial.
 - Nao persistir senha em arquivo.
 - Nao salvar credenciais definitivas em appsettings ou env.
 - Limpar estado apos instalacao concluida ou cancelamento.
@@ -236,3 +246,7 @@ Persistencia do estado:
 - Barra de progresso em tempo real via SignalR.
 - Multi-idioma.
 - Recuperacao de wizard abandonado apos reinicio do servidor.
+
+## Proximo Bloco
+
+Implementar a UE-14.02, adicionando validacoes por etapa, teste de conexao real na tela de banco e tratamento visual de erros.

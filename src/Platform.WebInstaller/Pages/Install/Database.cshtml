@@ -1,0 +1,63 @@
+@page "/install/database"
+@model Platform.WebInstaller.Pages.Install.DatabaseModel
+@{
+    ViewData["Title"] = "Banco";
+}
+
+<section class="installer-frame">
+    <aside class="installer-sidebar">
+        <div class="brand-mark">
+            <span class="brand-name">Devcraft CRM</span>
+            <span class="brand-context">Web Installer</span>
+        </div>
+        <partial name="_InstallerStepIndicator" model="Model" />
+    </aside>
+
+    <div class="installer-content">
+        <header class="installer-header">
+            <div>
+                <h1>Banco de dados</h1>
+                <p>Configure o destino SQL Server usado no bootstrap da instalacao.</p>
+            </div>
+            <span class="status-pill">Etapa 2 de 8</span>
+        </header>
+
+        <form class="installer-body" method="post">
+            <div class="form-grid">
+                <div class="form-field">
+                    <label asp-for="Input.Host">Host</label>
+                    <input asp-for="Input.Host" autocomplete="off" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.Port">Porta</label>
+                    <input asp-for="Input.Port" type="number" min="1" max="65535" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.DatabaseName">Banco</label>
+                    <input asp-for="Input.DatabaseName" autocomplete="off" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.Username">Usuario</label>
+                    <input asp-for="Input.Username" autocomplete="off" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.Password">Senha</label>
+                    <input asp-for="Input.Password" type="password" autocomplete="current-password" />
+                </div>
+                <div class="form-field check-field">
+                    <input asp-for="Input.TrustServerCertificate" />
+                    <label asp-for="Input.TrustServerCertificate">Trust server certificate</label>
+                </div>
+                <div class="form-field check-field">
+                    <input asp-for="Input.CreateDatabase" />
+                    <label asp-for="Input.CreateDatabase">Criar banco se necessario</label>
+                </div>
+            </div>
+
+            <div class="action-row">
+                <a class="button button-secondary" href="@InstallerWizardRoutes.Welcome">Voltar</a>
+                <button class="button button-primary" type="submit">Continuar</button>
+            </div>
+        </form>
+    </div>
+</section>

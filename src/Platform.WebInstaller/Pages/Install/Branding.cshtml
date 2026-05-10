@@ -1,0 +1,47 @@
+@page "/install/branding"
+@model Platform.WebInstaller.Pages.Install.BrandingModel
+@{
+    ViewData["Title"] = "Marca";
+}
+
+<section class="installer-frame">
+    <aside class="installer-sidebar">
+        <div class="brand-mark">
+            <span class="brand-name">Devcraft CRM</span>
+            <span class="brand-context">Web Installer</span>
+        </div>
+        <partial name="_InstallerStepIndicator" model="Model" />
+    </aside>
+
+    <div class="installer-content">
+        <header class="installer-header">
+            <div>
+                <h1>Identidade visual</h1>
+                <p>Defina o nome exibido e as cores iniciais do tenant.</p>
+            </div>
+            <span class="status-pill">Etapa 5 de 8</span>
+        </header>
+
+        <form class="installer-body" method="post">
+            <div class="form-grid">
+                <div class="form-field is-wide">
+                    <label asp-for="Input.SystemName">Nome comercial</label>
+                    <input asp-for="Input.SystemName" autocomplete="organization" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.PrimaryColor">Cor primaria</label>
+                    <input asp-for="Input.PrimaryColor" type="color" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.SecondaryColor">Cor secundaria</label>
+                    <input asp-for="Input.SecondaryColor" type="color" />
+                </div>
+            </div>
+
+            <div class="action-row">
+                <a class="button button-secondary" href="@InstallerWizardRoutes.Admin">Voltar</a>
+                <button class="button button-primary" type="submit">Continuar</button>
+            </div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,15 @@
+@model InstallPageModel
+
+<nav class="step-indicator" aria-label="Etapas da instalacao">
+    @foreach (var step in Model.Steps)
+    {
+        var isCurrent = step.Step == Model.CurrentStep;
+        var isComplete = step.Step < Model.CurrentStep;
+        var stepClass = isCurrent ? "step is-current" : isComplete ? "step is-complete" : "step";
+
+        <a class="@stepClass" href="@step.Route" aria-current="@(isCurrent ? "step" : null)">
+            <span class="step-number">@((int)step.Step)</span>
+            <span class="step-title">@step.Title</span>
+        </a>
+    }
+</nav>

@@ -1,0 +1,51 @@
+@page "/install/admin"
+@model Platform.WebInstaller.Pages.Install.AdminModel
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<section class="installer-frame">
+    <aside class="installer-sidebar">
+        <div class="brand-mark">
+            <span class="brand-name">Devcraft CRM</span>
+            <span class="brand-context">Web Installer</span>
+        </div>
+        <partial name="_InstallerStepIndicator" model="Model" />
+    </aside>
+
+    <div class="installer-content">
+        <header class="installer-header">
+            <div>
+                <h1>Administrador</h1>
+                <p>Crie a identidade administrativa inicial do tenant.</p>
+            </div>
+            <span class="status-pill">Etapa 4 de 8</span>
+        </header>
+
+        <form class="installer-body" method="post">
+            <div class="form-grid">
+                <div class="form-field">
+                    <label asp-for="Input.Name">Nome</label>
+                    <input asp-for="Input.Name" autocomplete="name" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.Email">Email</label>
+                    <input asp-for="Input.Email" type="email" autocomplete="email" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.Password">Senha</label>
+                    <input asp-for="Input.Password" type="password" autocomplete="new-password" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="ConfirmPassword">Confirmacao</label>
+                    <input asp-for="ConfirmPassword" type="password" autocomplete="new-password" />
+                </div>
+            </div>
+
+            <div class="action-row">
+                <a class="button button-secondary" href="@InstallerWizardRoutes.Tenant">Voltar</a>
+                <button class="button button-primary" type="submit">Continuar</button>
+            </div>
+        </form>
+    </div>
+</section>

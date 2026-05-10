@@ -1,0 +1,47 @@
+@page "/install/tenant"
+@model Platform.WebInstaller.Pages.Install.TenantModel
+@{
+    ViewData["Title"] = "Tenant";
+}
+
+<section class="installer-frame">
+    <aside class="installer-sidebar">
+        <div class="brand-mark">
+            <span class="brand-name">Devcraft CRM</span>
+            <span class="brand-context">Web Installer</span>
+        </div>
+        <partial name="_InstallerStepIndicator" model="Model" />
+    </aside>
+
+    <div class="installer-content">
+        <header class="installer-header">
+            <div>
+                <h1>Tenant inicial</h1>
+                <p>Defina a empresa principal que sera criada no primeiro provisionamento.</p>
+            </div>
+            <span class="status-pill">Etapa 3 de 8</span>
+        </header>
+
+        <form class="installer-body" method="post">
+            <div class="form-grid">
+                <div class="form-field">
+                    <label asp-for="Input.CompanyName">Empresa</label>
+                    <input asp-for="Input.CompanyName" autocomplete="organization" />
+                </div>
+                <div class="form-field">
+                    <label asp-for="Input.Slug">Slug</label>
+                    <input asp-for="Input.Slug" autocomplete="off" />
+                </div>
+                <div class="form-field is-wide">
+                    <label asp-for="Input.CustomDomain">Dominio customizado</label>
+                    <input asp-for="Input.CustomDomain" autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="action-row">
+                <a class="button button-secondary" href="@InstallerWizardRoutes.Database">Voltar</a>
+                <button class="button button-primary" type="submit">Continuar</button>
+            </div>
+        </form>
+    </div>
+</section>

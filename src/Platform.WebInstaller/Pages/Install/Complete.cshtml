@@ -1,0 +1,43 @@
+@page "/install/complete"
+@model Platform.WebInstaller.Pages.Install.CompleteModel
+@{
+    ViewData["Title"] = "Conclusao";
+}
+
+<section class="installer-frame">
+    <aside class="installer-sidebar">
+        <div class="brand-mark">
+            <span class="brand-name">Devcraft CRM</span>
+            <span class="brand-context">Web Installer</span>
+        </div>
+        <partial name="_InstallerStepIndicator" model="Model" />
+    </aside>
+
+    <div class="installer-content">
+        <header class="installer-header">
+            <div>
+                <h1>Estrutura pronta</h1>
+                <p>O wizard visual esta preparado para receber a validacao e execucao do provisioning.</p>
+            </div>
+            <span class="status-pill is-ready">UE-14.01</span>
+        </header>
+
+        <div class="installer-body">
+            <dl class="summary-list">
+                <div class="summary-row">
+                    <dt>Fluxo</dt>
+                    <dd>Layout, progresso, navegacao e estado temporario</dd>
+                </div>
+                <div class="summary-row">
+                    <dt>Proxima etapa</dt>
+                    <dd>Validacoes por etapa e teste de conexao com banco</dd>
+                </div>
+            </dl>
+
+            <div class="action-row">
+                <a class="button button-secondary" href="@InstallerWizardRoutes.Review">Voltar</a>
+                <a class="button button-primary" href="@InstallerWizardRoutes.Welcome">Inicio</a>
+            </div>
+        </div>
+    </div>
+</section>

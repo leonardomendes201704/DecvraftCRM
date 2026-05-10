@@ -1,0 +1,69 @@
+@page "/install"
+@model Platform.WebInstaller.Pages.Install.IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<section class="installer-frame">
+    <aside class="installer-sidebar">
+        <div class="brand-mark">
+            <span class="brand-name">Devcraft CRM</span>
+            <span class="brand-context">Web Installer</span>
+        </div>
+        <partial name="_InstallerStepIndicator" model="Model" />
+    </aside>
+
+    <div class="installer-content">
+        <header class="installer-header">
+            <div>
+                <h1>Instalacao inicial</h1>
+                <p>Prepare o banco, tenant, administrador, identidade visual e modulos da primeira entrega.</p>
+            </div>
+            <span class="status-pill @(Model.IsInstalled ? "is-blocked" : "is-ready")">
+                @(Model.IsInstalled ? "Instalado" : "Disponivel")
+            </span>
+        </header>
+
+        <div class="installer-body">
+            @if (Model.IsInstalled)
+            {
+                <dl class="summary-list">
+                    <div class="summary-row">
+                        <dt>Status</dt>
+                        <dd>Instalacao concluida</dd>
+                    </div>
+                    <div class="summary-row">
+                        <dt>Versao</dt>
+                        <dd>@(Model.Version ?? "Nao informada")</dd>
+                    </div>
+                    <div class="summary-row">
+                        <dt>Data</dt>
+                        <dd>@(Model.InstalledAt?.ToString("dd/MM/yyyy HH:mm") ?? "Nao informada")</dd>
+                    </div>
+                </dl>
+            }
+            else
+            {
+                <dl class="summary-list">
+                    <div class="summary-row">
+                        <dt>Banco</dt>
+                        <dd>@(string.IsNullOrWhiteSpace(Model.WizardState.Database.DatabaseName) ? "Pendente" : Model.WizardState.Database.DatabaseName)</dd>
+                    </div>
+                    <div class="summary-row">
+                        <dt>Tenant</dt>
+                        <dd>@(string.IsNullOrWhiteSpace(Model.WizardState.Tenant.CompanyName) ? "Pendente" : Model.WizardState.Tenant.CompanyName)</dd>
+                    </div>
+                    <div class="summary-row">
+                        <dt>Administrador</dt>
+                        <dd>@(string.IsNullOrWhiteSpace(Model.WizardState.Admin.Email) ? "Pendente" : Model.WizardState.Admin.Email)</dd>
+                    </div>
+                </dl>
+
+                <div class="action-row">
+                    <span></span>
+                    <a class="button button-primary" href="@InstallerWizardRoutes.Database">Iniciar</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>

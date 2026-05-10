@@ -1,0 +1,50 @@
+@page "/install/modules"
+@model Platform.WebInstaller.Pages.Install.ModulesModel
+@{
+    ViewData["Title"] = "Modulos";
+}
+
+<section class="installer-frame">
+    <aside class="installer-sidebar">
+        <div class="brand-mark">
+            <span class="brand-name">Devcraft CRM</span>
+            <span class="brand-context">Web Installer</span>
+        </div>
+        <partial name="_InstallerStepIndicator" model="Model" />
+    </aside>
+
+    <div class="installer-content">
+        <header class="installer-header">
+            <div>
+                <h1>Modulos</h1>
+                <p>Selecione os modulos iniciais que serao habilitados para o tenant.</p>
+            </div>
+            <span class="status-pill">Etapa 6 de 8</span>
+        </header>
+
+        <form class="installer-body" method="post">
+            <div class="module-grid">
+                <label class="module-option">
+                    <input asp-for="Input.CoreEnabled" disabled />
+                    <strong>Core</strong>
+                    <span>Usuarios, permissoes e configuracoes centrais</span>
+                </label>
+                <label class="module-option">
+                    <input asp-for="Input.CrmEnabled" />
+                    <strong>CRM</strong>
+                    <span>Clientes, contatos, oportunidades e atividades</span>
+                </label>
+                <label class="module-option">
+                    <input asp-for="Input.FinanceEnabled" />
+                    <strong>Financeiro</strong>
+                    <span>Contas financeiras e lancamentos iniciais</span>
+                </label>
+            </div>
+
+            <div class="action-row">
+                <a class="button button-secondary" href="@InstallerWizardRoutes.Branding">Voltar</a>
+                <button class="button button-primary" type="submit">Continuar</button>
+            </div>
+        </form>
+    </div>
+</section>

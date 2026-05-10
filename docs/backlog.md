@@ -438,7 +438,7 @@ Tasks:
 
 ## EP-14 - Frontend Web Installer
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P0`
 
 Objetivo: criar um wizard visual em Razor Pages para executar a instalacao inicial da plataforma pelo navegador.
@@ -447,10 +447,10 @@ Objetivo: criar um wizard visual em Razor Pages para executar a instalacao inici
 
 Tasks:
 
-- `[Todo]` Criar layout base do Web Installer.
-- `[Todo]` Criar navegacao por etapas.
-- `[Todo]` Criar componente de indicador de progresso.
-- `[Todo]` Criar estado temporario do wizard.
+- `[Done]` Criar layout base do Web Installer.
+- `[Done]` Criar navegacao por etapas.
+- `[Done]` Criar componente de indicador de progresso.
+- `[Done]` Criar estado temporario do wizard.
 
 ### UE-14.02 - Etapas do wizard
 

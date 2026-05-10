@@ -1,0 +1,55 @@
+@page "/install/review"
+@model Platform.WebInstaller.Pages.Install.ReviewModel
+@{
+    ViewData["Title"] = "Revisao";
+}
+
+<section class="installer-frame">
+    <aside class="installer-sidebar">
+        <div class="brand-mark">
+            <span class="brand-name">Devcraft CRM</span>
+            <span class="brand-context">Web Installer</span>
+        </div>
+        <partial name="_InstallerStepIndicator" model="Model" />
+    </aside>
+
+    <div class="installer-content">
+        <header class="installer-header">
+            <div>
+                <h1>Revisao</h1>
+                <p>Confira os dados estruturais antes da execucao do provisionamento.</p>
+            </div>
+            <span class="status-pill">Etapa 7 de 8</span>
+        </header>
+
+        <div class="installer-body">
+            <dl class="summary-list">
+                <div class="summary-row">
+                    <dt>Banco</dt>
+                    <dd>@Model.WizardState.Database.Host:@Model.WizardState.Database.Port / @Model.WizardState.Database.DatabaseName</dd>
+                </div>
+                <div class="summary-row">
+                    <dt>Tenant</dt>
+                    <dd>@Model.WizardState.Tenant.CompanyName (@Model.WizardState.Tenant.Slug)</dd>
+                </div>
+                <div class="summary-row">
+                    <dt>Administrador</dt>
+                    <dd>@Model.WizardState.Admin.Name - @Model.WizardState.Admin.Email</dd>
+                </div>
+                <div class="summary-row">
+                    <dt>Marca</dt>
+                    <dd>@Model.WizardState.Branding.SystemName</dd>
+                </div>
+                <div class="summary-row">
+                    <dt>Modulos</dt>
+                    <dd>@string.Join(", ", Model.WizardState.Modules.SelectedModuleSlugs)</dd>
+                </div>
+            </dl>
+
+            <div class="action-row">
+                <a class="button button-secondary" href="@InstallerWizardRoutes.Modules">Voltar</a>
+                <a class="button button-primary" href="@InstallerWizardRoutes.Complete">Concluir estrutura</a>
+            </div>
+        </div>
+    </div>
+</section>
