@@ -73,3 +73,5 @@ Fluxo interno:
 A connection string do host/container e permitida apenas como configuracao minima de bootstrap. Configuracoes definitivas da plataforma devem ser persistidas em entidades de banco, conforme `agent.md`.
 
 Ao executar o installer dentro do Docker Compose, use `mssql` como host do banco. Ao executar localmente fora do container, use `localhost`.
+
+Para startup multiplo no Visual Studio, configure `ConnectionStrings:DefaultConnection` via User Secrets nos projetos `Platform.Api` e `Platform.WebInstaller`. O passo a passo fica em [local-development.md](local-development.md).

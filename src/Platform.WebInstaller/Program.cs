@@ -1,4 +1,5 @@
 using Platform.Persistence;
+using Platform.Persistence.Configuration;
 using Platform.Provisioning;
 using Platform.Provisioning.Abstractions;
 using Platform.Provisioning.Models;
@@ -21,11 +22,13 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddScoped<IInstallerWizardStateStore, SessionInstallerWizardStateStore>();
 
-var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var defaultConnectionString = builder.Configuration.GetConnectionString(ConnectionStringNames.DefaultConnection)
+    ?? builder.Configuration.GetConnectionString(ConnectionStringNames.LegacyDefault);
 
 if (string.IsNullOrWhiteSpace(defaultConnectionString))
 {
-    throw new InvalidOperationException("Bootstrap connection string 'DefaultConnection' was not configured.");
+    throw new InvalidOperationException(
+        "Bootstrap connection string 'DefaultConnection' was not configured. Configure it with User Secrets or the process environment before starting the Web Installer.");
 }
 
 builder.Services.AddPersistence(defaultConnectionString);

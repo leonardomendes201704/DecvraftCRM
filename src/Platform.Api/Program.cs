@@ -5,10 +5,13 @@ using Platform.Application.Auth;
 using Platform.Application.Common.Behaviors;
 using Platform.Infrastructure;
 using Platform.Persistence;
+using Platform.Persistence.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("Default")
-    ?? throw new InvalidOperationException("Connection string 'Default' was not provided.");
+var connectionString = builder.Configuration.GetConnectionString(ConnectionStringNames.DefaultConnection)
+    ?? builder.Configuration.GetConnectionString(ConnectionStringNames.LegacyDefault)
+    ?? throw new InvalidOperationException(
+        "Connection string 'DefaultConnection' was not provided. Configure it with User Secrets or the process environment before starting the API.");
 
 builder.Services.AddPersistence(connectionString);
 builder.Services.AddInfrastructure();
