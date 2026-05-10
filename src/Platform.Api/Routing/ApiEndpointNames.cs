@@ -16,4 +16,11 @@ public static class ApiEndpointNames
     public const string ContactsCreate = "Contacts.Create";
     public const string ContactsUpdate = "Contacts.Update";
     public const string ContactsDelete = "Contacts.Delete";
+    public const string OpportunitiesListByCustomer = "Opportunities.ListByCustomer";
+    public const string OpportunitiesGetById = "Opportunities.GetById";
+    public const string OpportunitiesCreate = "Opportunities.Create";
+    public const string OpportunitiesUpdate = "Opportunities.Update";
+    public const string OpportunitiesMarkWon = "Opportunities.MarkWon";
+    public const string OpportunitiesMarkLost = "Opportunities.MarkLost";
+    public const string OpportunitiesCancel = "Opportunities.Cancel";
 }

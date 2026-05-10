@@ -78,7 +78,7 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[x]` Entidades CRM respeitam filtro global por tenant.
 - `[x]` CRUD basico de clientes existe.
 - `[x]` CRUD basico de contatos existe.
-- `[ ]` CRUD basico de oportunidades existe.
+- `[x]` CRUD basico de oportunidades existe.
 
 ## Testes
 

@@ -72,4 +72,29 @@ public sealed class Opportunity : ITenantEntity
         Status = OpportunityStatus.Lost;
         UpdatedAt = updatedAt;
     }
+
+    public void Update(
+        string title,
+        decimal estimatedValue,
+        DateOnly? expectedCloseDate,
+        DateTimeOffset updatedAt)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(title);
+
+        if (estimatedValue < decimal.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(estimatedValue));
+        }
+
+        Title = title.Trim();
+        EstimatedValue = estimatedValue;
+        ExpectedCloseDate = expectedCloseDate;
+        UpdatedAt = updatedAt;
+    }
+
+    public void Cancel(DateTimeOffset updatedAt)
+    {
+        Status = OpportunityStatus.Canceled;
+        UpdatedAt = updatedAt;
+    }
 }

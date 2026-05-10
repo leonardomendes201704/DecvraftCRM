@@ -74,6 +74,30 @@ Request de criacao/atualizacao:
 
 O contato sempre deve pertencer a um cliente do mesmo tenant. Email duplicado dentro do mesmo cliente retorna `409 Conflict`.
 
+## Oportunidades
+
+Endpoints iniciais:
+
+- `GET /api/customers/{customerId}/opportunities`: lista oportunidades de um cliente do tenant autenticado. Permissao: `crm.opportunities.view`.
+- `GET /api/opportunities/{opportunityId}`: retorna uma oportunidade do tenant autenticado. Permissao: `crm.opportunities.view`.
+- `POST /api/customers/{customerId}/opportunities`: cria oportunidade para um cliente. Permissao: `crm.opportunities.manage`.
+- `PUT /api/opportunities/{opportunityId}`: atualiza oportunidade. Permissao: `crm.opportunities.manage`.
+- `POST /api/opportunities/{opportunityId}/won`: marca oportunidade como ganha. Permissao: `crm.opportunities.manage`.
+- `POST /api/opportunities/{opportunityId}/lost`: marca oportunidade como perdida. Permissao: `crm.opportunities.manage`.
+- `POST /api/opportunities/{opportunityId}/canceled`: cancela oportunidade. Permissao: `crm.opportunities.manage`.
+
+Request de criacao/atualizacao:
+
+```json
+{
+  "title": "Projeto ERP",
+  "estimatedValue": 15000.00,
+  "expectedCloseDate": "2026-07-31"
+}
+```
+
+A oportunidade sempre deve pertencer a um cliente do mesmo tenant. Valor estimado negativo retorna `400 Bad Request`.
+
 ## Proximo bloco
 
-O proximo bloco do CRM deve criar CRUD basico para oportunidades, protegendo os endpoints com permissoes CRM.
+O proximo bloco recomendado e iniciar o modulo financeiro basico ou antecipar a refatoracao arquitetural da API registrada no `EP-11`.

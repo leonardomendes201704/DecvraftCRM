@@ -4,6 +4,7 @@ using Platform.Infrastructure.Auth;
 using Platform.Infrastructure.Contacts;
 using Platform.Infrastructure.Customers;
 using Platform.Infrastructure.Modules;
+using Platform.Infrastructure.Opportunities;
 
 namespace Platform.Infrastructure;
 
@@ -18,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<IModuleCatalogService, ModuleCatalogService>();
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<IContactService, ContactService>();
+        services.AddScoped<IOpportunityService, OpportunityService>();
 
         return services;
     }

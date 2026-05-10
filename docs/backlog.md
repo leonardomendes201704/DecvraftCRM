@@ -18,7 +18,7 @@ Prioridade:
 
 ## EP-01 - Fundacao da Plataforma
 
-Status: `Doing`
+Status: `Done`
 Prioridade: `P0`
 
 Objetivo: criar a base tecnica compilavel e executavel via Docker.
@@ -229,7 +229,7 @@ Tasks:
 - `[Done]` Criar configuracoes EF.
 - `[Done]` Criar CRUD basico de clientes.
 - `[Done]` Criar CRUD basico de contatos.
-- `[Todo]` Criar CRUD basico de oportunidades.
+- `[Done]` Criar CRUD basico de oportunidades.
 - `[Done]` Aplicar filtro por tenant.
 - `[Done]` Criar migration inicial do CRM.
 - `[Done]` Criar testes principais de dominio, modelo e filtro por tenant.
