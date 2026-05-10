@@ -324,7 +324,7 @@ Tasks:
 - `[Done]` Criar commands/queries para financeiro.
 - `[Todo]` Migrar regras de orquestracao de services diretos para handlers.
 - `[Done]` Padronizar responses/resultados de handlers.
-- `[Todo]` Criar behaviors para validacao, logging e tratamento de erros quando fizer sentido.
+- `[Done]` Criar behaviors para logging e tratamento de erros.
 
 ### UE-11.03 - Reforcar arquitetura hexagonal
 

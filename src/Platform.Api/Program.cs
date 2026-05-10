@@ -1,6 +1,7 @@
 using Platform.Api.Endpoints;
 using Platform.Api.Security;
 using Platform.Application.Auth;
+using Platform.Application.Common.Behaviors;
 using Platform.Infrastructure;
 using Platform.Persistence;
 
@@ -11,7 +12,11 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
 builder.Services.AddPersistence(connectionString);
 builder.Services.AddInfrastructure();
 builder.Services.AddMediatR(configuration =>
-    configuration.RegisterServicesFromAssembly(typeof(LoginCommand).Assembly));
+{
+    configuration.RegisterServicesFromAssembly(typeof(LoginCommand).Assembly);
+    configuration.AddOpenBehavior(typeof(UnhandledExceptionBehavior<,>));
+    configuration.AddOpenBehavior(typeof(RequestLoggingBehavior<,>));
+});
 builder.Services.AddEndpointModules();
 builder.Services.AddScoped<PermissionEndpointFilter>();
 builder.Services.AddEndpointsApiExplorer();
