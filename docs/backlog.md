@@ -407,10 +407,10 @@ Tasks:
 
 Tasks:
 
-- `[Todo]` Permitir vincular um `ApplicationUser` a um `Employee`.
-- `[Todo]` Permitir desvincular usuario e funcionario sem apagar historico.
-- `[Todo]` Validar unicidade do vinculo por tenant.
-- `[Todo]` Atualizar `GET /api/me` para retornar dados do funcionario vinculado quando existir.
+- `[Done]` Permitir vincular um `ApplicationUser` a um `Employee`.
+- `[Done]` Permitir desvincular usuario e funcionario sem apagar historico.
+- `[Done]` Validar unicidade do vinculo por tenant.
+- `[Done]` Atualizar `GET /api/me` para retornar dados do funcionario vinculado quando existir.
 
 ### UE-13.04 - Responsaveis no CRM
 

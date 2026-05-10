@@ -7,4 +7,5 @@ public sealed record CurrentUserResponse(
     string Name,
     string Email,
     IReadOnlyCollection<string> Roles,
-    IReadOnlyCollection<string> Permissions);
+    IReadOnlyCollection<string> Permissions,
+    CurrentEmployeeResponse? Employee = null);

@@ -34,6 +34,16 @@ public sealed class EmployeeRepository : IEmployeeRepository
             cancellationToken);
     }
 
+    public Task<Employee?> GetByApplicationUserIdAsync(
+        Guid tenantId,
+        Guid applicationUserId,
+        CancellationToken cancellationToken = default)
+    {
+        return _dbContext.Employees.SingleOrDefaultAsync(
+            employee => employee.TenantId == tenantId && employee.ApplicationUserId == applicationUserId,
+            cancellationToken);
+    }
+
     public async Task<IReadOnlyCollection<Employee>> ListSubordinatesAsync(
         Guid tenantId,
         Guid managerEmployeeId,
@@ -72,6 +82,30 @@ public sealed class EmployeeRepository : IEmployeeRepository
     {
         return _dbContext.Employees.AnyAsync(
             employee => employee.TenantId == tenantId && employee.Id == employeeId,
+            cancellationToken);
+    }
+
+    public Task<bool> ApplicationUserExistsAsync(
+        Guid tenantId,
+        Guid applicationUserId,
+        CancellationToken cancellationToken = default)
+    {
+        return _dbContext.ApplicationUsers.AnyAsync(
+            user => user.TenantId == tenantId && user.Id == applicationUserId && user.IsActive,
+            cancellationToken);
+    }
+
+    public Task<bool> ApplicationUserLinkedAsync(
+        Guid tenantId,
+        Guid applicationUserId,
+        Guid? exceptEmployeeId = null,
+        CancellationToken cancellationToken = default)
+    {
+        return _dbContext.Employees.AnyAsync(
+            employee =>
+                employee.TenantId == tenantId
+                && employee.ApplicationUserId == applicationUserId
+                && (exceptEmployeeId == null || employee.Id != exceptEmployeeId),
             cancellationToken);
     }
 

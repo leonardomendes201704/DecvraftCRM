@@ -389,6 +389,53 @@ public sealed class OrganizationEndpointModule : IEndpointModule
         .RequirePermission(KnownPermissions.CoreEmployeesManage)
         .WithName(ApiEndpointNames.EmployeesDeactivate)
         .WithOpenApi();
+
+        app.MapPost(ApiRoutes.EmployeeLinkUser, async (
+            Guid employeeId,
+            LinkEmployeeUserRequest linkRequest,
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await ResolveCurrentUserAsync(request, mediator, currentUserAccessor, cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var result = await mediator.Send(
+                new LinkEmployeeUserCommand(currentUser.TenantId, employeeId, linkRequest),
+                cancellationToken);
+
+            return EndpointResultMapper.ToEmployeeLinkWriteResult(result);
+        })
+        .RequirePermission(KnownPermissions.CoreEmployeesManage)
+        .WithName(ApiEndpointNames.EmployeesLinkUser)
+        .WithOpenApi();
+
+        app.MapPost(ApiRoutes.EmployeeUnlinkUser, async (
+            Guid employeeId,
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await ResolveCurrentUserAsync(request, mediator, currentUserAccessor, cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var result = await mediator.Send(
+                new UnlinkEmployeeUserCommand(currentUser.TenantId, employeeId),
+                cancellationToken);
+
+            return EndpointResultMapper.ToEmployeeLinkWriteResult(result);
+        })
+        .RequirePermission(KnownPermissions.CoreEmployeesManage)
+        .WithName(ApiEndpointNames.EmployeesUnlinkUser)
+        .WithOpenApi();
     }
 
     private static Task<CurrentUserResponse?> ResolveCurrentUserAsync(

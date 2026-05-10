@@ -131,4 +131,17 @@ internal static class EndpointResultMapper
             _ => Results.BadRequest()
         };
     }
+
+    internal static IResult ToEmployeeLinkWriteResult(EmployeeLinkOperationResult result)
+    {
+        return result.Status switch
+        {
+            EmployeeLinkOperationStatus.Success => Results.Ok(result.Employee),
+            EmployeeLinkOperationStatus.EmployeeNotFound => Results.NotFound(),
+            EmployeeLinkOperationStatus.UserNotFound => Results.NotFound(),
+            EmployeeLinkOperationStatus.UserAlreadyLinked => Results.Conflict(),
+            EmployeeLinkOperationStatus.InvalidInput => Results.BadRequest(),
+            _ => Results.BadRequest()
+        };
+    }
 }

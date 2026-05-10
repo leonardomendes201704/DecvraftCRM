@@ -212,7 +212,17 @@ Status de implementacao: `Done` na UE-13.02.
 Status de implementacao:
 
 - CRUD e subordinados diretos: `Done` na UE-13.02.
-- `link-user` e `unlink-user`: planejados para UE-13.03.
+- `link-user` e `unlink-user`: `Done` na UE-13.03.
+
+Request de vinculo usuario-funcionario:
+
+```json
+{
+  "applicationUserId": "00000000-0000-0000-0000-000000000000"
+}
+```
+
+`GET /api/me` retorna o campo `employee` preenchido quando o usuario autenticado possui funcionario vinculado.
 
 ### CRM com responsaveis
 

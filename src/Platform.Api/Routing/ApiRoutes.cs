@@ -12,6 +12,8 @@ public static class ApiRoutes
     public const string JobTitleById = "/api/job-titles/{jobTitleId:guid}";
     public const string Employees = "/api/employees";
     public const string EmployeeById = "/api/employees/{employeeId:guid}";
+    public const string EmployeeLinkUser = "/api/employees/{employeeId:guid}/link-user";
+    public const string EmployeeUnlinkUser = "/api/employees/{employeeId:guid}/unlink-user";
     public const string EmployeeSubordinates = "/api/employees/{employeeId:guid}/subordinates";
     public const string Customers = "/api/customers";
     public const string CustomerById = "/api/customers/{customerId:guid}";

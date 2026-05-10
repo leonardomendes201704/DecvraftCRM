@@ -122,6 +122,18 @@ public sealed class AuthenticationService : IAuthenticationService
             .OrderBy(permission => permission)
             .ToListAsync(cancellationToken);
 
-        return new CurrentUserResponse(userId, tenantId, tenantSlug, name, email, roles, permissions);
+        var employee = await _dbContext.Employees
+            .Where(item => item.TenantId == tenantId && item.ApplicationUserId == userId)
+            .Select(item => new CurrentEmployeeResponse(
+                item.Id,
+                item.DepartmentId,
+                item.JobTitleId,
+                item.ManagerEmployeeId,
+                item.FullName,
+                item.CorporateEmail,
+                item.Status))
+            .SingleOrDefaultAsync(cancellationToken);
+
+        return new CurrentUserResponse(userId, tenantId, tenantSlug, name, email, roles, permissions, employee);
     }
 }

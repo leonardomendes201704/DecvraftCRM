@@ -21,6 +21,8 @@ public static class ApiEndpointNames
     public const string EmployeesCreate = "Employees.Create";
     public const string EmployeesUpdate = "Employees.Update";
     public const string EmployeesDeactivate = "Employees.Deactivate";
+    public const string EmployeesLinkUser = "Employees.LinkUser";
+    public const string EmployeesUnlinkUser = "Employees.UnlinkUser";
     public const string EmployeesSubordinates = "Employees.Subordinates";
     public const string CustomersList = "Customers.List";
     public const string CustomersGetById = "Customers.GetById";

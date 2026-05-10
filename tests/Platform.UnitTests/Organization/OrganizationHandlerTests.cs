@@ -59,6 +59,41 @@ public sealed class OrganizationHandlerTests
         Assert.False(repository.Saved);
     }
 
+    [Fact]
+    public async Task LinkEmployeeUser_returns_user_already_linked_when_user_has_another_employee()
+    {
+        var tenantId = Guid.NewGuid();
+        var employee = Employee.Create(
+            tenantId,
+            null,
+            null,
+            null,
+            null,
+            "Ana Lima",
+            null,
+            null,
+            null,
+            null,
+            Now);
+        var repository = new FakeEmployeeRepository
+        {
+            Employee = employee,
+            ApplicationUserExists = true,
+            ApplicationUserLinked = true
+        };
+        var handler = new LinkEmployeeUserCommandHandler(repository, new FixedClock(Now));
+
+        var result = await handler.Handle(
+            new LinkEmployeeUserCommand(
+                tenantId,
+                employee.Id,
+                new LinkEmployeeUserRequest(Guid.NewGuid())),
+            CancellationToken.None);
+
+        Assert.Equal(EmployeeLinkOperationStatus.UserAlreadyLinked, result.Status);
+        Assert.False(repository.Saved);
+    }
+
     private sealed class FixedClock : IClock
     {
         public FixedClock(DateTimeOffset utcNow)
@@ -122,12 +157,21 @@ public sealed class OrganizationHandlerTests
 
     private sealed class FakeEmployeeRepository : IEmployeeRepository
     {
+        public Employee? Employee { get; init; }
+        public bool ApplicationUserExists { get; init; }
+        public bool ApplicationUserLinked { get; init; }
         public bool Saved { get; private set; }
 
         public Task<IReadOnlyCollection<Employee>> ListAsync(Guid tenantId, CancellationToken cancellationToken = default) =>
             Task.FromResult<IReadOnlyCollection<Employee>>([]);
 
         public Task<Employee?> GetByIdAsync(Guid tenantId, Guid employeeId, CancellationToken cancellationToken = default) =>
+            Task.FromResult(Employee);
+
+        public Task<Employee?> GetByApplicationUserIdAsync(
+            Guid tenantId,
+            Guid applicationUserId,
+            CancellationToken cancellationToken = default) =>
             Task.FromResult<Employee?>(null);
 
         public Task<IReadOnlyCollection<Employee>> ListSubordinatesAsync(
@@ -144,6 +188,19 @@ public sealed class OrganizationHandlerTests
 
         public Task<bool> EmployeeExistsAsync(Guid tenantId, Guid employeeId, CancellationToken cancellationToken = default) =>
             Task.FromResult(false);
+
+        public Task<bool> ApplicationUserExistsAsync(
+            Guid tenantId,
+            Guid applicationUserId,
+            CancellationToken cancellationToken = default) =>
+            Task.FromResult(ApplicationUserExists);
+
+        public Task<bool> ApplicationUserLinkedAsync(
+            Guid tenantId,
+            Guid applicationUserId,
+            Guid? exceptEmployeeId = null,
+            CancellationToken cancellationToken = default) =>
+            Task.FromResult(ApplicationUserLinked);
 
         public Task<bool> ExistsByCorporateEmailAsync(
             Guid tenantId,
