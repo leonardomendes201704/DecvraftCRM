@@ -1,6 +1,6 @@
+using MediatR;
 using Platform.Api.Routing;
 using Platform.Api.Security;
-using Platform.Application.Abstractions;
 using Platform.Application.Finance;
 using Platform.Domain.Catalog;
 using Platform.Domain.Enums;
@@ -13,17 +13,16 @@ public sealed class FinanceEndpointModule : IEndpointModule
     {
         app.MapGet(ApiRoutes.FinancialAccounts, async (
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialAccountService accountService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var accounts = await accountService.ListAsync(currentUser.TenantId, cancellationToken);
+            var accounts = await mediator.Send(new ListFinancialAccountsQuery(currentUser.TenantId), cancellationToken);
 
             return Results.Ok(accounts);
         })
@@ -34,17 +33,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
         app.MapGet(ApiRoutes.FinancialAccountById, async (
             Guid accountId,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialAccountService accountService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var account = await accountService.GetByIdAsync(currentUser.TenantId, accountId, cancellationToken);
+            var account = await mediator.Send(
+                new GetFinancialAccountByIdQuery(currentUser.TenantId, accountId),
+                cancellationToken);
 
             return account is null ? Results.NotFound() : Results.Ok(account);
         })
@@ -55,17 +55,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
         app.MapPost(ApiRoutes.FinancialAccounts, async (
             CreateFinancialAccountRequest accountRequest,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialAccountService accountService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await accountService.CreateAsync(currentUser.TenantId, accountRequest, cancellationToken);
+            var result = await mediator.Send(
+                new CreateFinancialAccountCommand(currentUser.TenantId, accountRequest),
+                cancellationToken);
 
             return EndpointResultMapper.ToFinancialAccountWriteResult(result);
         })
@@ -77,17 +78,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
             Guid accountId,
             UpdateFinancialAccountRequest accountRequest,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialAccountService accountService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await accountService.UpdateAsync(currentUser.TenantId, accountId, accountRequest, cancellationToken);
+            var result = await mediator.Send(
+                new UpdateFinancialAccountCommand(currentUser.TenantId, accountId, accountRequest),
+                cancellationToken);
 
             return EndpointResultMapper.ToFinancialAccountWriteResult(result);
         })
@@ -98,17 +100,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
         app.MapDelete(ApiRoutes.FinancialAccountById, async (
             Guid accountId,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialAccountService accountService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await accountService.DeactivateAsync(currentUser.TenantId, accountId, cancellationToken);
+            var result = await mediator.Send(
+                new DeactivateFinancialAccountCommand(currentUser.TenantId, accountId),
+                cancellationToken);
 
             return result.Status == FinancialAccountOperationStatus.Success
                 ? Results.NoContent()
@@ -121,17 +124,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
         app.MapGet(ApiRoutes.FinancialAccountTransactions, async (
             Guid accountId,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialTransactionService transactionService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var transactions = await transactionService.ListByAccountAsync(currentUser.TenantId, accountId, cancellationToken);
+            var transactions = await mediator.Send(
+                new ListFinancialTransactionsByAccountQuery(currentUser.TenantId, accountId),
+                cancellationToken);
 
             return Results.Ok(transactions);
         })
@@ -142,17 +146,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
         app.MapGet(ApiRoutes.FinancialTransactionById, async (
             Guid transactionId,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialTransactionService transactionService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var transaction = await transactionService.GetByIdAsync(currentUser.TenantId, transactionId, cancellationToken);
+            var transaction = await mediator.Send(
+                new GetFinancialTransactionByIdQuery(currentUser.TenantId, transactionId),
+                cancellationToken);
 
             return transaction is null ? Results.NotFound() : Results.Ok(transaction);
         })
@@ -164,17 +169,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
             Guid accountId,
             CreateFinancialTransactionRequest transactionRequest,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialTransactionService transactionService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await transactionService.CreateAsync(currentUser.TenantId, accountId, transactionRequest, cancellationToken);
+            var result = await mediator.Send(
+                new CreateFinancialTransactionCommand(currentUser.TenantId, accountId, transactionRequest),
+                cancellationToken);
 
             return EndpointResultMapper.ToFinancialTransactionWriteResult(result);
         })
@@ -186,17 +192,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
             Guid transactionId,
             UpdateFinancialTransactionRequest transactionRequest,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialTransactionService transactionService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await transactionService.UpdateAsync(currentUser.TenantId, transactionId, transactionRequest, cancellationToken);
+            var result = await mediator.Send(
+                new UpdateFinancialTransactionCommand(currentUser.TenantId, transactionId, transactionRequest),
+                cancellationToken);
 
             return EndpointResultMapper.ToFinancialTransactionWriteResult(result);
         })
@@ -207,17 +214,18 @@ public sealed class FinanceEndpointModule : IEndpointModule
         app.MapPost(ApiRoutes.FinancialTransactionVoid, async (
             Guid transactionId,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            IFinancialTransactionService transactionService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await transactionService.VoidAsync(currentUser.TenantId, transactionId, cancellationToken);
+            var result = await mediator.Send(
+                new VoidFinancialTransactionCommand(currentUser.TenantId, transactionId),
+                cancellationToken);
 
             return EndpointResultMapper.ToFinancialTransactionWriteResult(result);
         })
