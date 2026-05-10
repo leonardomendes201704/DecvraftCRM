@@ -8,6 +8,7 @@ namespace Platform.Provisioning.Services;
 public sealed class ProvisioningService : IProvisioningService
 {
     private readonly IDatabaseProvisioner _databaseProvisioner;
+    private readonly IProvisioningDbConnectionSwitcher _connectionSwitcher;
     private readonly IMigrationRunner _migrationRunner;
     private readonly ISeedRunner _seedRunner;
     private readonly ITenantProvisioner _tenantProvisioner;
@@ -16,6 +17,7 @@ public sealed class ProvisioningService : IProvisioningService
 
     public ProvisioningService(
         IDatabaseProvisioner databaseProvisioner,
+        IProvisioningDbConnectionSwitcher connectionSwitcher,
         IMigrationRunner migrationRunner,
         ISeedRunner seedRunner,
         ITenantProvisioner tenantProvisioner,
@@ -23,6 +25,7 @@ public sealed class ProvisioningService : IProvisioningService
         IInstallerLockService installerLockService)
     {
         _databaseProvisioner = databaseProvisioner;
+        _connectionSwitcher = connectionSwitcher;
         _migrationRunner = migrationRunner;
         _seedRunner = seedRunner;
         _tenantProvisioner = tenantProvisioner;
@@ -39,13 +42,15 @@ public sealed class ProvisioningService : IProvisioningService
             return ProvisioningResult.Failure(validationErrors);
         }
 
+        await _databaseProvisioner.TestConnectionAsync(request.Database, cancellationToken);
+        await _databaseProvisioner.EnsureDatabaseCreatedAsync(request.Database, cancellationToken);
+        await _connectionSwitcher.UseTargetDatabaseAsync(request.Database, cancellationToken);
+
         if (await _installerLockService.IsInstalledAsync(cancellationToken))
         {
             return ProvisioningResult.Failure([ProvisioningErrors.AlreadyInstalled]);
         }
 
-        await _databaseProvisioner.TestConnectionAsync(request.Database, cancellationToken);
-        await _databaseProvisioner.EnsureDatabaseCreatedAsync(request.Database, cancellationToken);
         await _migrationRunner.RunAsync(cancellationToken);
         await _seedRunner.RunAsync(cancellationToken);
 

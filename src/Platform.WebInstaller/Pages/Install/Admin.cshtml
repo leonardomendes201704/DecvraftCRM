@@ -23,6 +23,16 @@
         </header>
 
         <form class="installer-body" method="post">
+            @if (Model.PageErrors.Count > 0)
+            {
+                <div class="validation-panel">
+                    @foreach (var error in Model.PageErrors)
+                    {
+                        <p>@error</p>
+                    }
+                </div>
+            }
+
             <div class="form-grid">
                 <div class="form-field">
                     <label asp-for="Input.Name">Nome</label>

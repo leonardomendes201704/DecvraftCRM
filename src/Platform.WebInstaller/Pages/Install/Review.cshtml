@@ -22,7 +22,17 @@
             <span class="status-pill">Etapa 7 de 8</span>
         </header>
 
-        <div class="installer-body">
+        <form class="installer-body" method="post">
+            @if (Model.PageErrors.Count > 0)
+            {
+                <div class="validation-panel">
+                    @foreach (var error in Model.PageErrors)
+                    {
+                        <p>@error</p>
+                    }
+                </div>
+            }
+
             <dl class="summary-list">
                 <div class="summary-row">
                     <dt>Banco</dt>
@@ -48,8 +58,8 @@
 
             <div class="action-row">
                 <a class="button button-secondary" href="@InstallerWizardRoutes.Modules">Voltar</a>
-                <a class="button button-primary" href="@InstallerWizardRoutes.Complete">Concluir estrutura</a>
+                <button class="button button-primary" type="submit">Executar instalacao</button>
             </div>
-        </div>
+        </form>
     </div>
 </section>

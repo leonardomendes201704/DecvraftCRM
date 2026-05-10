@@ -16,23 +16,36 @@
     <div class="installer-content">
         <header class="installer-header">
             <div>
-                <h1>Estrutura pronta</h1>
-                <p>O wizard visual esta preparado para receber a validacao e execucao do provisioning.</p>
+                <h1>Instalacao concluida</h1>
+                <p>O tenant inicial foi provisionado e o instalador foi bloqueado para novas execucoes.</p>
             </div>
-            <span class="status-pill is-ready">UE-14.01</span>
+            <span class="status-pill is-ready">Concluido</span>
         </header>
 
         <div class="installer-body">
-            <dl class="summary-list">
-                <div class="summary-row">
-                    <dt>Fluxo</dt>
-                    <dd>Layout, progresso, navegacao e estado temporario</dd>
+            @if (Model.WizardState.Completion?.Succeeded == true)
+            {
+                <dl class="summary-list">
+                    <div class="summary-row">
+                        <dt>Tenant</dt>
+                        <dd>@Model.WizardState.Completion.TenantId</dd>
+                    </div>
+                    <div class="summary-row">
+                        <dt>Administrador</dt>
+                        <dd>@Model.WizardState.Completion.AdminUserId</dd>
+                    </div>
+                    <div class="summary-row">
+                        <dt>Modulos</dt>
+                        <dd>@string.Join(", ", Model.WizardState.Completion.InstalledModules)</dd>
+                    </div>
+                </dl>
+            }
+            else
+            {
+                <div class="validation-panel">
+                    <p>Nenhuma instalacao concluida foi encontrada nesta sessao.</p>
                 </div>
-                <div class="summary-row">
-                    <dt>Proxima etapa</dt>
-                    <dd>Validacoes por etapa e teste de conexao com banco</dd>
-                </div>
-            </dl>
+            }
 
             <div class="action-row">
                 <a class="button button-secondary" href="@InstallerWizardRoutes.Review">Voltar</a>

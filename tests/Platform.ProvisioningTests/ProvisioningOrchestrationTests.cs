@@ -42,7 +42,14 @@ public sealed class ProvisioningOrchestrationTests
 
         Assert.False(result.Succeeded);
         Assert.Contains(ProvisioningErrors.AlreadyInstalled, result.Errors);
-        Assert.Equal([ProvisioningCallNames.IsInstalled], recorder.Calls);
+        Assert.Equal(
+            [
+                ProvisioningCallNames.TestConnection,
+                ProvisioningCallNames.EnsureDatabaseCreated,
+                ProvisioningCallNames.SwitchConnection,
+                ProvisioningCallNames.IsInstalled
+            ],
+            recorder.Calls);
     }
 
     [Fact]
@@ -59,9 +66,10 @@ public sealed class ProvisioningOrchestrationTests
         Assert.Equal(KnownModules.DefaultSlugs, result.InstalledModules);
         Assert.Equal(
             [
-                ProvisioningCallNames.IsInstalled,
                 ProvisioningCallNames.TestConnection,
                 ProvisioningCallNames.EnsureDatabaseCreated,
+                ProvisioningCallNames.SwitchConnection,
+                ProvisioningCallNames.IsInstalled,
                 ProvisioningCallNames.RunMigrations,
                 ProvisioningCallNames.RunSeeds,
                 ProvisioningCallNames.CreateTenant,
@@ -77,6 +85,7 @@ public sealed class ProvisioningOrchestrationTests
     {
         return new ProvisioningService(
             new FakeDatabaseProvisioner(recorder),
+            new FakeConnectionSwitcher(recorder),
             new FakeMigrationRunner(recorder),
             new FakeSeedRunner(recorder),
             new FakeTenantProvisioner(recorder),
@@ -127,6 +136,7 @@ public sealed class ProvisioningOrchestrationTests
         public const string IsInstalled = "IsInstalled";
         public const string TestConnection = "TestConnection";
         public const string EnsureDatabaseCreated = "EnsureDatabaseCreated";
+        public const string SwitchConnection = "SwitchConnection";
         public const string RunMigrations = "RunMigrations";
         public const string RunSeeds = "RunSeeds";
         public const string CreateTenant = "CreateTenant";
@@ -154,6 +164,22 @@ public sealed class ProvisioningOrchestrationTests
         public Task EnsureDatabaseCreatedAsync(DatabaseSetupOptions options, CancellationToken cancellationToken = default)
         {
             _recorder.Calls.Add(ProvisioningCallNames.EnsureDatabaseCreated);
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class FakeConnectionSwitcher : IProvisioningDbConnectionSwitcher
+    {
+        private readonly ProvisioningCallRecorder _recorder;
+
+        public FakeConnectionSwitcher(ProvisioningCallRecorder recorder)
+        {
+            _recorder = recorder;
+        }
+
+        public Task UseTargetDatabaseAsync(DatabaseSetupOptions options, CancellationToken cancellationToken = default)
+        {
+            _recorder.Calls.Add(ProvisioningCallNames.SwitchConnection);
             return Task.CompletedTask;
         }
     }

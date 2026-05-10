@@ -20,6 +20,10 @@ public abstract class InstallPageModel : PageModel
 
     public InstallWizardState WizardState { get; private set; } = new();
 
+    public IReadOnlyCollection<string> PageErrors { get; protected set; } = [];
+
+    public string? PageSuccessMessage { get; protected set; }
+
     protected InstallWizardState LoadWizardState()
     {
         WizardState = _stateStore.Get(HttpContext);

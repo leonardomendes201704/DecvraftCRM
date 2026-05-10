@@ -52,6 +52,16 @@ Status da UE-14.01:
 - Estado temporario criado em `InstallWizardState` e armazenado via session protegida do ASP.NET Core.
 - Rotas visuais criadas de `/install` ate `/install/complete`.
 
+Status das UE-14.02 e UE-14.03:
+
+- Etapas do wizard implementadas com validacoes server-side.
+- Tela de banco testa conexao usando `IDatabaseProvisioner`.
+- Tela de revisao executa o `ProvisioningService`.
+- O provisioning troca o `DbContext` para o banco informado no wizard antes de migrations, seeds e criacao do tenant.
+- Tela de conclusao exibe tenant, administrador e modulos instalados sem expor senha.
+- Dados sensiveis do wizard sao limpos da session apos instalacao bem-sucedida.
+- Acesso direto as etapas e bloqueado quando a instalacao ja esta concluida.
+
 ## Padrao de UI
 
 - Usar Razor Pages para o wizard.
@@ -90,11 +100,11 @@ Campos:
 - Usuario.
 - Senha.
 - Trust server certificate.
-- Criar banco se nao existir.
 
 Acoes:
 
 - Testar conexao.
+- Criar banco automaticamente durante a instalacao, quando ainda nao existir.
 - Persistir dados temporarios no estado do wizard.
 
 Observacao:
@@ -176,7 +186,7 @@ Comportamento:
 Rota sugerida:
 
 - `GET /install/review`
-- `POST /install/run`
+- `POST /install/review`
 
 Responsabilidades:
 
@@ -249,4 +259,4 @@ Persistencia do estado:
 
 ## Proximo Bloco
 
-Implementar a UE-14.02, adicionando validacoes por etapa, teste de conexao real na tela de banco e tratamento visual de erros.
+Iniciar a `EP-15 - Frontend Web MVC/Razor`, criando a aplicacao autenticada operacional.

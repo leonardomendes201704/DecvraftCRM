@@ -1,15 +1,23 @@
+using Microsoft.AspNetCore.Mvc;
 using Platform.Persistence;
 using Platform.Persistence.Configuration;
 using Platform.Provisioning;
 using Platform.Provisioning.Abstractions;
 using Platform.Provisioning.Models;
 using Platform.Provisioning.Validation;
+using Platform.WebInstaller.Filters;
 using Platform.WebInstaller.Services;
 using Platform.WebInstaller.Routing;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorPages();
+builder.Services.AddScoped<InstalledWizardGuardFilter>();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AddFolderApplicationModelConvention(
+        "/Install",
+        model => model.Filters.Add(new ServiceFilterAttribute(typeof(InstalledWizardGuardFilter))));
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDistributedMemoryCache();

@@ -2,6 +2,8 @@
 
 O Web Installer expoe os endpoints iniciais para verificar status, testar banco e executar a instalacao.
 
+O fluxo completo tambem pode ser executado pela interface em `GET /install`.
+
 ## Endpoints
 
 ### GET /install/status
@@ -47,6 +49,8 @@ Resposta de sucesso:
 ### POST /install/run
 
 Executa o provisionamento inicial completo.
+
+Na UI, a execucao equivalente acontece em `POST /install/review`, apos a tela de revisao do wizard.
 
 Request de exemplo:
 

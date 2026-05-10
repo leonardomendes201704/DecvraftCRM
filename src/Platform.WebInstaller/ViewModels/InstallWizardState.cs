@@ -7,4 +7,5 @@ public sealed class InstallWizardState
     public AdminStepViewModel Admin { get; set; } = new();
     public BrandingStepViewModel Branding { get; set; } = new();
     public ModulesStepViewModel Modules { get; set; } = new();
+    public InstallCompletionViewModel? Completion { get; set; }
 }

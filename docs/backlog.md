@@ -438,7 +438,7 @@ Tasks:
 
 ## EP-14 - Frontend Web Installer
 
-Status: `Doing`
+Status: `Done`
 Prioridade: `P0`
 
 Objetivo: criar um wizard visual em Razor Pages para executar a instalacao inicial da plataforma pelo navegador.
@@ -456,24 +456,24 @@ Tasks:
 
 Tasks:
 
-- `[Todo]` Criar etapa de boas-vindas/status.
-- `[Todo]` Criar etapa de banco de dados com teste de conexao.
-- `[Todo]` Criar etapa de tenant inicial.
-- `[Todo]` Criar etapa de administrador.
-- `[Todo]` Criar etapa de branding.
-- `[Todo]` Criar etapa de modulos.
-- `[Todo]` Criar etapa de revisao.
-- `[Todo]` Criar etapa de conclusao.
+- `[Done]` Criar etapa de boas-vindas/status.
+- `[Done]` Criar etapa de banco de dados com teste de conexao.
+- `[Done]` Criar etapa de tenant inicial.
+- `[Done]` Criar etapa de administrador.
+- `[Done]` Criar etapa de branding.
+- `[Done]` Criar etapa de modulos.
+- `[Done]` Criar etapa de revisao.
+- `[Done]` Criar etapa de conclusao.
 
 ### UE-14.03 - Execucao da instalacao pela UI
 
 Tasks:
 
-- `[Todo]` Integrar wizard ao ProvisioningService.
-- `[Todo]` Exibir erros de validacao por etapa.
-- `[Todo]` Exibir resultado final da instalacao.
-- `[Todo]` Bloquear wizard quando instalacao ja estiver concluida.
-- `[Todo]` Limpar estado temporario apos instalacao.
+- `[Done]` Integrar wizard ao ProvisioningService.
+- `[Done]` Exibir erros de validacao por etapa.
+- `[Done]` Exibir resultado final da instalacao.
+- `[Done]` Bloquear wizard quando instalacao ja estiver concluida.
+- `[Done]` Limpar estado temporario apos instalacao.
 
 ## EP-15 - Frontend Web MVC/Razor
 

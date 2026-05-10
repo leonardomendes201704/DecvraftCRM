@@ -25,6 +25,13 @@ public sealed class BrandingModel : InstallPageModel
     public IActionResult OnPost()
     {
         var state = LoadWizardState();
+        PageErrors = InstallerWizardValidator.ValidateBranding(Input);
+
+        if (PageErrors.Count > 0)
+        {
+            return Page();
+        }
+
         state.Branding = Input;
         SaveWizardState(state);
 

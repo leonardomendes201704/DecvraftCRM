@@ -9,6 +9,7 @@ public static class DependencyInjection
     public static IServiceCollection AddProvisioning(this IServiceCollection services)
     {
         services.AddScoped<IDatabaseProvisioner, DatabaseProvisioner>();
+        services.AddScoped<IProvisioningDbConnectionSwitcher, ProvisioningDbConnectionSwitcher>();
         services.AddScoped<IMigrationRunner, MigrationRunner>();
         services.AddScoped<ISeedRunner, SeedRunner>();
         services.AddScoped<ITenantProvisioner, TenantProvisioner>();

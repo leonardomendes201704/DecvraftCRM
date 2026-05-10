@@ -23,6 +23,23 @@
         </header>
 
         <form class="installer-body" method="post">
+            @if (Model.PageErrors.Count > 0)
+            {
+                <div class="validation-panel">
+                    @foreach (var error in Model.PageErrors)
+                    {
+                        <p>@error</p>
+                    }
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.PageSuccessMessage))
+            {
+                <div class="success-panel">
+                    <p>@Model.PageSuccessMessage</p>
+                </div>
+            }
+
             <div class="form-grid">
                 <div class="form-field">
                     <label asp-for="Input.Host">Host</label>
@@ -48,15 +65,14 @@
                     <input asp-for="Input.TrustServerCertificate" />
                     <label asp-for="Input.TrustServerCertificate">Trust server certificate</label>
                 </div>
-                <div class="form-field check-field">
-                    <input asp-for="Input.CreateDatabase" />
-                    <label asp-for="Input.CreateDatabase">Criar banco se necessario</label>
-                </div>
             </div>
 
             <div class="action-row">
                 <a class="button button-secondary" href="@InstallerWizardRoutes.Welcome">Voltar</a>
-                <button class="button button-primary" type="submit">Continuar</button>
+                <span class="action-group">
+                    <button class="button button-secondary" type="submit" name="command" value="test">Testar conexao</button>
+                    <button class="button button-primary" type="submit" name="command" value="continue">Continuar</button>
+                </span>
             </div>
         </form>
     </div>

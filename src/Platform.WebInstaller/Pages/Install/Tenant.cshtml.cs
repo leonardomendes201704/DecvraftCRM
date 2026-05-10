@@ -25,6 +25,13 @@ public sealed class TenantModel : InstallPageModel
     public IActionResult OnPost()
     {
         var state = LoadWizardState();
+        PageErrors = InstallerWizardValidator.ValidateTenant(Input);
+
+        if (PageErrors.Count > 0)
+        {
+            return Page();
+        }
+
         state.Tenant = Input;
         SaveWizardState(state);
 

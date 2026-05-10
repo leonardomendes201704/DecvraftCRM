@@ -226,6 +226,13 @@ input[type="checkbox"] {
     margin-top: 28px;
 }
 
+.action-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
 .button {
     display: inline-flex;
     align-items: center;
@@ -262,6 +269,32 @@ input[type="checkbox"] {
 .summary-list {
     display: grid;
     gap: 12px;
+    margin: 0;
+}
+
+.validation-panel,
+.success-panel {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 22px;
+    border-radius: 8px;
+    padding: 14px 16px;
+}
+
+.validation-panel {
+    border: 1px solid #fecdca;
+    background: #fffbfa;
+    color: var(--danger);
+}
+
+.success-panel {
+    border: 1px solid #abefc6;
+    background: #ecfdf3;
+    color: var(--success);
+}
+
+.validation-panel p,
+.success-panel p {
     margin: 0;
 }
 

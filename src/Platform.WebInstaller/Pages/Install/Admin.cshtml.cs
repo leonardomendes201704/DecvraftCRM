@@ -28,9 +28,12 @@ public sealed class AdminModel : InstallPageModel
     public IActionResult OnPost()
     {
         var state = LoadWizardState();
-        if (Input.Password != ConfirmPassword)
+        PageErrors = InstallerWizardValidator.ValidateAdmin(Input, ConfirmPassword);
+
+        if (PageErrors.Count > 0)
         {
             Input.Password = string.Empty;
+            return Page();
         }
 
         state.Admin = Input;
