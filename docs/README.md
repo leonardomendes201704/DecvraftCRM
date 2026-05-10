@@ -25,6 +25,8 @@ Antes de implementar qualquer mudanca relevante:
 - [decisions.md](decisions.md): registro de decisoes tecnicas e arquiteturais.
 - [definition-of-done.md](definition-of-done.md): criterios minimos para considerar uma task concluida.
 - [installer-flow.md](installer-flow.md): endpoints e fluxo inicial do Web Installer.
+- [web-installer-ui.md](web-installer-ui.md): arquitetura e wizard visual do instalador.
+- [web-app-ui.md](web-app-ui.md): arquitetura do frontend MVC/Razor autenticado.
 - [auth-flow.md](auth-flow.md): endpoints e exemplos do fluxo de autenticacao.
 - [security.md](security.md): autenticacao, JWT, senhas e configuracoes sensiveis.
 - [modules.md](modules.md): catalogo inicial de modulos e ativacao por tenant.

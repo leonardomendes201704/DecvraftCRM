@@ -52,6 +52,10 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[x]` Roles e permissions iniciais sao criadas.
 - `[x]` Instalador e bloqueado apos instalacao.
 - `[x]` `GET /install/status` retorna `isInstalled = true` apos instalacao.
+- `[ ]` Wizard visual do instalador existe.
+- `[ ]` Wizard permite testar banco pelo navegador.
+- `[ ]` Wizard permite executar instalacao completa pelo navegador.
+- `[ ]` Wizard bloqueia instalacao quando sistema ja estiver instalado.
 
 ## Autenticacao
 
@@ -90,6 +94,15 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[x]` CRUD basico de contas financeiras existe.
 - `[x]` CRUD basico de lancamentos financeiros existe.
 
+## Frontend Web
+
+- `[ ]` Projeto `Platform.Web` existe.
+- `[ ]` Login web consome a API.
+- `[ ]` Sessao web autenticada funciona.
+- `[ ]` Layout autenticado existe.
+- `[ ]` Navegacao respeita permissoes.
+- `[ ]` Dashboard inicial existe.
+
 ## Testes
 
 - `[x]` Testes unitarios principais passam.
@@ -109,3 +122,5 @@ Uma entrega so deve ser considerada concluida quando todos os itens P0 aplicavei
 - `[ ]` Documentacao de testes existe.
 - `[ ]` Documentacao de Docker existe.
 - `[x]` Documentacao de seguranca existe.
+- `[x]` Documentacao do frontend do installer existe.
+- `[x]` Documentacao do frontend web MVC/Razor existe.

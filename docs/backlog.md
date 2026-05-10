@@ -422,3 +422,88 @@ Tasks:
 - `[Done]` Permitir alterar responsavel da atividade.
 - `[Done]` Registrar historico quando responsavel for alterado.
 - `[Done]` Atualizar listagens de oportunidades e atividades com filtro por responsavel.
+
+## EP-14 - Frontend Web Installer
+
+Status: `Todo`
+Prioridade: `P0`
+
+Objetivo: criar um wizard visual em Razor Pages para executar a instalacao inicial da plataforma pelo navegador.
+
+### UE-14.01 - Estrutura visual do installer
+
+Tasks:
+
+- `[Todo]` Criar layout base do Web Installer.
+- `[Todo]` Criar navegacao por etapas.
+- `[Todo]` Criar componente de indicador de progresso.
+- `[Todo]` Criar estado temporario do wizard.
+
+### UE-14.02 - Etapas do wizard
+
+Tasks:
+
+- `[Todo]` Criar etapa de boas-vindas/status.
+- `[Todo]` Criar etapa de banco de dados com teste de conexao.
+- `[Todo]` Criar etapa de tenant inicial.
+- `[Todo]` Criar etapa de administrador.
+- `[Todo]` Criar etapa de branding.
+- `[Todo]` Criar etapa de modulos.
+- `[Todo]` Criar etapa de revisao.
+- `[Todo]` Criar etapa de conclusao.
+
+### UE-14.03 - Execucao da instalacao pela UI
+
+Tasks:
+
+- `[Todo]` Integrar wizard ao ProvisioningService.
+- `[Todo]` Exibir erros de validacao por etapa.
+- `[Todo]` Exibir resultado final da instalacao.
+- `[Todo]` Bloquear wizard quando instalacao ja estiver concluida.
+- `[Todo]` Limpar estado temporario apos instalacao.
+
+## EP-15 - Frontend Web MVC/Razor
+
+Status: `Todo`
+Prioridade: `P1`
+
+Objetivo: criar a aplicacao web autenticada do ERP/CRM usando ASP.NET Core MVC + Razor Pages, componentes reutilizaveis, services e API clients.
+
+### UE-15.01 - Estrutura base do Platform.Web
+
+Tasks:
+
+- `[Todo]` Criar projeto `Platform.Web`.
+- `[Todo]` Configurar referencias e Docker quando necessario.
+- `[Todo]` Criar layout autenticado.
+- `[Todo]` Criar estrutura de Controllers, Pages, Views, ViewComponents, Services, Clients e ViewModels.
+
+### UE-15.02 - Autenticacao web
+
+Tasks:
+
+- `[Todo]` Criar tela de login.
+- `[Todo]` Criar logout.
+- `[Todo]` Consumir `POST /api/auth/login`.
+- `[Todo]` Consumir `GET /api/me`.
+- `[Todo]` Manter sessao web via cookie seguro.
+- `[Todo]` Criar contexto web do usuario autenticado.
+
+### UE-15.03 - Dashboard inicial
+
+Tasks:
+
+- `[Todo]` Criar dashboard autenticado.
+- `[Todo]` Exibir atividades vencidas.
+- `[Todo]` Exibir proximas atividades.
+- `[Todo]` Exibir oportunidades por etapa.
+- `[Todo]` Exibir filtros por responsavel quando disponivel.
+
+### UE-15.04 - Telas operacionais iniciais
+
+Tasks:
+
+- `[Todo]` Criar telas de organizacao.
+- `[Todo]` Criar telas de CRM.
+- `[Todo]` Criar telas de financeiro.
+- `[Todo]` Criar componentes reutilizaveis de tabela, filtros, cards e acoes.

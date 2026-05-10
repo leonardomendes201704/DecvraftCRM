@@ -67,13 +67,15 @@ Entregas:
 
 Status: `Concluido`
 
-Objetivo: expor endpoints para status, teste de banco e execucao da instalacao.
+Objetivo: expor endpoints e interface visual para status, teste de banco e execucao da instalacao.
 
 Entregas:
 
 - `GET /install/status`;
 - `POST /install/test-database`;
 - `POST /install/run`;
+- wizard visual em Razor Pages;
+- etapas de banco, tenant, admin, branding, modulos, revisao e conclusao;
 - validacoes de entrada;
 - bloqueio contra reinstalacao;
 - respostas padronizadas.
@@ -174,3 +176,21 @@ Entregas:
 - docs de Docker;
 - docs de seguranca;
 - roadmap atualizado.
+
+## Fase 11 - Frontend Web Operacional
+
+Status: `Nao iniciado`
+
+Objetivo: criar a aplicacao web autenticada em ASP.NET Core MVC + Razor Pages para operacao do ERP/CRM.
+
+Entregas:
+
+- projeto `Platform.Web`;
+- login/logout via API;
+- layout autenticado;
+- navegacao por permissoes;
+- API clients tipados;
+- dashboard inicial;
+- telas de organizacao;
+- telas de CRM;
+- telas de financeiro.
