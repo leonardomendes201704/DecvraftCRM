@@ -37,6 +37,11 @@ public static class ApiRoutes
     public const string OpportunityWon = "/api/opportunities/{opportunityId:guid}/won";
     public const string OpportunityLost = "/api/opportunities/{opportunityId:guid}/lost";
     public const string OpportunityCanceled = "/api/opportunities/{opportunityId:guid}/canceled";
+    public const string CrmResponsiblePortfolioSummary = "/api/crm/responsibles/portfolio-summary";
+    public const string CrmResponsibleOpportunitiesSummary = "/api/crm/responsibles/opportunities-summary";
+    public const string CrmResponsibleOverdueActivitiesSummary = "/api/crm/responsibles/overdue-activities-summary";
+    public const string CrmResponsibleUpcomingActivitiesSummary = "/api/crm/responsibles/upcoming-activities-summary";
+    public const string CrmTeamFunnelSummary = "/api/crm/teams/funnel-summary";
     public const string FinancialAccounts = "/api/financial/accounts";
     public const string FinancialAccountById = "/api/financial/accounts/{accountId:guid}";
     public const string FinancialAccountTransactions = "/api/financial/accounts/{accountId:guid}/transactions";

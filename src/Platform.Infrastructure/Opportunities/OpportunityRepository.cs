@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Platform.Application.Abstractions;
+using Platform.Application.Opportunities;
 using Platform.Domain.Entities;
 using Platform.Domain.Enums;
 using Platform.Persistence;
@@ -71,6 +72,114 @@ public sealed class OpportunityRepository : IOpportunityRepository
                 && employee.Id == employeeId
                 && employee.Status == EmployeeStatus.Active,
             cancellationToken);
+    }
+
+    public async Task<IReadOnlyCollection<ResponsiblePortfolioSummaryResponse>> ListResponsiblePortfolioSummaryAsync(
+        Guid tenantId,
+        CancellationToken cancellationToken = default)
+    {
+        var summaries = await _dbContext.Opportunities
+            .Where(opportunity => opportunity.TenantId == tenantId)
+            .GroupJoin(
+                _dbContext.Employees.Where(employee => employee.TenantId == tenantId),
+                opportunity => opportunity.OwnerEmployeeId,
+                employee => employee.Id,
+                (opportunity, employees) => new { opportunity, employees })
+            .SelectMany(
+                item => item.employees.DefaultIfEmpty(),
+                (item, employee) => new { item.opportunity, employee })
+            .GroupBy(item => new
+            {
+                OwnerEmployeeId = item.employee == null ? null : (Guid?)item.employee.Id,
+                OwnerName = item.employee == null ? "Sem responsavel" : item.employee.FullName
+            })
+            .Select(group => new ResponsiblePortfolioSummaryResponse(
+                group.Key.OwnerEmployeeId,
+                group.Key.OwnerName,
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Open),
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Won),
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Lost),
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Canceled),
+                group.Where(item => item.opportunity.Status == OpportunityStatus.Open)
+                    .Sum(item => item.opportunity.EstimatedValue)))
+            .OrderBy(summary => summary.OwnerName)
+            .ToListAsync(cancellationToken);
+
+        return summaries;
+    }
+
+    public async Task<IReadOnlyCollection<ResponsibleOpportunitySummaryResponse>> ListResponsibleOpportunitySummaryAsync(
+        Guid tenantId,
+        CancellationToken cancellationToken = default)
+    {
+        var summaries = await _dbContext.Opportunities
+            .Where(opportunity => opportunity.TenantId == tenantId)
+            .GroupJoin(
+                _dbContext.Employees.Where(employee => employee.TenantId == tenantId),
+                opportunity => opportunity.OwnerEmployeeId,
+                employee => employee.Id,
+                (opportunity, employees) => new { opportunity, employees })
+            .SelectMany(
+                item => item.employees.DefaultIfEmpty(),
+                (item, employee) => new { item.opportunity, employee })
+            .GroupBy(item => new
+            {
+                OwnerEmployeeId = item.employee == null ? null : (Guid?)item.employee.Id,
+                OwnerName = item.employee == null ? "Sem responsavel" : item.employee.FullName
+            })
+            .Select(group => new ResponsibleOpportunitySummaryResponse(
+                group.Key.OwnerEmployeeId,
+                group.Key.OwnerName,
+                group.Count(),
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Open),
+                group.Where(item => item.opportunity.Status == OpportunityStatus.Open)
+                    .Sum(item => item.opportunity.EstimatedValue)))
+            .OrderBy(summary => summary.OwnerName)
+            .ToListAsync(cancellationToken);
+
+        return summaries;
+    }
+
+    public async Task<IReadOnlyCollection<TeamFunnelSummaryResponse>> ListTeamFunnelSummaryAsync(
+        Guid tenantId,
+        CancellationToken cancellationToken = default)
+    {
+        var summaries = await _dbContext.Opportunities
+            .Where(opportunity => opportunity.TenantId == tenantId)
+            .GroupJoin(
+                _dbContext.Employees.Where(employee => employee.TenantId == tenantId),
+                opportunity => opportunity.OwnerEmployeeId,
+                employee => employee.Id,
+                (opportunity, employees) => new { opportunity, employees })
+            .SelectMany(
+                item => item.employees.DefaultIfEmpty(),
+                (item, employee) => new { item.opportunity, employee })
+            .GroupJoin(
+                _dbContext.Departments.Where(department => department.TenantId == tenantId),
+                item => item.employee == null ? null : item.employee.DepartmentId,
+                department => department.Id,
+                (item, departments) => new { item.opportunity, departments })
+            .SelectMany(
+                item => item.departments.DefaultIfEmpty(),
+                (item, department) => new { item.opportunity, department })
+            .GroupBy(item => new
+            {
+                DepartmentId = item.department == null ? null : (Guid?)item.department.Id,
+                DepartmentName = item.department == null ? "Sem departamento" : item.department.Name
+            })
+            .Select(group => new TeamFunnelSummaryResponse(
+                group.Key.DepartmentId,
+                group.Key.DepartmentName,
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Open),
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Won),
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Lost),
+                group.Count(item => item.opportunity.Status == OpportunityStatus.Canceled),
+                group.Where(item => item.opportunity.Status == OpportunityStatus.Open)
+                    .Sum(item => item.opportunity.EstimatedValue)))
+            .OrderBy(summary => summary.DepartmentName)
+            .ToListAsync(cancellationToken);
+
+        return summaries;
     }
 
     public void Add(Opportunity opportunity)

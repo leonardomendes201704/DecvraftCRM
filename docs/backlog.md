@@ -375,7 +375,7 @@ Tasks:
 
 ## EP-13 - Organizacao, Pessoas e Responsaveis
 
-Status: `Doing`
+Status: `Done`
 Prioridade: `P1`
 
 Objetivo: criar a base organizacional para relacionar usuarios, funcionarios, cargos, departamentos, hierarquias e responsaveis de negocio.
@@ -427,14 +427,14 @@ Tasks:
 
 Tasks:
 
-- `[Todo]` Criar resumo de carteira por responsavel.
-- `[Todo]` Criar total de oportunidades por responsavel.
-- `[Todo]` Criar valor estimado de oportunidades abertas por responsavel.
-- `[Todo]` Criar atividades vencidas agrupadas por responsavel.
-- `[Todo]` Criar proximas atividades agrupadas por responsavel.
-- `[Todo]` Criar funil comercial por equipe/departamento.
-- `[Todo]` Criar endpoints agregados para dashboard comercial.
-- `[Todo]` Atualizar documentacao de CRM e organizacao com os endpoints agregados.
+- `[Done]` Criar resumo de carteira por responsavel.
+- `[Done]` Criar total de oportunidades por responsavel.
+- `[Done]` Criar valor estimado de oportunidades abertas por responsavel.
+- `[Done]` Criar atividades vencidas agrupadas por responsavel.
+- `[Done]` Criar proximas atividades agrupadas por responsavel.
+- `[Done]` Criar funil comercial por equipe/departamento.
+- `[Done]` Criar endpoints agregados para dashboard comercial.
+- `[Done]` Atualizar documentacao de CRM e organizacao com os endpoints agregados.
 
 ## EP-14 - Frontend Web Installer
 

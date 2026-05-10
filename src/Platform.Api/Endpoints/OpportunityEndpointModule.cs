@@ -68,6 +68,137 @@ public sealed class OpportunityEndpointModule : IEndpointModule
         .WithName(ApiEndpointNames.OpportunitiesGetById)
         .WithOpenApi();
 
+        app.MapGet(ApiRoutes.CrmResponsiblePortfolioSummary, async (
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var summary = await mediator.Send(
+                new ListResponsiblePortfolioSummaryQuery(currentUser.TenantId),
+                cancellationToken);
+
+            return Results.Ok(summary);
+        })
+        .RequirePermission(KnownPermissions.CrmOpportunitiesView)
+        .WithName(ApiEndpointNames.CrmResponsiblePortfolioSummary)
+        .WithOpenApi();
+
+        app.MapGet(ApiRoutes.CrmResponsibleOpportunitiesSummary, async (
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var summary = await mediator.Send(
+                new ListResponsibleOpportunitySummaryQuery(currentUser.TenantId),
+                cancellationToken);
+
+            return Results.Ok(summary);
+        })
+        .RequirePermission(KnownPermissions.CrmOpportunitiesView)
+        .WithName(ApiEndpointNames.CrmResponsibleOpportunitiesSummary)
+        .WithOpenApi();
+
+        app.MapGet(ApiRoutes.CrmResponsibleOverdueActivitiesSummary, async (
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var summary = await mediator.Send(
+                new ListResponsibleOverdueActivitySummaryQuery(currentUser.TenantId),
+                cancellationToken);
+
+            return Results.Ok(summary);
+        })
+        .RequirePermission(KnownPermissions.CrmOpportunitiesView)
+        .WithName(ApiEndpointNames.CrmResponsibleOverdueActivitiesSummary)
+        .WithOpenApi();
+
+        app.MapGet(ApiRoutes.CrmResponsibleUpcomingActivitiesSummary, async (
+            int? days,
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var summary = await mediator.Send(
+                new ListResponsibleUpcomingActivitySummaryQuery(currentUser.TenantId, days ?? 7),
+                cancellationToken);
+
+            return Results.Ok(summary);
+        })
+        .RequirePermission(KnownPermissions.CrmOpportunitiesView)
+        .WithName(ApiEndpointNames.CrmResponsibleUpcomingActivitiesSummary)
+        .WithOpenApi();
+
+        app.MapGet(ApiRoutes.CrmTeamFunnelSummary, async (
+            HttpRequest request,
+            IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
+            CancellationToken cancellationToken) =>
+        {
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
+            if (currentUser is null)
+            {
+                return Results.Unauthorized();
+            }
+
+            var summary = await mediator.Send(
+                new ListTeamFunnelSummaryQuery(currentUser.TenantId),
+                cancellationToken);
+
+            return Results.Ok(summary);
+        })
+        .RequirePermission(KnownPermissions.CrmOpportunitiesView)
+        .WithName(ApiEndpointNames.CrmTeamFunnelSummary)
+        .WithOpenApi();
+
         app.MapGet(ApiRoutes.OpportunityStages, async (
             HttpRequest request,
             IMediator mediator,

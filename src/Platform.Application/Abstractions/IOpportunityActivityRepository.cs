@@ -1,3 +1,4 @@
+using Platform.Application.Opportunities;
 using Platform.Domain.Entities;
 
 namespace Platform.Application.Abstractions;
@@ -28,6 +29,17 @@ public interface IOpportunityActivityRepository
     Task<bool> OpportunityExistsAsync(Guid tenantId, Guid opportunityId, CancellationToken cancellationToken = default);
 
     Task<bool> ActiveEmployeeExistsAsync(Guid tenantId, Guid employeeId, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<ResponsibleActivitySummaryResponse>> ListOverdueSummaryByResponsibleAsync(
+        Guid tenantId,
+        DateTimeOffset now,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<ResponsibleActivitySummaryResponse>> ListUpcomingSummaryByResponsibleAsync(
+        Guid tenantId,
+        DateTimeOffset from,
+        DateTimeOffset to,
+        CancellationToken cancellationToken = default);
 
     void Add(OpportunityActivity activity);
 

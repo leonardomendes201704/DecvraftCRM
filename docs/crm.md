@@ -195,13 +195,18 @@ Filtros por responsavel:
 - `GET /api/opportunity-activities/overdue?ownerEmployeeId={employeeId}`.
 - `GET /api/opportunity-activities/upcoming?ownerEmployeeId={employeeId}&days=7`.
 
+## Visoes gerenciais
+
+Endpoints agregados para dashboards comerciais:
+
+- `GET /api/crm/responsibles/portfolio-summary`: agrupa carteira por responsavel, com oportunidades abertas, ganhas, perdidas, canceladas e valor aberto estimado.
+- `GET /api/crm/responsibles/opportunities-summary`: agrupa total de oportunidades, oportunidades abertas e valor aberto estimado por responsavel.
+- `GET /api/crm/responsibles/overdue-activities-summary`: agrupa atividades vencidas e ainda agendadas por responsavel.
+- `GET /api/crm/responsibles/upcoming-activities-summary?days=7`: agrupa proximas atividades agendadas por responsavel. A janela padrao e 7 dias e o limite maximo e 90 dias.
+- `GET /api/crm/teams/funnel-summary`: agrupa funil por departamento/equipe, com oportunidades abertas, ganhas, perdidas, canceladas e valor aberto estimado.
+
+Todos os endpoints usam permissao `crm.opportunities.view`, respeitam tenant autenticado e retornam registros tambem para itens sem responsavel ou sem departamento.
+
 ## Proximo bloco
 
-O proximo bloco recomendado antes do frontend e implementar a `UE-13.05`, criando endpoints agregados para dashboard comercial:
-
-- carteira por responsavel;
-- oportunidades por responsavel;
-- valor estimado por responsavel;
-- atividades vencidas por responsavel;
-- proximas atividades por responsavel;
-- funil por equipe/departamento.
+O proximo bloco recomendado e iniciar a `EP-14 - Frontend Web Installer`, criando o wizard visual de instalacao em Razor Pages.

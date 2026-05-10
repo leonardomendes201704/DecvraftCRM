@@ -1,3 +1,4 @@
+using Platform.Application.Opportunities;
 using Platform.Domain.Entities;
 
 namespace Platform.Application.Abstractions;
@@ -21,6 +22,18 @@ public interface IOpportunityRepository
     Task<bool> CustomerExistsAsync(Guid tenantId, Guid customerId, CancellationToken cancellationToken = default);
 
     Task<bool> ActiveEmployeeExistsAsync(Guid tenantId, Guid employeeId, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<ResponsiblePortfolioSummaryResponse>> ListResponsiblePortfolioSummaryAsync(
+        Guid tenantId,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<ResponsibleOpportunitySummaryResponse>> ListResponsibleOpportunitySummaryAsync(
+        Guid tenantId,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyCollection<TeamFunnelSummaryResponse>> ListTeamFunnelSummaryAsync(
+        Guid tenantId,
+        CancellationToken cancellationToken = default);
 
     void Add(Opportunity opportunity);
 

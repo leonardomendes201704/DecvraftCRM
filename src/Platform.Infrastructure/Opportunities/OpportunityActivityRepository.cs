@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Platform.Application.Abstractions;
+using Platform.Application.Opportunities;
 using Platform.Domain.Entities;
 using Platform.Domain.Enums;
 using Platform.Persistence;
@@ -101,6 +102,76 @@ public sealed class OpportunityActivityRepository : IOpportunityActivityReposito
                 && employee.Id == employeeId
                 && employee.Status == EmployeeStatus.Active,
             cancellationToken);
+    }
+
+    public async Task<IReadOnlyCollection<ResponsibleActivitySummaryResponse>> ListOverdueSummaryByResponsibleAsync(
+        Guid tenantId,
+        DateTimeOffset now,
+        CancellationToken cancellationToken = default)
+    {
+        var summaries = await _dbContext.OpportunityActivities
+            .Where(activity =>
+                activity.TenantId == tenantId
+                && activity.Status == OpportunityActivityStatus.Scheduled
+                && activity.DueAt != null
+                && activity.DueAt < now)
+            .GroupJoin(
+                _dbContext.Employees.Where(employee => employee.TenantId == tenantId),
+                activity => activity.OwnerEmployeeId,
+                employee => employee.Id,
+                (activity, employees) => new { activity, employees })
+            .SelectMany(
+                item => item.employees.DefaultIfEmpty(),
+                (item, employee) => new { item.activity, employee })
+            .GroupBy(item => new
+            {
+                OwnerEmployeeId = item.employee == null ? null : (Guid?)item.employee.Id,
+                OwnerName = item.employee == null ? "Sem responsavel" : item.employee.FullName
+            })
+            .Select(group => new ResponsibleActivitySummaryResponse(
+                group.Key.OwnerEmployeeId,
+                group.Key.OwnerName,
+                group.Count()))
+            .OrderBy(summary => summary.OwnerName)
+            .ToListAsync(cancellationToken);
+
+        return summaries;
+    }
+
+    public async Task<IReadOnlyCollection<ResponsibleActivitySummaryResponse>> ListUpcomingSummaryByResponsibleAsync(
+        Guid tenantId,
+        DateTimeOffset from,
+        DateTimeOffset to,
+        CancellationToken cancellationToken = default)
+    {
+        var summaries = await _dbContext.OpportunityActivities
+            .Where(activity =>
+                activity.TenantId == tenantId
+                && activity.Status == OpportunityActivityStatus.Scheduled
+                && activity.DueAt != null
+                && activity.DueAt >= from
+                && activity.DueAt <= to)
+            .GroupJoin(
+                _dbContext.Employees.Where(employee => employee.TenantId == tenantId),
+                activity => activity.OwnerEmployeeId,
+                employee => employee.Id,
+                (activity, employees) => new { activity, employees })
+            .SelectMany(
+                item => item.employees.DefaultIfEmpty(),
+                (item, employee) => new { item.activity, employee })
+            .GroupBy(item => new
+            {
+                OwnerEmployeeId = item.employee == null ? null : (Guid?)item.employee.Id,
+                OwnerName = item.employee == null ? "Sem responsavel" : item.employee.FullName
+            })
+            .Select(group => new ResponsibleActivitySummaryResponse(
+                group.Key.OwnerEmployeeId,
+                group.Key.OwnerName,
+                group.Count()))
+            .OrderBy(summary => summary.OwnerName)
+            .ToListAsync(cancellationToken);
+
+        return summaries;
     }
 
     public void Add(OpportunityActivity activity)

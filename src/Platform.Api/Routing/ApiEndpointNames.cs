@@ -57,6 +57,11 @@ public static class ApiEndpointNames
     public const string OpportunitiesMarkWon = "Opportunities.MarkWon";
     public const string OpportunitiesMarkLost = "Opportunities.MarkLost";
     public const string OpportunitiesCancel = "Opportunities.Cancel";
+    public const string CrmResponsiblePortfolioSummary = "Crm.Responsibles.PortfolioSummary";
+    public const string CrmResponsibleOpportunitiesSummary = "Crm.Responsibles.OpportunitiesSummary";
+    public const string CrmResponsibleOverdueActivitiesSummary = "Crm.Responsibles.OverdueActivitiesSummary";
+    public const string CrmResponsibleUpcomingActivitiesSummary = "Crm.Responsibles.UpcomingActivitiesSummary";
+    public const string CrmTeamFunnelSummary = "Crm.Teams.FunnelSummary";
     public const string FinancialAccountsList = "FinancialAccounts.List";
     public const string FinancialAccountsGetById = "FinancialAccounts.GetById";
     public const string FinancialAccountsCreate = "FinancialAccounts.Create";
