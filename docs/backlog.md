@@ -375,7 +375,7 @@ Tasks:
 
 ## EP-13 - Organizacao, Pessoas e Responsaveis
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P1`
 
 Objetivo: criar a base organizacional para relacionar usuarios, funcionarios, cargos, departamentos, hierarquias e responsaveis de negocio.
@@ -384,13 +384,13 @@ Objetivo: criar a base organizacional para relacionar usuarios, funcionarios, ca
 
 Tasks:
 
-- `[Todo]` Criar entidade `Department`.
-- `[Todo]` Criar entidade `JobTitle`.
-- `[Todo]` Criar entidade `Employee`.
-- `[Todo]` Criar enum valorado `EmployeeStatus`.
-- `[Todo]` Configurar indices unicos por tenant para codigos, emails e vinculo usuario-funcionario.
-- `[Todo]` Configurar hierarquia direta por `ManagerEmployeeId`.
-- `[Todo]` Criar migration da estrutura organizacional.
+- `[Done]` Criar entidade `Department`.
+- `[Done]` Criar entidade `JobTitle`.
+- `[Done]` Criar entidade `Employee`.
+- `[Done]` Criar enum valorado `EmployeeStatus`.
+- `[Done]` Configurar indices unicos por tenant para codigos, emails e vinculo usuario-funcionario.
+- `[Done]` Configurar hierarquia direta por `ManagerEmployeeId`.
+- `[Done]` Criar migration da estrutura organizacional.
 
 ### UE-13.02 - Casos de uso e endpoints Core
 

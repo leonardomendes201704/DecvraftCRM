@@ -29,6 +29,9 @@ public sealed class AppDbContext : DbContext
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<SystemConfiguration> SystemConfigurations => Set<SystemConfiguration>();
     public DbSet<TenantConfiguration> TenantConfigurations => Set<TenantConfiguration>();
+    public DbSet<Department> Departments => Set<Department>();
+    public DbSet<JobTitle> JobTitles => Set<JobTitle>();
+    public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Contact> Contacts => Set<Contact>();
     public DbSet<Opportunity> Opportunities => Set<Opportunity>();

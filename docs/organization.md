@@ -61,6 +61,8 @@ Regras:
 - `Name` obrigatorio.
 - Desativacao logica para preservar historico.
 
+Status de implementacao: `Done` na UE-13.01.
+
 ### JobTitle
 
 Representa cargo ou funcao.
@@ -82,6 +84,8 @@ Regras:
 - `Code` unico por tenant.
 - `Level` deve ser valor positivo e ajuda ordenacao de senioridade.
 - `IsLeadership` indica cargos que podem atuar como gestores em fluxos de negocio.
+
+Status de implementacao: `Done` na UE-13.01.
 
 ### Employee
 
@@ -117,6 +121,10 @@ Regras:
 - Funcionario nao pode ser seu proprio gestor.
 - `TerminationDate` deve mudar status para `Terminated`.
 - Desativar usuario nao deve apagar funcionario nem historico.
+
+Status de implementacao: `Done` na UE-13.01.
+
+Migration: `AddOrganizationEntities`.
 
 ## Relacao Usuario x Funcionario
 
