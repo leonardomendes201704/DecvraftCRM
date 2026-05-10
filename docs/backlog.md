@@ -372,3 +372,53 @@ Tasks:
 - `[Done]` Listar atividades vencidas do tenant.
 - `[Done]` Listar proximas atividades do tenant com janela configuravel.
 - `[Done]` Manter consultas agregadas via handlers MediatR e portas da Application.
+
+## EP-13 - Organizacao, Pessoas e Responsaveis
+
+Status: `Todo`
+Prioridade: `P1`
+
+Objetivo: criar a base organizacional para relacionar usuarios, funcionarios, cargos, departamentos, hierarquias e responsaveis de negocio.
+
+### UE-13.01 - Estrutura organizacional base
+
+Tasks:
+
+- `[Todo]` Criar entidade `Department`.
+- `[Todo]` Criar entidade `JobTitle`.
+- `[Todo]` Criar entidade `Employee`.
+- `[Todo]` Criar enum valorado `EmployeeStatus`.
+- `[Todo]` Configurar indices unicos por tenant para codigos, emails e vinculo usuario-funcionario.
+- `[Todo]` Configurar hierarquia direta por `ManagerEmployeeId`.
+- `[Todo]` Criar migration da estrutura organizacional.
+
+### UE-13.02 - Casos de uso e endpoints Core
+
+Tasks:
+
+- `[Todo]` Criar portas, commands/queries e handlers para departamentos.
+- `[Todo]` Criar portas, commands/queries e handlers para cargos.
+- `[Todo]` Criar portas, commands/queries e handlers para funcionarios.
+- `[Todo]` Criar endpoints HTTP usando MediatR.
+- `[Todo]` Criar permissoes centralizadas para departamentos, cargos, funcionarios e hierarquia.
+- `[Todo]` Cobrir regras principais com testes automatizados.
+
+### UE-13.03 - Vinculo usuario-funcionario
+
+Tasks:
+
+- `[Todo]` Permitir vincular um `ApplicationUser` a um `Employee`.
+- `[Todo]` Permitir desvincular usuario e funcionario sem apagar historico.
+- `[Todo]` Validar unicidade do vinculo por tenant.
+- `[Todo]` Atualizar `GET /api/me` para retornar dados do funcionario vinculado quando existir.
+
+### UE-13.04 - Responsaveis no CRM
+
+Tasks:
+
+- `[Todo]` Adicionar `OwnerEmployeeId` em `Opportunity`.
+- `[Todo]` Adicionar `OwnerEmployeeId` em `OpportunityActivity`.
+- `[Todo]` Permitir alterar responsavel da oportunidade.
+- `[Todo]` Permitir alterar responsavel da atividade.
+- `[Todo]` Registrar historico quando responsavel for alterado.
+- `[Todo]` Atualizar listagens de oportunidades e atividades com filtro por responsavel.
