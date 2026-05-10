@@ -6,6 +6,13 @@ public static class ApiRoutes
     public const string Me = "/api/me";
     public const string Modules = "/api/modules";
     public const string SystemPermissions = "/api/system/permissions";
+    public const string Departments = "/api/departments";
+    public const string DepartmentById = "/api/departments/{departmentId:guid}";
+    public const string JobTitles = "/api/job-titles";
+    public const string JobTitleById = "/api/job-titles/{jobTitleId:guid}";
+    public const string Employees = "/api/employees";
+    public const string EmployeeById = "/api/employees/{employeeId:guid}";
+    public const string EmployeeSubordinates = "/api/employees/{employeeId:guid}/subordinates";
     public const string Customers = "/api/customers";
     public const string CustomerById = "/api/customers/{customerId:guid}";
     public const string CustomerContacts = "/api/customers/{customerId:guid}/contacts";

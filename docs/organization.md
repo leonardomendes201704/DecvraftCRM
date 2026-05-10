@@ -186,6 +186,8 @@ Regras:
 - `PUT /api/departments/{departmentId}`
 - `DELETE /api/departments/{departmentId}`
 
+Status de implementacao: `Done` na UE-13.02.
+
 ### Cargos
 
 - `GET /api/job-titles`
@@ -193,6 +195,8 @@ Regras:
 - `POST /api/job-titles`
 - `PUT /api/job-titles/{jobTitleId}`
 - `DELETE /api/job-titles/{jobTitleId}`
+
+Status de implementacao: `Done` na UE-13.02.
 
 ### Funcionarios
 
@@ -204,6 +208,11 @@ Regras:
 - `POST /api/employees/{employeeId}/link-user`
 - `POST /api/employees/{employeeId}/unlink-user`
 - `GET /api/employees/{employeeId}/subordinates`
+
+Status de implementacao:
+
+- CRUD e subordinados diretos: `Done` na UE-13.02.
+- `link-user` e `unlink-user`: planejados para UE-13.03.
 
 ### CRM com responsaveis
 

@@ -2,6 +2,7 @@ using Platform.Application.Contacts;
 using Platform.Application.Customers;
 using Platform.Application.Finance;
 using Platform.Application.Opportunities;
+using Platform.Application.Organization;
 using Platform.Domain.Enums;
 
 namespace Platform.Api.Endpoints;
@@ -90,6 +91,43 @@ internal static class EndpointResultMapper
             FinancialTransactionOperationStatus.NotFound => Results.NotFound(),
             FinancialTransactionOperationStatus.AccountNotFound => Results.NotFound(),
             FinancialTransactionOperationStatus.InvalidInput => Results.BadRequest(),
+            _ => Results.BadRequest()
+        };
+    }
+
+    internal static IResult ToDepartmentWriteResult(DepartmentOperationResult result)
+    {
+        return result.Status switch
+        {
+            OrganizationOperationStatus.Success => Results.Ok(result.Department),
+            OrganizationOperationStatus.NotFound => Results.NotFound(),
+            OrganizationOperationStatus.DuplicateCode => Results.Conflict(),
+            OrganizationOperationStatus.InvalidInput => Results.BadRequest(),
+            _ => Results.BadRequest()
+        };
+    }
+
+    internal static IResult ToJobTitleWriteResult(JobTitleOperationResult result)
+    {
+        return result.Status switch
+        {
+            OrganizationOperationStatus.Success => Results.Ok(result.JobTitle),
+            OrganizationOperationStatus.NotFound => Results.NotFound(),
+            OrganizationOperationStatus.DuplicateCode => Results.Conflict(),
+            OrganizationOperationStatus.InvalidInput => Results.BadRequest(),
+            _ => Results.BadRequest()
+        };
+    }
+
+    internal static IResult ToEmployeeWriteResult(EmployeeOperationResult result)
+    {
+        return result.Status switch
+        {
+            OrganizationOperationStatus.Success => Results.Ok(result.Employee),
+            OrganizationOperationStatus.NotFound => Results.NotFound(),
+            OrganizationOperationStatus.DuplicateEmail => Results.Conflict(),
+            OrganizationOperationStatus.RelatedEntityNotFound => Results.NotFound(),
+            OrganizationOperationStatus.InvalidInput => Results.BadRequest(),
             _ => Results.BadRequest()
         };
     }

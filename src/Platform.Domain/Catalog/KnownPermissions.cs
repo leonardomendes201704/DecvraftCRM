@@ -8,6 +8,14 @@ public static class KnownPermissions
     public const string CoreUsersManage = "core.users.manage";
     public const string CoreModulesView = "core.modules.view";
     public const string CoreModulesManage = "core.modules.manage";
+    public const string CoreDepartmentsView = "core.departments.view";
+    public const string CoreDepartmentsManage = "core.departments.manage";
+    public const string CoreJobTitlesView = "core.job-titles.view";
+    public const string CoreJobTitlesManage = "core.job-titles.manage";
+    public const string CoreEmployeesView = "core.employees.view";
+    public const string CoreEmployeesManage = "core.employees.manage";
+    public const string CoreHierarchyView = "core.hierarchy.view";
+    public const string CoreHierarchyManage = "core.hierarchy.manage";
     public const string CrmCustomersView = "crm.customers.view";
     public const string CrmCustomersCreate = "crm.customers.create";
     public const string CrmCustomersUpdate = "crm.customers.update";
@@ -27,6 +35,14 @@ public static class KnownPermissions
         new(CoreUsersManage, "Gerenciar usuarios", KnownModules.CoreSlug),
         new(CoreModulesView, "Visualizar modulos", KnownModules.CoreSlug),
         new(CoreModulesManage, "Gerenciar modulos", KnownModules.CoreSlug),
+        new(CoreDepartmentsView, "Visualizar departamentos", KnownModules.CoreSlug),
+        new(CoreDepartmentsManage, "Gerenciar departamentos", KnownModules.CoreSlug),
+        new(CoreJobTitlesView, "Visualizar cargos", KnownModules.CoreSlug),
+        new(CoreJobTitlesManage, "Gerenciar cargos", KnownModules.CoreSlug),
+        new(CoreEmployeesView, "Visualizar funcionarios", KnownModules.CoreSlug),
+        new(CoreEmployeesManage, "Gerenciar funcionarios", KnownModules.CoreSlug),
+        new(CoreHierarchyView, "Visualizar hierarquia", KnownModules.CoreSlug),
+        new(CoreHierarchyManage, "Gerenciar hierarquia", KnownModules.CoreSlug),
 
         new(CrmCustomersView, "Visualizar clientes", KnownModules.CrmSlug),
         new(CrmCustomersCreate, "Criar clientes", KnownModules.CrmSlug),

@@ -396,12 +396,12 @@ Tasks:
 
 Tasks:
 
-- `[Todo]` Criar portas, commands/queries e handlers para departamentos.
-- `[Todo]` Criar portas, commands/queries e handlers para cargos.
-- `[Todo]` Criar portas, commands/queries e handlers para funcionarios.
-- `[Todo]` Criar endpoints HTTP usando MediatR.
-- `[Todo]` Criar permissoes centralizadas para departamentos, cargos, funcionarios e hierarquia.
-- `[Todo]` Cobrir regras principais com testes automatizados.
+- `[Done]` Criar portas, commands/queries e handlers para departamentos.
+- `[Done]` Criar portas, commands/queries e handlers para cargos.
+- `[Done]` Criar portas, commands/queries e handlers para funcionarios.
+- `[Done]` Criar endpoints HTTP usando MediatR.
+- `[Done]` Criar permissoes centralizadas para departamentos, cargos, funcionarios e hierarquia.
+- `[Done]` Cobrir regras principais com testes automatizados.
 
 ### UE-13.03 - Vinculo usuario-funcionario
 

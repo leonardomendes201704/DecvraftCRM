@@ -6,6 +6,7 @@ using Platform.Infrastructure.Customers;
 using Platform.Infrastructure.Finance;
 using Platform.Infrastructure.Modules;
 using Platform.Infrastructure.Opportunities;
+using Platform.Infrastructure.Organization;
 
 namespace Platform.Infrastructure;
 
@@ -19,6 +20,9 @@ public static class DependencyInjection
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IPermissionAuthorizationService, PermissionAuthorizationService>();
         services.AddScoped<IModuleCatalogService, ModuleCatalogService>();
+        services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<IJobTitleRepository, JobTitleRepository>();
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IContactRepository, ContactRepository>();
         services.AddScoped<IOpportunityRepository, OpportunityRepository>();
