@@ -250,6 +250,12 @@ a {
   background: #eaf5f7;
 }
 
+.alert-danger {
+  border: 1px solid #e4b4aa;
+  color: #8d2a1e;
+  background: #fff0ed;
+}
+
 .form-label {
   display: block;
   margin-bottom: 6px;

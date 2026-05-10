@@ -1,10 +1,12 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platform.Web.Models;
 using Platform.Web.Services;
 
 namespace Platform.Web.Controllers;
 
+[Authorize]
 public sealed class DashboardController : Controller
 {
     private readonly DashboardWebService _dashboardWebService;

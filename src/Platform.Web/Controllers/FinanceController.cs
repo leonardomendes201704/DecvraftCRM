@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platform.Web.Services;
 
 namespace Platform.Web.Controllers;
 
+[Authorize]
 public sealed class FinanceController : Controller
 {
     private readonly FinanceWebService _financeWebService;

@@ -88,6 +88,18 @@ Response `401`: token ausente, invalido ou expirado.
 
 Response `403`: usuario autenticado sem a permissao exigida.
 
+## Login pelo `Platform.Web`
+
+O frontend operacional usa os mesmos contratos da API:
+
+1. Usuario informa endereco da API, tenant, e-mail e senha.
+2. `Platform.Web` chama `POST /api/auth/login`.
+3. Com o `accessToken`, `Platform.Web` chama `GET /api/me`.
+4. O token, tenant, permissoes e dados do usuario ficam em cookie web `HttpOnly`.
+5. Logout remove o cookie local.
+
+O endereco da API e informado em runtime na tela de login. Ele nao deve ser gravado em `appsettings`, variaveis de ambiente ou codigo fonte; configuracoes definitivas continuam sendo responsabilidade de entidades em banco.
+
 ## `GET /api/modules`
 
 Retorna o catalogo de modulos com status de instalacao e ativacao para o tenant autenticado. Este endpoint exige a permissao `core.modules.view`.

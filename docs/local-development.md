@@ -12,7 +12,7 @@ Nao grave credenciais reais em `appsettings`, `launchSettings` ou codigo fonte.
 
 ## Visual Studio com startup multiplo
 
-Antes de iniciar `Platform.Api` e `Platform.WebInstaller` juntos pelo Visual Studio, configure User Secrets nos dois projetos:
+Antes de iniciar `Platform.Api`, `Platform.WebInstaller` e `Platform.Web` juntos pelo Visual Studio, configure User Secrets nos projetos que acessam banco diretamente:
 
 ```powershell
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Database=WhiteLabelErp;User Id=sa;Password=SUA_SENHA_LOCAL;TrustServerCertificate=True;" --project src/Platform.Api/Platform.Api.csproj
@@ -20,6 +20,8 @@ dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,
 ```
 
 Use `localhost` quando executar os projetos fora do Docker. Use `mssql` apenas quando a aplicacao estiver rodando dentro da rede do Docker Compose.
+
+O `Platform.Web` nao deve receber connection string nem URL fixa da API em arquivo. Para validar o login local, abra a tela de login e informe o endereco em que o `Platform.Api` subiu no Visual Studio, junto do tenant e credenciais criados no instalador.
 
 ## Compatibilidade
 

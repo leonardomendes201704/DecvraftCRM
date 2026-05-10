@@ -17,9 +17,19 @@
     <main class="login-panel">
         <span class="section-eyebrow">Devcraft CRM</span>
         <h1 class="mt-2">Entrar</h1>
-        <p class="text-muted">Estrutura preparada para conectar o login web na API na proxima UE.</p>
+        <p class="text-muted">Informe a API, o tenant e suas credenciais para abrir a area operacional.</p>
 
         <form method="post" class="mt-4">
+            <div class="mb-3">
+                <label asp-for="Input.ApiBaseUrl" class="form-label">Endereco da API</label>
+                <input asp-for="Input.ApiBaseUrl" class="form-control" autocomplete="url" placeholder="https://host-da-api" />
+                <span asp-validation-for="Input.ApiBaseUrl" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.TenantSlug" class="form-label">Tenant</label>
+                <input asp-for="Input.TenantSlug" class="form-control" autocomplete="organization" />
+                <span asp-validation-for="Input.TenantSlug" class="text-danger"></span>
+            </div>
             <div class="mb-3">
                 <label asp-for="Input.Email" class="form-label">E-mail</label>
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" />
@@ -30,9 +40,9 @@
                 <input asp-for="Input.Password" class="form-control" autocomplete="current-password" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            @if (!string.IsNullOrWhiteSpace(Model.Message))
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
             {
-                <div class="alert alert-info">@Model.Message</div>
+                <div class="alert alert-danger">@Model.ErrorMessage</div>
             }
             <button class="btn-command primary w-100 justify-content-center" type="submit">Entrar</button>
         </form>

@@ -495,12 +495,12 @@ Tasks:
 
 Tasks:
 
-- `[Todo]` Criar tela de login.
-- `[Todo]` Criar logout.
-- `[Todo]` Consumir `POST /api/auth/login`.
-- `[Todo]` Consumir `GET /api/me`.
-- `[Todo]` Manter sessao web via cookie seguro.
-- `[Todo]` Criar contexto web do usuario autenticado.
+- `[Done]` Criar tela de login.
+- `[Done]` Criar logout.
+- `[Done]` Consumir `POST /api/auth/login`.
+- `[Done]` Consumir `GET /api/me`.
+- `[Done]` Manter sessao web via cookie seguro.
+- `[Done]` Criar contexto web do usuario autenticado.
 
 ### UE-15.03 - Dashboard inicial
 

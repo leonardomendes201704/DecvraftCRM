@@ -126,6 +126,8 @@ Modelo recomendado:
 - Token de API deve ser protegido no servidor, evitando exposicao desnecessaria no browser.
 - Requests dos API Clients enviam bearer token para `Platform.Api`.
 - `GET /api/me` carrega usuario atual, permissoes e funcionario vinculado.
+- A tela de login recebe o endereco da API em runtime para evitar configuracao em arquivo.
+- O endereco da API fica limitado a sessao autenticada e nao e persistido em `appsettings`, env ou codigo fonte.
 
 Regras:
 
@@ -207,10 +209,11 @@ Direcao visual:
 ## Status Atual
 
 - UE-15.01 concluida com estrutura base MVC/Razor em `src/Platform.Web`.
+- UE-15.02 concluida com login real via `POST /api/auth/login`, validacao via `GET /api/me`, cookie de sessao e logout real.
 - Projeto adicionado a solution principal.
 - Layout operacional inicial criado com sidebar, topbar, componentes de KPI e tabela.
 - Controllers, Razor Pages, Services, Clients e ViewModels foram criados como base para as proximas UEs.
-- Login/logout existem como estrutura visual, mas a autenticacao real via API permanece na UE-15.02.
+- Controllers operacionais exigem usuario autenticado.
 
 ## Fora do Primeiro Bloco
 
