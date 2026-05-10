@@ -32,6 +32,19 @@ public sealed class OpportunityRepository : IOpportunityRepository
             cancellationToken);
     }
 
+    public async Task<IReadOnlyCollection<Opportunity>> ListByStageAsync(
+        Guid tenantId,
+        Guid stageId,
+        CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Opportunities
+            .Where(opportunity => opportunity.TenantId == tenantId && opportunity.StageId == stageId)
+            .OrderBy(opportunity => opportunity.ExpectedCloseDate)
+            .ThenByDescending(opportunity => opportunity.EstimatedValue)
+            .ThenBy(opportunity => opportunity.Title)
+            .ToListAsync(cancellationToken);
+    }
+
     public Task<bool> CustomerExistsAsync(Guid tenantId, Guid customerId, CancellationToken cancellationToken = default)
     {
         return _dbContext.Customers

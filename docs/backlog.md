@@ -363,3 +363,12 @@ Tasks:
 - `[Done]` Registrar historico automatico para criacao, atualizacao, mudanca de etapa, status e atividades.
 - `[Done]` Expor leitura do historico por oportunidade.
 - `[Done]` Cobrir valores fechados do CRM com testes de dominio.
+
+### UE-12.03 - Visao operacional do pipeline
+
+Tasks:
+
+- `[Done]` Listar oportunidades por etapa do pipeline.
+- `[Done]` Listar atividades vencidas do tenant.
+- `[Done]` Listar proximas atividades do tenant com janela configuravel.
+- `[Done]` Manter consultas agregadas via handlers MediatR e portas da Application.

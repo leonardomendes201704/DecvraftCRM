@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Platform.Application.Abstractions;
 using Platform.Domain.Entities;
+using Platform.Domain.Enums;
 using Platform.Persistence;
 
 namespace Platform.Infrastructure.Opportunities;
@@ -35,6 +36,40 @@ public sealed class OpportunityActivityRepository : IOpportunityActivityReposito
         return _dbContext.OpportunityActivities.SingleOrDefaultAsync(
             activity => activity.TenantId == tenantId && activity.Id == activityId,
             cancellationToken);
+    }
+
+    public async Task<IReadOnlyCollection<OpportunityActivity>> ListOverdueAsync(
+        Guid tenantId,
+        DateTimeOffset now,
+        CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.OpportunityActivities
+            .Where(activity =>
+                activity.TenantId == tenantId
+                && activity.Status == OpportunityActivityStatus.Scheduled
+                && activity.DueAt != null
+                && activity.DueAt < now)
+            .OrderBy(activity => activity.DueAt)
+            .ThenBy(activity => activity.Title)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyCollection<OpportunityActivity>> ListUpcomingAsync(
+        Guid tenantId,
+        DateTimeOffset from,
+        DateTimeOffset to,
+        CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.OpportunityActivities
+            .Where(activity =>
+                activity.TenantId == tenantId
+                && activity.Status == OpportunityActivityStatus.Scheduled
+                && activity.DueAt != null
+                && activity.DueAt >= from
+                && activity.DueAt <= to)
+            .OrderBy(activity => activity.DueAt)
+            .ThenBy(activity => activity.Title)
+            .ToListAsync(cancellationToken);
     }
 
     public Task<bool> OpportunityExistsAsync(

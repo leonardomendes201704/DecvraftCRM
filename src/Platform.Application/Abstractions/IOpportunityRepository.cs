@@ -9,6 +9,11 @@ public interface IOpportunityRepository
         Guid customerId,
         CancellationToken cancellationToken = default);
 
+    Task<IReadOnlyCollection<Opportunity>> ListByStageAsync(
+        Guid tenantId,
+        Guid stageId,
+        CancellationToken cancellationToken = default);
+
     Task<Opportunity?> GetByIdAsync(Guid tenantId, Guid opportunityId, CancellationToken cancellationToken = default);
 
     Task<bool> CustomerExistsAsync(Guid tenantId, Guid customerId, CancellationToken cancellationToken = default);

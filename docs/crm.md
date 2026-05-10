@@ -115,6 +115,7 @@ Endpoints iniciais:
 - `POST /api/opportunity-stages`: cria etapa. Permissao: `crm.opportunities.manage`.
 - `PUT /api/opportunity-stages/{stageId}`: atualiza etapa. Permissao: `crm.opportunities.manage`.
 - `DELETE /api/opportunity-stages/{stageId}`: desativa etapa. Permissao: `crm.opportunities.manage`.
+- `GET /api/opportunity-stages/{stageId}/opportunities`: lista oportunidades vinculadas a uma etapa. Permissao: `crm.opportunities.view`.
 - `PUT /api/opportunities/{opportunityId}/stage`: move oportunidade para uma etapa ativa. Permissao: `crm.opportunities.manage`.
 
 Request de criacao/atualizacao de etapa:
@@ -143,6 +144,8 @@ Endpoints iniciais:
 - `PUT /api/opportunity-activities/{activityId}`: atualiza atividade. Permissao: `crm.opportunities.manage`.
 - `POST /api/opportunity-activities/{activityId}/complete`: conclui atividade. Permissao: `crm.opportunities.manage`.
 - `POST /api/opportunity-activities/{activityId}/cancel`: cancela atividade. Permissao: `crm.opportunities.manage`.
+- `GET /api/opportunity-activities/overdue`: lista atividades vencidas ainda agendadas. Permissao: `crm.opportunities.view`.
+- `GET /api/opportunity-activities/upcoming?days=7`: lista proximas atividades agendadas. Permissao: `crm.opportunities.view`.
 - `GET /api/opportunities/{opportunityId}/history`: lista historico da oportunidade. Permissao: `crm.opportunities.view`.
 
 Request de criacao/atualizacao de atividade:
@@ -169,4 +172,4 @@ Eventos de criacao, atualizacao, mudanca de etapa, ganho, perda, cancelamento e 
 
 ## Proximo bloco
 
-O proximo bloco recomendado e adicionar filtros/listagens agregadas para pipeline comercial, como oportunidades por etapa, atividades vencidas e proximas atividades por responsavel.
+O proximo bloco recomendado e modelar responsaveis comerciais em oportunidades e atividades para permitir agenda por usuario, distribuicao de carteira e filtros por responsavel.
