@@ -31,6 +31,7 @@ public sealed class DatabaseModel : InstallPageModel
     public async Task<IActionResult> OnPostAsync(string command, CancellationToken cancellationToken)
     {
         var state = LoadWizardState();
+        MergeStoredSensitiveState(state.Database);
         PageErrors = InstallerWizardValidator.ValidateDatabase(Input);
 
         if (PageErrors.Count > 0)
@@ -63,7 +64,7 @@ public sealed class DatabaseModel : InstallPageModel
             return Page();
         }
 
-        if (!Input.LastConnectionTestSucceeded)
+        if (!state.Database.LastConnectionTestSucceeded || !IsSameConnectionTarget(state.Database, Input))
         {
             PageErrors = ["Teste a conexao com sucesso antes de continuar."];
             return Page();
@@ -73,5 +74,29 @@ public sealed class DatabaseModel : InstallPageModel
         SaveWizardState(state);
 
         return Redirect(InstallerWizardRoutes.Tenant);
+    }
+
+    private void MergeStoredSensitiveState(DatabaseStepViewModel storedDatabase)
+    {
+        if (string.IsNullOrWhiteSpace(Input.Password))
+        {
+            Input.Password = storedDatabase.Password;
+        }
+
+        if (IsSameConnectionTarget(storedDatabase, Input))
+        {
+            Input.HasConnectionTest = storedDatabase.HasConnectionTest;
+            Input.LastConnectionTestSucceeded = storedDatabase.LastConnectionTestSucceeded;
+        }
+    }
+
+    private static bool IsSameConnectionTarget(DatabaseStepViewModel storedDatabase, DatabaseStepViewModel input)
+    {
+        return string.Equals(storedDatabase.Host, input.Host, StringComparison.OrdinalIgnoreCase)
+            && storedDatabase.Port == input.Port
+            && string.Equals(storedDatabase.DatabaseName, input.DatabaseName, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(storedDatabase.Username, input.Username, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(storedDatabase.Password, input.Password, StringComparison.Ordinal)
+            && storedDatabase.TrustServerCertificate == input.TrustServerCertificate;
     }
 }
