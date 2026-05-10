@@ -1,0 +1,48 @@
+@model Platform.Web.ViewModels.Finance.FinanceHomeViewModel
+
+@{
+    ViewData["Title"] = "Financeiro";
+}
+
+<section class="page-heading">
+    <div>
+        <span class="section-eyebrow">ERP financeiro</span>
+        <h1>Financeiro</h1>
+        <p>Area base para contas a receber, contas a pagar, documentos e conciliacao.</p>
+    </div>
+    <div class="toolbar">
+        <button class="btn-command primary" type="button">Novo lancamento</button>
+        <button class="btn-command" type="button">Conciliacao</button>
+    </div>
+</section>
+
+<section class="module-grid">
+    <article class="module-tile">
+        <h2>Recebiveis em aberto</h2>
+        <strong class="kpi-value">@Model.OpenReceivables.ToString("C")</strong>
+        <p>Total previsto para entrada.</p>
+    </article>
+    <article class="module-tile">
+        <h2>Pagaveis em aberto</h2>
+        <strong class="kpi-value">@Model.OpenPayables.ToString("C")</strong>
+        <p>Total previsto para saida.</p>
+    </article>
+    <article class="module-tile">
+        <h2>Documentos pendentes</h2>
+        <strong class="kpi-value">@Model.PendingDocuments</strong>
+        <p>Notas, parcelas e conferencias aguardando acao.</p>
+    </article>
+</section>
+
+<section class="panel mt-3">
+    <h2>Checagens operacionais</h2>
+    <ul class="simple-list">
+        @foreach (var item in Model.OperationalChecks)
+        {
+            <li>
+                <span>@item</span>
+                <span class="status-pill">Planejado</span>
+            </li>
+        }
+    </ul>
+</section>

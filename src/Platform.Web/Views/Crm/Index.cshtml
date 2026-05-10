@@ -1,0 +1,48 @@
+@model Platform.Web.ViewModels.Crm.CrmHomeViewModel
+
+@{
+    ViewData["Title"] = "CRM";
+}
+
+<section class="page-heading">
+    <div>
+        <span class="section-eyebrow">Comercial</span>
+        <h1>CRM</h1>
+        <p>Base visual para oportunidades, contas, atividades e agenda por responsavel.</p>
+    </div>
+    <div class="toolbar">
+        <button class="btn-command primary" type="button">Nova oportunidade</button>
+        <button class="btn-command" type="button">Filtrar carteira</button>
+    </div>
+</section>
+
+<section class="module-grid">
+    <article class="module-tile">
+        <h2>Oportunidades abertas</h2>
+        <strong class="kpi-value">@Model.OpenOpportunities</strong>
+        <p>Pipeline comercial por etapa e responsavel.</p>
+    </article>
+    <article class="module-tile">
+        <h2>Atividades hoje</h2>
+        <strong class="kpi-value">@Model.ActivitiesDueToday</strong>
+        <p>Compromissos e follow-ups previstos para o dia.</p>
+    </article>
+    <article class="module-tile">
+        <h2>Contas ativas</h2>
+        <strong class="kpi-value">@Model.ActiveAccounts</strong>
+        <p>Clientes, leads e relacionamentos ativos.</p>
+    </article>
+</section>
+
+<section class="panel mt-3">
+    <h2>Proximas entregas do CRM</h2>
+    <ul class="simple-list">
+        @foreach (var item in Model.UpcomingWork)
+        {
+            <li>
+                <span>@item</span>
+                <span class="status-pill">Backlog</span>
+            </li>
+        }
+    </ul>
+</section>

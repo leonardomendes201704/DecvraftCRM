@@ -477,7 +477,7 @@ Tasks:
 
 ## EP-15 - Frontend Web MVC/Razor
 
-Status: `Todo`
+Status: `Doing`
 Prioridade: `P1`
 
 Objetivo: criar a aplicacao web autenticada do ERP/CRM usando ASP.NET Core MVC + Razor Pages, componentes reutilizaveis, services e API clients.
@@ -486,10 +486,10 @@ Objetivo: criar a aplicacao web autenticada do ERP/CRM usando ASP.NET Core MVC +
 
 Tasks:
 
-- `[Todo]` Criar projeto `Platform.Web`.
-- `[Todo]` Configurar referencias e Docker quando necessario.
-- `[Todo]` Criar layout autenticado.
-- `[Todo]` Criar estrutura de Controllers, Pages, Views, ViewComponents, Services, Clients e ViewModels.
+- `[Done]` Criar projeto `Platform.Web`.
+- `[Done]` Configurar referencias e Docker quando necessario.
+- `[Done]` Criar layout autenticado base.
+- `[Done]` Criar estrutura de Controllers, Pages, Views, ViewComponents, Services, Clients e ViewModels.
 
 ### UE-15.02 - Autenticacao web
 

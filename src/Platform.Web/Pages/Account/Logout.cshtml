@@ -1,0 +1,24 @@
+@page
+@model Platform.Web.Pages.Account.LogoutModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sair - Devcraft CRM</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="login-page">
+    <main class="login-panel">
+        <span class="section-eyebrow">Sessao</span>
+        <h1 class="mt-2">Logout preparado</h1>
+        <p class="text-muted">O fluxo de autenticacao real sera conectado a API na proxima UE.</p>
+        <a class="btn-command primary w-100 justify-content-center" asp-controller="Dashboard" asp-action="Index">Voltar ao dashboard</a>
+    </main>
+</body>
+</html>

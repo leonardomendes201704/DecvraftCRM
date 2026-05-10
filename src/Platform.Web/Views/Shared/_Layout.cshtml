@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Devcraft CRM</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="app-shell">
+    <div class="shell-grid">
+        @await Component.InvokeAsync("SidebarNavigation")
+        <div class="shell-main">
+            @await Component.InvokeAsync("Topbar")
+            <main class="content-area" role="main">
+                @RenderBody()
+            </main>
+            <div class="shell-footer">
+                <span>Devcraft CRM</span>
+                <span>Frontend operacional MVC/Razor</span>
+            </div>
+        </div>
+    </div>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

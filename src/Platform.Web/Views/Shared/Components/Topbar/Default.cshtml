@@ -1,0 +1,12 @@
+@model Platform.Web.ViewModels.Shell.TopbarViewModel
+
+<header class="topbar">
+    <div class="topbar-title">
+        <span class="topbar-eyebrow">Devcraft CRM</span>
+        <h1>@Model.PageTitle</h1>
+    </div>
+    <div class="user-chip">
+        <strong>@Model.DisplayName</strong>
+        <span>@Model.TenantName</span>
+    </div>
+</header>

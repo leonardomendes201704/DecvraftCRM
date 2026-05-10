@@ -195,14 +195,22 @@ Direcao visual:
 
 ## Ordem Recomendada
 
-1. Criar projeto `Platform.Web`.
-2. Configurar layout base autenticado.
+1. Criar projeto `Platform.Web`. `[Done]`
+2. Configurar layout base autenticado. `[Done]`
 3. Implementar login/logout.
 4. Criar API clients tipados.
 5. Criar dashboard inicial.
 6. Criar telas de Organizacao.
 7. Criar telas de CRM.
 8. Criar telas de Financeiro.
+
+## Status Atual
+
+- UE-15.01 concluida com estrutura base MVC/Razor em `src/Platform.Web`.
+- Projeto adicionado a solution principal.
+- Layout operacional inicial criado com sidebar, topbar, componentes de KPI e tabela.
+- Controllers, Razor Pages, Services, Clients e ViewModels foram criados como base para as proximas UEs.
+- Login/logout existem como estrutura visual, mas a autenticacao real via API permanece na UE-15.02.
 
 ## Fora do Primeiro Bloco
 

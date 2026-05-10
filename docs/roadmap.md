@@ -180,18 +180,18 @@ Entregas:
 
 ## Fase 11 - Frontend Web Operacional
 
-Status: `Nao iniciado`
+Status: `Em andamento`
 
 Objetivo: criar a aplicacao web autenticada em ASP.NET Core MVC + Razor Pages para operacao do ERP/CRM.
 
 Entregas:
 
-- projeto `Platform.Web`;
+- projeto `Platform.Web`; `[Done]`
 - login/logout via API;
-- layout autenticado;
+- layout autenticado; `[Base Done]`
 - navegacao por permissoes;
-- API clients tipados;
-- dashboard inicial;
-- telas de organizacao;
-- telas de CRM;
-- telas de financeiro.
+- API clients tipados; `[Base Done]`
+- dashboard inicial; `[Base Done]`
+- telas de organizacao; `[Base Done]`
+- telas de CRM; `[Base Done]`
+- telas de financeiro. `[Base Done]`

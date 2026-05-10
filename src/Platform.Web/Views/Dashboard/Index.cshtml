@@ -1,0 +1,44 @@
+@model Platform.Web.ViewModels.Dashboard.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="page-heading">
+    <div>
+        <span class="section-eyebrow">Visao operacional</span>
+        <h1>Dashboard</h1>
+        <p>Resumo inicial para acompanhar CRM, financeiro e estrutura organizacional em uma unica experiencia web.</p>
+    </div>
+    <div class="toolbar">
+        <a class="btn-command primary" asp-controller="Crm" asp-action="Index">Abrir CRM</a>
+        <a class="btn-command" asp-controller="Organization" asp-action="Index">Organizacao</a>
+    </div>
+</section>
+
+<section class="kpi-grid">
+    @foreach (var kpi in Model.Kpis)
+    {
+        @await Component.InvokeAsync("KpiCard", new { label = kpi.Title, value = kpi.Value, context = kpi.Context })
+    }
+</section>
+
+<section class="panel-grid">
+    <div class="panel">
+        <h2>Fila de trabalho</h2>
+        <p>Primeiro encaixe visual para os dados que virao da API.</p>
+        @await Component.InvokeAsync("DataTable", new { model = Model.WorkQueue })
+    </div>
+    <aside class="panel">
+        <h2>Prioridades tecnicas</h2>
+        <ul class="simple-list">
+            @foreach (var priority in Model.Priorities)
+            {
+                <li>
+                    <span>@priority</span>
+                    <span class="status-pill">Planejado</span>
+                </li>
+            }
+        </ul>
+    </aside>
+</section>

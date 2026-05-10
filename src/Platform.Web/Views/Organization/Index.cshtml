@@ -1,0 +1,48 @@
+@model Platform.Web.ViewModels.Organization.OrganizationHomeViewModel
+
+@{
+    ViewData["Title"] = "Organizacao";
+}
+
+<section class="page-heading">
+    <div>
+        <span class="section-eyebrow">Estrutura interna</span>
+        <h1>Organizacao</h1>
+        <p>Base visual para departamentos, cargos, funcionarios, usuarios vinculados e hierarquias.</p>
+    </div>
+    <div class="toolbar">
+        <button class="btn-command primary" type="button">Novo funcionario</button>
+        <button class="btn-command" type="button">Hierarquia</button>
+    </div>
+</section>
+
+<section class="module-grid">
+    <article class="module-tile">
+        <h2>Departamentos</h2>
+        <strong class="kpi-value">@Model.Departments</strong>
+        <p>Areas organizacionais cadastradas.</p>
+    </article>
+    <article class="module-tile">
+        <h2>Cargos</h2>
+        <strong class="kpi-value">@Model.JobTitles</strong>
+        <p>Funcoes e responsabilidades formais.</p>
+    </article>
+    <article class="module-tile">
+        <h2>Funcionarios</h2>
+        <strong class="kpi-value">@Model.Employees</strong>
+        <p>Equipe ativa e vinculacao com usuarios.</p>
+    </article>
+</section>
+
+<section class="panel mt-3">
+    <h2>Governanca prevista</h2>
+    <ul class="simple-list">
+        @foreach (var item in Model.GovernanceItems)
+        {
+            <li>
+                <span>@item</span>
+                <span class="status-pill">Backlog</span>
+            </li>
+        }
+    </ul>
+</section>

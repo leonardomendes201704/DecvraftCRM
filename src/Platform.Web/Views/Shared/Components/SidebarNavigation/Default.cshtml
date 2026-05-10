@@ -1,0 +1,34 @@
+@model Platform.Web.ViewModels.Navigation.SidebarNavigationViewModel
+@using Platform.Web.Constants
+
+<aside class="sidebar">
+    <div class="brand-lockup">
+        <span class="brand-name">Devcraft CRM</span>
+        <span class="brand-caption">Operacao comercial e ERP</span>
+    </div>
+    <nav class="nav-stack" aria-label="Navegacao principal">
+        @foreach (var item in Model.Items)
+        {
+            var icon = item.IconKey switch
+            {
+                NavigationIconKey.Dashboard => "D",
+                NavigationIconKey.Crm => "C",
+                NavigationIconKey.Finance => "F",
+                NavigationIconKey.Organization => "O",
+                _ => "-"
+            };
+
+            <a class="nav-link-shell @(item.IsActive ? "is-active" : string.Empty)"
+               asp-controller="@item.Controller"
+               asp-action="@item.Action"
+               title="@item.Label">
+                <span class="nav-icon" aria-hidden="true">@icon</span>
+                <span class="nav-text">@item.Label</span>
+            </a>
+        }
+    </nav>
+    <div class="sidebar-status">
+        <strong>UE-15.01</strong><br />
+        Base MVC/Razor em construcao.
+    </div>
+</aside>
