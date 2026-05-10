@@ -1,6 +1,6 @@
+using MediatR;
 using Platform.Api.Routing;
 using Platform.Api.Security;
-using Platform.Application.Abstractions;
 using Platform.Application.Auth;
 
 namespace Platform.Api.Endpoints;
@@ -11,10 +11,10 @@ public sealed class AuthEndpointModule : IEndpointModule
     {
         app.MapPost(ApiRoutes.AuthLogin, async (
             LoginRequest request,
-            IAuthenticationService authenticationService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var result = await authenticationService.LoginAsync(request, cancellationToken);
+            var result = await mediator.Send(new LoginCommand(request), cancellationToken);
 
             return result.Succeeded
                 ? Results.Ok(result.Login)
@@ -25,7 +25,7 @@ public sealed class AuthEndpointModule : IEndpointModule
 
         app.MapGet(ApiRoutes.Me, async (
             HttpRequest request,
-            IAuthenticationService authenticationService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
             var accessToken = BearerTokenReader.Read(request);
@@ -34,7 +34,7 @@ public sealed class AuthEndpointModule : IEndpointModule
                 return Results.Unauthorized();
             }
 
-            var currentUser = await authenticationService.GetCurrentUserAsync(accessToken, cancellationToken);
+            var currentUser = await mediator.Send(new GetCurrentUserQuery(accessToken), cancellationToken);
 
             return currentUser is not null
                 ? Results.Ok(currentUser)
