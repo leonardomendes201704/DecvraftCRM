@@ -1,6 +1,7 @@
+using MediatR;
 using Platform.Api.Routing;
 using Platform.Api.Security;
-using Platform.Application.Abstractions;
+using Platform.Application.Auth;
 using Platform.Application.Customers;
 using Platform.Domain.Catalog;
 using Platform.Domain.Enums;
@@ -13,17 +14,16 @@ public sealed class CustomerEndpointModule : IEndpointModule
     {
         app.MapGet(ApiRoutes.Customers, async (
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            ICustomerService customerService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var customers = await customerService.ListAsync(currentUser.TenantId, cancellationToken);
+            var customers = await mediator.Send(new ListCustomersQuery(currentUser.TenantId), cancellationToken);
 
             return Results.Ok(customers);
         })
@@ -34,17 +34,18 @@ public sealed class CustomerEndpointModule : IEndpointModule
         app.MapGet(ApiRoutes.CustomerById, async (
             Guid customerId,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            ICustomerService customerService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var customer = await customerService.GetByIdAsync(currentUser.TenantId, customerId, cancellationToken);
+            var customer = await mediator.Send(
+                new GetCustomerByIdQuery(currentUser.TenantId, customerId),
+                cancellationToken);
 
             return customer is null
                 ? Results.NotFound()
@@ -57,17 +58,18 @@ public sealed class CustomerEndpointModule : IEndpointModule
         app.MapPost(ApiRoutes.Customers, async (
             CreateCustomerRequest customerRequest,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            ICustomerService customerService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await customerService.CreateAsync(currentUser.TenantId, customerRequest, cancellationToken);
+            var result = await mediator.Send(
+                new CreateCustomerCommand(currentUser.TenantId, customerRequest),
+                cancellationToken);
 
             return EndpointResultMapper.ToCustomerWriteResult(result);
         })
@@ -79,17 +81,18 @@ public sealed class CustomerEndpointModule : IEndpointModule
             Guid customerId,
             UpdateCustomerRequest customerRequest,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            ICustomerService customerService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await customerService.UpdateAsync(currentUser.TenantId, customerId, customerRequest, cancellationToken);
+            var result = await mediator.Send(
+                new UpdateCustomerCommand(currentUser.TenantId, customerId, customerRequest),
+                cancellationToken);
 
             return EndpointResultMapper.ToCustomerWriteResult(result);
         })
@@ -100,17 +103,18 @@ public sealed class CustomerEndpointModule : IEndpointModule
         app.MapDelete(ApiRoutes.CustomerById, async (
             Guid customerId,
             HttpRequest request,
-            IAuthenticationService authenticationService,
-            ICustomerService customerService,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, authenticationService, cancellationToken);
+            var currentUser = await ResolveCurrentUserAsync(request, mediator, cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
             }
 
-            var result = await customerService.DeactivateAsync(currentUser.TenantId, customerId, cancellationToken);
+            var result = await mediator.Send(
+                new DeactivateCustomerCommand(currentUser.TenantId, customerId),
+                cancellationToken);
 
             return result.Status == CustomerOperationStatus.Success
                 ? Results.NoContent()
@@ -119,5 +123,17 @@ public sealed class CustomerEndpointModule : IEndpointModule
         .RequirePermission(KnownPermissions.CrmCustomersDelete)
         .WithName(ApiEndpointNames.CustomersDeactivate)
         .WithOpenApi();
+    }
+
+    private static async Task<CurrentUserResponse?> ResolveCurrentUserAsync(
+        HttpRequest request,
+        IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var accessToken = BearerTokenReader.Read(request);
+
+        return accessToken is null
+            ? null
+            : await mediator.Send(new GetCurrentUserQuery(accessToken), cancellationToken);
     }
 }
