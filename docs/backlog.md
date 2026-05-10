@@ -330,8 +330,8 @@ Tasks:
 
 Tasks:
 
-- `[Todo]` Definir portas de entrada e saida na camada Application.
-- `[Todo]` Manter infraestrutura como adapters externos.
-- `[Todo]` Isolar controllers/endpoints como adapters HTTP.
-- `[Todo]` Revisar dependencias entre projetos para evitar acoplamento indevido.
-- `[Todo]` Adicionar testes de arquitetura para validar as regras.
+- `[Done]` Definir portas de entrada e saida na camada Application.
+- `[Done]` Manter infraestrutura como adapters externos.
+- `[Done]` Isolar controllers/endpoints como adapters HTTP.
+- `[Done]` Revisar dependencias entre projetos para evitar acoplamento indevido.
+- `[Done]` Adicionar testes de arquitetura para validar as regras.

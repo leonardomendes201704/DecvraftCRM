@@ -21,6 +21,7 @@ Antes de implementar qualquer mudanca relevante:
 - [backlog.md](backlog.md): epicos, user stories e tasks tecnicas.
 - [mvp-checklist.md](mvp-checklist.md): checklist objetivo da primeira entrega valida.
 - [development-process.md](development-process.md): regras de acompanhamento e fluxo de trabalho.
+- [architecture.md](architecture.md): camadas, portas/adapters e regras de dependencia.
 - [decisions.md](decisions.md): registro de decisoes tecnicas e arquiteturais.
 - [definition-of-done.md](definition-of-done.md): criterios minimos para considerar uma task concluida.
 - [installer-flow.md](installer-flow.md): endpoints e fluxo inicial do Web Installer.
