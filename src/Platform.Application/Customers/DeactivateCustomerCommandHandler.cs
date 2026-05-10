@@ -6,17 +6,32 @@ namespace Platform.Application.Customers;
 public sealed class DeactivateCustomerCommandHandler
     : IRequestHandler<DeactivateCustomerCommand, CustomerOperationResult>
 {
-    private readonly ICustomerService _customerService;
+    private readonly ICustomerRepository _customerRepository;
+    private readonly IClock _clock;
 
-    public DeactivateCustomerCommandHandler(ICustomerService customerService)
+    public DeactivateCustomerCommandHandler(ICustomerRepository customerRepository, IClock clock)
     {
-        _customerService = customerService;
+        _customerRepository = customerRepository;
+        _clock = clock;
     }
 
-    public Task<CustomerOperationResult> Handle(
+    public async Task<CustomerOperationResult> Handle(
         DeactivateCustomerCommand request,
         CancellationToken cancellationToken)
     {
-        return _customerService.DeactivateAsync(request.TenantId, request.CustomerId, cancellationToken);
+        var customer = await _customerRepository.GetByIdAsync(
+            request.TenantId,
+            request.CustomerId,
+            cancellationToken);
+
+        if (customer is null)
+        {
+            return CustomerOperationResult.NotFound();
+        }
+
+        customer.Deactivate(_clock.UtcNow);
+        await _customerRepository.SaveChangesAsync(cancellationToken);
+
+        return CustomerOperationResult.Success(CustomerResponseMapper.ToResponse(customer));
     }
 }

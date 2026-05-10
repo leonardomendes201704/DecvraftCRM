@@ -6,17 +6,21 @@ namespace Platform.Application.Customers;
 public sealed class ListCustomersQueryHandler
     : IRequestHandler<ListCustomersQuery, IReadOnlyCollection<CustomerResponse>>
 {
-    private readonly ICustomerService _customerService;
+    private readonly ICustomerRepository _customerRepository;
 
-    public ListCustomersQueryHandler(ICustomerService customerService)
+    public ListCustomersQueryHandler(ICustomerRepository customerRepository)
     {
-        _customerService = customerService;
+        _customerRepository = customerRepository;
     }
 
-    public Task<IReadOnlyCollection<CustomerResponse>> Handle(
+    public async Task<IReadOnlyCollection<CustomerResponse>> Handle(
         ListCustomersQuery request,
         CancellationToken cancellationToken)
     {
-        return _customerService.ListAsync(request.TenantId, cancellationToken);
+        var customers = await _customerRepository.ListAsync(request.TenantId, cancellationToken);
+
+        return customers
+            .Select(CustomerResponseMapper.ToResponse)
+            .ToArray();
     }
 }

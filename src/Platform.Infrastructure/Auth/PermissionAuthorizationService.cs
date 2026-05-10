@@ -31,7 +31,7 @@ public sealed class PermissionAuthorizationService : IPermissionAuthorizationSer
         }
 
         return currentUser.Permissions.Contains(requiredPermission, StringComparer.Ordinal)
-            ? PermissionAuthorizationResult.Authorized(requiredPermission)
+            ? PermissionAuthorizationResult.Authorized(requiredPermission, currentUser)
             : PermissionAuthorizationResult.Forbidden(requiredPermission);
     }
 }

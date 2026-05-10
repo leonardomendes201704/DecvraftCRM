@@ -104,6 +104,10 @@ namespace Platform.Persistence.Migrations
                     b.HasIndex("TenantId", "CustomerId", "Email")
                         .IsUnique();
 
+                    b.HasIndex("TenantId", "CustomerId", "IsPrimary")
+                        .IsUnique()
+                        .HasFilter("[IsPrimary] = 1");
+
                     b.ToTable("Contacts", (string)null);
                 });
 

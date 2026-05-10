@@ -274,7 +274,7 @@ Tasks:
 - `[Done]` Testar login do admin apos instalacao em nivel de servico.
 - `[Done]` Testar autorizacao basica por permissao.
 - `[Done]` Testar consulta de modulos por tenant.
-- `[Todo]` Testar regras de arquitetura.
+- `[Done]` Testar regras de arquitetura.
 
 ## EP-10 - Documentacao Tecnica
 
@@ -298,7 +298,7 @@ Tasks:
 
 ## EP-11 - Refatoracao Arquitetural da API
 
-Status: `Doing`
+Status: `Done`
 Prioridade: `P0`
 
 Objetivo: evoluir a API de Minimal API concentrada no `Program.cs` para uma arquitetura hexagonal mais explicita, com separacao clara entre entrada HTTP, casos de uso, modelos, servicos e infraestrutura.
@@ -322,7 +322,7 @@ Tasks:
 - `[Done]` Criar commands/queries para contatos do CRM.
 - `[Done]` Criar commands/queries para oportunidades do CRM.
 - `[Done]` Criar commands/queries para financeiro.
-- `[Todo]` Migrar regras de orquestracao de services diretos para handlers.
+- `[Done]` Migrar regras de orquestracao de services diretos para handlers.
 - `[Done]` Padronizar responses/resultados de handlers.
 - `[Done]` Criar behaviors para logging e tratamento de erros.
 

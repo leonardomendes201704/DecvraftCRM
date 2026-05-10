@@ -17,6 +17,9 @@ Este documento registra as regras de arquitetura que devem guiar a evolucao do s
 - Portas de entrada e saida ficam na camada `Application`.
 - Implementacoes concretas de infraestrutura ficam fora da `Application`.
 - Endpoints HTTP ficam isolados em `Platform.Api/Endpoints`.
+- Endpoints HTTP devem delegar casos de uso via `IMediator` e nao acessar services de aplicacao diretamente.
+- Handlers de casos de uso devem orquestrar regras usando portas da `Application`; adapters concretos ficam em `Infrastructure` ou `Persistence`.
+- O usuario autenticado resolvido por autorizacao deve ser compartilhado pelo contexto de request para evitar dupla resolucao do mesmo token.
 - Configuracoes, chaves e credenciais definitivas devem ser entidades persistidas em banco.
 - Valores fechados de dominio devem usar enums valorados ou constantes centralizadas.
 - Novas dependencias entre projetos devem respeitar os testes de arquitetura em `Platform.ArchitectureTests`.

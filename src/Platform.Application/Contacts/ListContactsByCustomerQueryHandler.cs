@@ -6,20 +6,34 @@ namespace Platform.Application.Contacts;
 public sealed class ListContactsByCustomerQueryHandler
     : IRequestHandler<ListContactsByCustomerQuery, IReadOnlyCollection<ContactResponse>>
 {
-    private readonly IContactService _contactService;
+    private readonly IContactRepository _contactRepository;
 
-    public ListContactsByCustomerQueryHandler(IContactService contactService)
+    public ListContactsByCustomerQueryHandler(IContactRepository contactRepository)
     {
-        _contactService = contactService;
+        _contactRepository = contactRepository;
     }
 
-    public Task<IReadOnlyCollection<ContactResponse>> Handle(
+    public async Task<IReadOnlyCollection<ContactResponse>> Handle(
         ListContactsByCustomerQuery request,
         CancellationToken cancellationToken)
     {
-        return _contactService.ListByCustomerAsync(
+        var customerExists = await _contactRepository.CustomerExistsAsync(
             request.TenantId,
             request.CustomerId,
             cancellationToken);
+
+        if (!customerExists)
+        {
+            return [];
+        }
+
+        var contacts = await _contactRepository.ListByCustomerAsync(
+            request.TenantId,
+            request.CustomerId,
+            cancellationToken);
+
+        return contacts
+            .Select(ContactResponseMapper.ToResponse)
+            .ToArray();
     }
 }

@@ -17,6 +17,9 @@ public sealed class ContactConfiguration : IEntityTypeConfiguration<Contact>
         builder.Property(entity => entity.Role).HasMaxLength(100);
 
         builder.HasIndex(entity => new { entity.TenantId, entity.CustomerId, entity.Email }).IsUnique();
+        builder.HasIndex(entity => new { entity.TenantId, entity.CustomerId, entity.IsPrimary })
+            .IsUnique()
+            .HasFilter("[IsPrimary] = 1");
 
         builder.HasOne<Tenant>()
             .WithMany()

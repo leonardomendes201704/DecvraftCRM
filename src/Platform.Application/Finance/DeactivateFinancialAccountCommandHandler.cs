@@ -6,20 +6,32 @@ namespace Platform.Application.Finance;
 public sealed class DeactivateFinancialAccountCommandHandler
     : IRequestHandler<DeactivateFinancialAccountCommand, FinancialAccountOperationResult>
 {
-    private readonly IFinancialAccountService _accountService;
+    private readonly IFinancialAccountRepository _accountRepository;
+    private readonly IClock _clock;
 
-    public DeactivateFinancialAccountCommandHandler(IFinancialAccountService accountService)
+    public DeactivateFinancialAccountCommandHandler(IFinancialAccountRepository accountRepository, IClock clock)
     {
-        _accountService = accountService;
+        _accountRepository = accountRepository;
+        _clock = clock;
     }
 
-    public Task<FinancialAccountOperationResult> Handle(
+    public async Task<FinancialAccountOperationResult> Handle(
         DeactivateFinancialAccountCommand request,
         CancellationToken cancellationToken)
     {
-        return _accountService.DeactivateAsync(
+        var account = await _accountRepository.GetByIdAsync(
             request.TenantId,
             request.AccountId,
             cancellationToken);
+
+        if (account is null)
+        {
+            return FinancialAccountOperationResult.NotFound();
+        }
+
+        account.Deactivate(_clock.UtcNow);
+        await _accountRepository.SaveChangesAsync(cancellationToken);
+
+        return FinancialAccountOperationResult.Success(FinancialAccountResponseMapper.ToResponse(account));
     }
 }

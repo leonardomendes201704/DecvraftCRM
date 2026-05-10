@@ -6,17 +6,27 @@ namespace Platform.Application.Contacts;
 public sealed class DeleteContactCommandHandler
     : IRequestHandler<DeleteContactCommand, ContactOperationResult>
 {
-    private readonly IContactService _contactService;
+    private readonly IContactRepository _contactRepository;
 
-    public DeleteContactCommandHandler(IContactService contactService)
+    public DeleteContactCommandHandler(IContactRepository contactRepository)
     {
-        _contactService = contactService;
+        _contactRepository = contactRepository;
     }
 
-    public Task<ContactOperationResult> Handle(
+    public async Task<ContactOperationResult> Handle(
         DeleteContactCommand request,
         CancellationToken cancellationToken)
     {
-        return _contactService.DeleteAsync(request.TenantId, request.ContactId, cancellationToken);
+        var contact = await _contactRepository.GetByIdAsync(request.TenantId, request.ContactId, cancellationToken);
+
+        if (contact is null)
+        {
+            return ContactOperationResult.NotFound();
+        }
+
+        _contactRepository.Remove(contact);
+        await _contactRepository.SaveChangesAsync(cancellationToken);
+
+        return ContactOperationResult.Success(ContactResponseMapper.ToResponse(contact));
     }
 }

@@ -100,6 +100,7 @@ public sealed class ContactService : IContactService
 
         if (request.IsPrimary)
         {
+            await UnmarkPrimaryContactsAsync(tenantId, customerId, null, cancellationToken);
             contact.MarkAsPrimary(DateTimeOffset.UtcNow);
         }
 
@@ -142,6 +143,11 @@ public sealed class ContactService : IContactService
             return ContactOperationResult.DuplicateEmail();
         }
 
+        if (request.IsPrimary)
+        {
+            await UnmarkPrimaryContactsAsync(tenantId, contact.CustomerId, contact.Id, cancellationToken);
+        }
+
         contact.Update(
             request.Name,
             email,
@@ -152,6 +158,26 @@ public sealed class ContactService : IContactService
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return ContactOperationResult.Success(ToResponse(contact));
+    }
+
+    private async Task UnmarkPrimaryContactsAsync(
+        Guid tenantId,
+        Guid customerId,
+        Guid? exceptContactId,
+        CancellationToken cancellationToken)
+    {
+        var primaryContacts = await _dbContext.Contacts
+            .Where(contact =>
+                contact.TenantId == tenantId &&
+                contact.CustomerId == customerId &&
+                contact.IsPrimary &&
+                (exceptContactId == null || contact.Id != exceptContactId))
+            .ToListAsync(cancellationToken);
+
+        foreach (var primaryContact in primaryContacts)
+        {
+            primaryContact.UnmarkAsPrimary(DateTimeOffset.UtcNow);
+        }
     }
 
     public async Task<ContactOperationResult> DeleteAsync(

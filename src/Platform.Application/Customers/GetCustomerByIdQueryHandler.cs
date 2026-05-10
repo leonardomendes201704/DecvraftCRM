@@ -5,15 +5,20 @@ namespace Platform.Application.Customers;
 
 public sealed class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery, CustomerResponse?>
 {
-    private readonly ICustomerService _customerService;
+    private readonly ICustomerRepository _customerRepository;
 
-    public GetCustomerByIdQueryHandler(ICustomerService customerService)
+    public GetCustomerByIdQueryHandler(ICustomerRepository customerRepository)
     {
-        _customerService = customerService;
+        _customerRepository = customerRepository;
     }
 
-    public Task<CustomerResponse?> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
+    public async Task<CustomerResponse?> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
-        return _customerService.GetByIdAsync(request.TenantId, request.CustomerId, cancellationToken);
+        var customer = await _customerRepository.GetByIdAsync(
+            request.TenantId,
+            request.CustomerId,
+            cancellationToken);
+
+        return customer is null ? null : CustomerResponseMapper.ToResponse(customer);
     }
 }

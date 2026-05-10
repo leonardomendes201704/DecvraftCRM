@@ -67,6 +67,12 @@ public sealed class Contact : ITenantEntity
         UpdatedAt = updatedAt;
     }
 
+    public void UnmarkAsPrimary(DateTimeOffset updatedAt)
+    {
+        IsPrimary = false;
+        UpdatedAt = updatedAt;
+    }
+
     public void Update(
         string name,
         string email,

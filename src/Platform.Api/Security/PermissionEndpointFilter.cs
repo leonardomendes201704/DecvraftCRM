@@ -6,10 +6,14 @@ namespace Platform.Api.Security;
 public sealed class PermissionEndpointFilter : IEndpointFilter
 {
     private readonly IPermissionAuthorizationService _authorizationService;
+    private readonly ICurrentUserAccessor _currentUserAccessor;
 
-    public PermissionEndpointFilter(IPermissionAuthorizationService authorizationService)
+    public PermissionEndpointFilter(
+        IPermissionAuthorizationService authorizationService,
+        ICurrentUserAccessor currentUserAccessor)
     {
         _authorizationService = authorizationService;
+        _currentUserAccessor = currentUserAccessor;
     }
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
@@ -29,6 +33,11 @@ public sealed class PermissionEndpointFilter : IEndpointFilter
             accessToken,
             requiredPermission,
             context.HttpContext.RequestAborted);
+
+        if (result.Status == PermissionAuthorizationStatus.Authorized && result.CurrentUser is not null)
+        {
+            _currentUserAccessor.Set(result.CurrentUser);
+        }
 
         return result.Status switch
         {

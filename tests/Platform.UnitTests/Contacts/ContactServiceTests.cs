@@ -115,6 +115,72 @@ public sealed class ContactServiceTests
     }
 
     [Fact]
+    public async Task CreateAsync_unmarks_existing_primary_contact_for_same_customer()
+    {
+        await using var dbContext = CreateDbContext();
+        var tenantId = Guid.NewGuid();
+        var customer = SeedCustomer(dbContext, tenantId);
+        var existingPrimary = Contact.Create(
+            tenantId,
+            customer.Id,
+            "Maria",
+            "maria@acme.test",
+            null,
+            null,
+            DateTimeOffset.UtcNow);
+        existingPrimary.MarkAsPrimary(DateTimeOffset.UtcNow);
+        dbContext.Contacts.Add(existingPrimary);
+        await dbContext.SaveChangesAsync();
+        var service = new ContactService(dbContext);
+
+        var result = await service.CreateAsync(
+            tenantId,
+            customer.Id,
+            new CreateContactRequest("Joao", "joao@acme.test", null, null, true));
+
+        Assert.Equal(ContactOperationStatus.Success, result.Status);
+        Assert.True(result.Contact!.IsPrimary);
+        Assert.False(existingPrimary.IsPrimary);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_unmarks_existing_primary_contact_for_same_customer()
+    {
+        await using var dbContext = CreateDbContext();
+        var tenantId = Guid.NewGuid();
+        var customer = SeedCustomer(dbContext, tenantId);
+        var existingPrimary = Contact.Create(
+            tenantId,
+            customer.Id,
+            "Maria",
+            "maria@acme.test",
+            null,
+            null,
+            DateTimeOffset.UtcNow);
+        existingPrimary.MarkAsPrimary(DateTimeOffset.UtcNow);
+        var secondary = Contact.Create(
+            tenantId,
+            customer.Id,
+            "Joao",
+            "joao@acme.test",
+            null,
+            null,
+            DateTimeOffset.UtcNow);
+        dbContext.Contacts.AddRange(existingPrimary, secondary);
+        await dbContext.SaveChangesAsync();
+        var service = new ContactService(dbContext);
+
+        var result = await service.UpdateAsync(
+            tenantId,
+            secondary.Id,
+            new UpdateContactRequest("Joao", "joao@acme.test", null, null, true));
+
+        Assert.Equal(ContactOperationStatus.Success, result.Status);
+        Assert.True(result.Contact!.IsPrimary);
+        Assert.False(existingPrimary.IsPrimary);
+    }
+
+    [Fact]
     public async Task DeleteAsync_removes_contact()
     {
         await using var dbContext = CreateDbContext();

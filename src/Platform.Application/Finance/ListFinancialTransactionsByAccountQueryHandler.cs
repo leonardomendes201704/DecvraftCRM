@@ -6,20 +6,34 @@ namespace Platform.Application.Finance;
 public sealed class ListFinancialTransactionsByAccountQueryHandler
     : IRequestHandler<ListFinancialTransactionsByAccountQuery, IReadOnlyCollection<FinancialTransactionResponse>>
 {
-    private readonly IFinancialTransactionService _transactionService;
+    private readonly IFinancialTransactionRepository _transactionRepository;
 
-    public ListFinancialTransactionsByAccountQueryHandler(IFinancialTransactionService transactionService)
+    public ListFinancialTransactionsByAccountQueryHandler(IFinancialTransactionRepository transactionRepository)
     {
-        _transactionService = transactionService;
+        _transactionRepository = transactionRepository;
     }
 
-    public Task<IReadOnlyCollection<FinancialTransactionResponse>> Handle(
+    public async Task<IReadOnlyCollection<FinancialTransactionResponse>> Handle(
         ListFinancialTransactionsByAccountQuery request,
         CancellationToken cancellationToken)
     {
-        return _transactionService.ListByAccountAsync(
+        var account = await _transactionRepository.GetAccountByIdAsync(
             request.TenantId,
             request.AccountId,
             cancellationToken);
+
+        if (account is null)
+        {
+            return [];
+        }
+
+        var transactions = await _transactionRepository.ListByAccountAsync(
+            request.TenantId,
+            request.AccountId,
+            cancellationToken);
+
+        return transactions
+            .Select(FinancialTransactionResponseMapper.ToResponse)
+            .ToArray();
     }
 }

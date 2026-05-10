@@ -6,20 +6,22 @@ namespace Platform.Application.Opportunities;
 public sealed class GetOpportunityByIdQueryHandler
     : IRequestHandler<GetOpportunityByIdQuery, OpportunityResponse?>
 {
-    private readonly IOpportunityService _opportunityService;
+    private readonly IOpportunityRepository _opportunityRepository;
 
-    public GetOpportunityByIdQueryHandler(IOpportunityService opportunityService)
+    public GetOpportunityByIdQueryHandler(IOpportunityRepository opportunityRepository)
     {
-        _opportunityService = opportunityService;
+        _opportunityRepository = opportunityRepository;
     }
 
-    public Task<OpportunityResponse?> Handle(
+    public async Task<OpportunityResponse?> Handle(
         GetOpportunityByIdQuery request,
         CancellationToken cancellationToken)
     {
-        return _opportunityService.GetByIdAsync(
+        var opportunity = await _opportunityRepository.GetByIdAsync(
             request.TenantId,
             request.OpportunityId,
             cancellationToken);
+
+        return opportunity is null ? null : OpportunityResponseMapper.ToResponse(opportunity);
     }
 }

@@ -5,15 +5,17 @@ namespace Platform.Application.Contacts;
 
 public sealed class GetContactByIdQueryHandler : IRequestHandler<GetContactByIdQuery, ContactResponse?>
 {
-    private readonly IContactService _contactService;
+    private readonly IContactRepository _contactRepository;
 
-    public GetContactByIdQueryHandler(IContactService contactService)
+    public GetContactByIdQueryHandler(IContactRepository contactRepository)
     {
-        _contactService = contactService;
+        _contactRepository = contactRepository;
     }
 
-    public Task<ContactResponse?> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ContactResponse?> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)
     {
-        return _contactService.GetByIdAsync(request.TenantId, request.ContactId, cancellationToken);
+        var contact = await _contactRepository.GetByIdAsync(request.TenantId, request.ContactId, cancellationToken);
+
+        return contact is null ? null : ContactResponseMapper.ToResponse(contact);
     }
 }

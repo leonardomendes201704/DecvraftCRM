@@ -6,20 +6,34 @@ namespace Platform.Application.Opportunities;
 public sealed class ListOpportunitiesByCustomerQueryHandler
     : IRequestHandler<ListOpportunitiesByCustomerQuery, IReadOnlyCollection<OpportunityResponse>>
 {
-    private readonly IOpportunityService _opportunityService;
+    private readonly IOpportunityRepository _opportunityRepository;
 
-    public ListOpportunitiesByCustomerQueryHandler(IOpportunityService opportunityService)
+    public ListOpportunitiesByCustomerQueryHandler(IOpportunityRepository opportunityRepository)
     {
-        _opportunityService = opportunityService;
+        _opportunityRepository = opportunityRepository;
     }
 
-    public Task<IReadOnlyCollection<OpportunityResponse>> Handle(
+    public async Task<IReadOnlyCollection<OpportunityResponse>> Handle(
         ListOpportunitiesByCustomerQuery request,
         CancellationToken cancellationToken)
     {
-        return _opportunityService.ListByCustomerAsync(
+        var customerExists = await _opportunityRepository.CustomerExistsAsync(
             request.TenantId,
             request.CustomerId,
             cancellationToken);
+
+        if (!customerExists)
+        {
+            return [];
+        }
+
+        var opportunities = await _opportunityRepository.ListByCustomerAsync(
+            request.TenantId,
+            request.CustomerId,
+            cancellationToken);
+
+        return opportunities
+            .Select(OpportunityResponseMapper.ToResponse)
+            .ToArray();
     }
 }

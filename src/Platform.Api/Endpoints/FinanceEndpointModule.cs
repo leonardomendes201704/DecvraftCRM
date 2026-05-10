@@ -1,6 +1,7 @@
 using MediatR;
 using Platform.Api.Routing;
 using Platform.Api.Security;
+using Platform.Application.Abstractions;
 using Platform.Application.Finance;
 using Platform.Domain.Catalog;
 using Platform.Domain.Enums;
@@ -14,9 +15,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
         app.MapGet(ApiRoutes.FinancialAccounts, async (
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -34,9 +40,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             Guid accountId,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -56,9 +67,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             CreateFinancialAccountRequest accountRequest,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -79,9 +95,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             UpdateFinancialAccountRequest accountRequest,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -101,9 +122,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             Guid accountId,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -125,9 +151,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             Guid accountId,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -147,9 +178,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             Guid transactionId,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -170,9 +206,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             CreateFinancialTransactionRequest transactionRequest,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -193,9 +234,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             UpdateFinancialTransactionRequest transactionRequest,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -215,9 +261,14 @@ public sealed class FinanceEndpointModule : IEndpointModule
             Guid transactionId,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();

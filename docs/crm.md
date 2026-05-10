@@ -73,6 +73,7 @@ Request de criacao/atualizacao:
 ```
 
 O contato sempre deve pertencer a um cliente do mesmo tenant. Email duplicado dentro do mesmo cliente retorna `409 Conflict`.
+Cada cliente pode ter apenas um contato principal por tenant. Ao criar ou atualizar um contato como principal, os demais contatos principais do mesmo cliente sao desmarcados e a persistencia reforca essa regra com indice unico filtrado.
 
 ## Oportunidades
 
@@ -100,4 +101,4 @@ A oportunidade sempre deve pertencer a um cliente do mesmo tenant. Valor estimad
 
 ## Proximo bloco
 
-O proximo bloco recomendado e iniciar o modulo financeiro basico ou antecipar a refatoracao arquitetural da API registrada no `EP-11`.
+O proximo bloco recomendado e evoluir o CRM com etapas comerciais, atividades e historico de interacoes, mantendo as regras em handlers MediatR e portas da camada `Application`.

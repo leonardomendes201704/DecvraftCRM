@@ -6,20 +6,32 @@ namespace Platform.Application.Opportunities;
 public sealed class MarkOpportunityAsLostCommandHandler
     : IRequestHandler<MarkOpportunityAsLostCommand, OpportunityOperationResult>
 {
-    private readonly IOpportunityService _opportunityService;
+    private readonly IOpportunityRepository _opportunityRepository;
+    private readonly IClock _clock;
 
-    public MarkOpportunityAsLostCommandHandler(IOpportunityService opportunityService)
+    public MarkOpportunityAsLostCommandHandler(IOpportunityRepository opportunityRepository, IClock clock)
     {
-        _opportunityService = opportunityService;
+        _opportunityRepository = opportunityRepository;
+        _clock = clock;
     }
 
-    public Task<OpportunityOperationResult> Handle(
+    public async Task<OpportunityOperationResult> Handle(
         MarkOpportunityAsLostCommand request,
         CancellationToken cancellationToken)
     {
-        return _opportunityService.MarkAsLostAsync(
+        var opportunity = await _opportunityRepository.GetByIdAsync(
             request.TenantId,
             request.OpportunityId,
             cancellationToken);
+
+        if (opportunity is null)
+        {
+            return OpportunityOperationResult.NotFound();
+        }
+
+        opportunity.MarkAsLost(_clock.UtcNow);
+        await _opportunityRepository.SaveChangesAsync(cancellationToken);
+
+        return OpportunityOperationResult.Success(OpportunityResponseMapper.ToResponse(opportunity));
     }
 }

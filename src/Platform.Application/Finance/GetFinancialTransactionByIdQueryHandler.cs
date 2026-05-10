@@ -6,20 +6,22 @@ namespace Platform.Application.Finance;
 public sealed class GetFinancialTransactionByIdQueryHandler
     : IRequestHandler<GetFinancialTransactionByIdQuery, FinancialTransactionResponse?>
 {
-    private readonly IFinancialTransactionService _transactionService;
+    private readonly IFinancialTransactionRepository _transactionRepository;
 
-    public GetFinancialTransactionByIdQueryHandler(IFinancialTransactionService transactionService)
+    public GetFinancialTransactionByIdQueryHandler(IFinancialTransactionRepository transactionRepository)
     {
-        _transactionService = transactionService;
+        _transactionRepository = transactionRepository;
     }
 
-    public Task<FinancialTransactionResponse?> Handle(
+    public async Task<FinancialTransactionResponse?> Handle(
         GetFinancialTransactionByIdQuery request,
         CancellationToken cancellationToken)
     {
-        return _transactionService.GetByIdAsync(
+        var transaction = await _transactionRepository.GetByIdAsync(
             request.TenantId,
             request.TransactionId,
             cancellationToken);
+
+        return transaction is null ? null : FinancialTransactionResponseMapper.ToResponse(transaction);
     }
 }

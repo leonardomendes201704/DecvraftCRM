@@ -6,20 +6,32 @@ namespace Platform.Application.Opportunities;
 public sealed class MarkOpportunityAsWonCommandHandler
     : IRequestHandler<MarkOpportunityAsWonCommand, OpportunityOperationResult>
 {
-    private readonly IOpportunityService _opportunityService;
+    private readonly IOpportunityRepository _opportunityRepository;
+    private readonly IClock _clock;
 
-    public MarkOpportunityAsWonCommandHandler(IOpportunityService opportunityService)
+    public MarkOpportunityAsWonCommandHandler(IOpportunityRepository opportunityRepository, IClock clock)
     {
-        _opportunityService = opportunityService;
+        _opportunityRepository = opportunityRepository;
+        _clock = clock;
     }
 
-    public Task<OpportunityOperationResult> Handle(
+    public async Task<OpportunityOperationResult> Handle(
         MarkOpportunityAsWonCommand request,
         CancellationToken cancellationToken)
     {
-        return _opportunityService.MarkAsWonAsync(
+        var opportunity = await _opportunityRepository.GetByIdAsync(
             request.TenantId,
             request.OpportunityId,
             cancellationToken);
+
+        if (opportunity is null)
+        {
+            return OpportunityOperationResult.NotFound();
+        }
+
+        opportunity.MarkAsWon(_clock.UtcNow);
+        await _opportunityRepository.SaveChangesAsync(cancellationToken);
+
+        return OpportunityOperationResult.Success(OpportunityResponseMapper.ToResponse(opportunity));
     }
 }

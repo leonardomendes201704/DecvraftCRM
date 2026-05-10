@@ -1,5 +1,6 @@
 using Platform.Api.Endpoints;
 using Platform.Api.Security;
+using Platform.Application.Abstractions;
 using Platform.Application.Auth;
 using Platform.Application.Common.Behaviors;
 using Platform.Infrastructure;
@@ -18,6 +19,7 @@ builder.Services.AddMediatR(configuration =>
     configuration.AddOpenBehavior(typeof(RequestLoggingBehavior<,>));
 });
 builder.Services.AddEndpointModules();
+builder.Services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
 builder.Services.AddScoped<PermissionEndpointFilter>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

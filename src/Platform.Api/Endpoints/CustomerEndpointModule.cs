@@ -1,6 +1,7 @@
 using MediatR;
 using Platform.Api.Routing;
 using Platform.Api.Security;
+using Platform.Application.Abstractions;
 using Platform.Application.Customers;
 using Platform.Domain.Catalog;
 using Platform.Domain.Enums;
@@ -14,9 +15,14 @@ public sealed class CustomerEndpointModule : IEndpointModule
         app.MapGet(ApiRoutes.Customers, async (
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -34,9 +40,14 @@ public sealed class CustomerEndpointModule : IEndpointModule
             Guid customerId,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -58,9 +69,14 @@ public sealed class CustomerEndpointModule : IEndpointModule
             CreateCustomerRequest customerRequest,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -81,9 +97,14 @@ public sealed class CustomerEndpointModule : IEndpointModule
             UpdateCustomerRequest customerRequest,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
@@ -103,9 +124,14 @@ public sealed class CustomerEndpointModule : IEndpointModule
             Guid customerId,
             HttpRequest request,
             IMediator mediator,
+            ICurrentUserAccessor currentUserAccessor,
             CancellationToken cancellationToken) =>
         {
-            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(request, mediator, cancellationToken);
+            var currentUser = await EndpointUserResolver.ResolveCurrentUserAsync(
+                request,
+                mediator,
+                currentUserAccessor,
+                cancellationToken);
             if (currentUser is null)
             {
                 return Results.Unauthorized();
